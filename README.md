@@ -1,4 +1,4 @@
-a flutter plugin for decode and genrate emvqrcode
+a flutter plugin for decode and genrate emv-mpm qrcode
 
 <hr>
 
@@ -65,4 +65,4 @@ Generate func
 
 ## Credits 
 
-<li>https://github.com/dongri/emv-qrcode#documents</li>
+<li>https://github.com/dongri/emv-qrcode</li>
