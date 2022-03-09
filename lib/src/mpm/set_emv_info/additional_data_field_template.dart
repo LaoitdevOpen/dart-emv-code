@@ -1,22 +1,9 @@
 import 'package:emvqrcode/src/constants/additional_id.dart';
 import 'package:emvqrcode/src/models/additoinal_data_field_template.dart';
 import 'package:emvqrcode/src/models/tlv_model.dart';
-import 'package:emvqrcode/src/models/set_tlv_model.dart';
 import 'package:emvqrcode/src/mpm/emv_types.dart';
 
 class SetAdditionalDataFieldTemplate {
-  // TLVModel? billNumber;
-  // TLVModel? mobileNumber;
-  // TLVModel? storeLabel;
-  // TLVModel? loyaltyNumber;
-  // TLVModel? referenceLabel;
-  // TLVModel? customerLabel;
-  // TLVModel? terminalLabel;
-  // TLVModel? purposeTransaction;
-  // TLVModel? additionalConsumerDataRequest;
-  // List<TLVModel>? rfuForEMVCo;
-  // List<TLVModel>? paymentSystemSpecific;
-
   late AdditionalDataFieldTemplate value = AdditionalDataFieldTemplate();
 
   setBillNumber(String value) {
@@ -68,39 +55,39 @@ class SetAdditionalDataFieldTemplate {
         .copyWith(additionalConsumerDataRequest: additionalConsumerDataRequest);
   }
 
-  setRfuForEMVCo(List<SetTlvModel>? value) {
-    List<TLVModel> tlv = [];
-    if (value != null) {
-      for (var element in value) {
-        if (int.parse(element.id) <
-                int.parse(AdditionalID.rfuForEMVCoRangeStart) ||
-            int.parse(element.id) >
-                int.parse(AdditionalID.rfuForEMVCoRangeEnd)) {
-          this.value = this.value.copyWith(rfuForEMVCo: []);
-          return;
-        }
-        tlv.add(setTLV(element.value, element.id));
+  setRfuForEMVCo({String? id, String? value}) {
+    if (id != null && value != null) {
+      if (int.parse(id) < int.parse(AdditionalID.rfuForEMVCoRangeStart) ||
+          int.parse(id) > int.parse(AdditionalID.rfuForEMVCoRangeEnd)) {
+        this.value = this.value.copyWith(rfuForEMVCo: []);
+        return;
+      }
+
+      if (this.value.rfuForEMVCo != null) {
+        this.value.rfuForEMVCo?.add(setTLV(value, id));
+      } else {
+        List<TLVModel> tlv = [];
+        tlv.add(setTLV(value, id));
+        this.value = this.value.copyWith(rfuForEMVCo: tlv);
       }
     }
-    // rfuForEMVCo = tlv;
-    this.value = this.value.copyWith(rfuForEMVCo: tlv);
   }
 
-  setPaymentSystemSpecific(List<SetTlvModel>? value) {
-    List<TLVModel> tlv = [];
-    if (value != null) {
-      for (var element in value) {
-        if (int.parse(element.id) <
-                int.parse(AdditionalID.paymentSystemSpecificTemplatesRangeStart) ||
-            int.parse(element.id) >
-                int.parse(AdditionalID.paymentSystemSpecificTemplatesRangeEnd)) {
-          this.value = this.value.copyWith(rfuForEMVCo: []);
-          return;
-        }
-        tlv.add(setTLV(element.value, element.id));
+  setPaymentSystemSpecific({String? id, String? value}) {
+    if (id != null && value != null) {
+      if (int.parse(id) < int.parse(AdditionalID.paymentSystemSpecificTemplatesRangeStart) ||
+          int.parse(id) > int.parse(AdditionalID.paymentSystemSpecificTemplatesRangeEnd)) {
+        this.value = this.value.copyWith(paymentSystemSpecific: []);
+        return;
+      }
+
+      if (this.value.paymentSystemSpecific != null) {
+        this.value.paymentSystemSpecific?.add(setTLV(value, id));
+      } else {
+        List<TLVModel> tlv = [];
+        tlv.add(setTLV(value, id));
+        this.value = this.value.copyWith(paymentSystemSpecific: tlv);
       }
     }
-    // paymentSystemSpecific = tlv;
-    this.value = this.value.copyWith(paymentSystemSpecific: tlv);
   }
 }
