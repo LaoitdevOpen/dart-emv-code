@@ -3,7 +3,7 @@ class ID {
   static const pointOfInitiationMethod = "01";
   static const merchantAccountInformationRangeStart = "02";
   static const merchantAccountInformationRangeEnd = "51";
-  static const merchantCategoryCode = "52";
+  static const merchantCategory = "52";
   static const transactionCurrency = "53";
   static const transactionAmount = "54";
   static const tipOrConvenienceIndicator = "55";

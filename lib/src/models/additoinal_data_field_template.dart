@@ -1,5 +1,3 @@
-
-
 import 'package:emvqrcode/src/models/tlv_model.dart';
 
 class AdditionalDataFieldTemplate {
@@ -77,7 +75,20 @@ class AdditionalDataFieldTemplate {
       );
 
   Map<String, dynamic> toJson() => {
-        "billNumber": billNumber!.toJson(),
-        "rfuForEMVCo": List<dynamic>.from(rfuForEMVCo!.map((x) => x.toJson())),
+        "billNumber": billNumber != null ? billNumber!.toJson() : null,
+        "mobileNumber": mobileNumber != null ? mobileNumber!.toJson() : null,
+        "storeLabel": storeLabel != null ? storeLabel!.toJson() : null,
+        "loyaltyNumber": loyaltyNumber != null ? loyaltyNumber!.toJson() : null,
+        "referenceLabel": referenceLabel != null ? referenceLabel!.toJson() : null,
+        "customerLabel": customerLabel != null ? customerLabel!.toJson() : null,
+        "terminalLabel": terminalLabel != null ? terminalLabel!.toJson() : null,
+        "purposeTransaction": purposeTransaction != null ? purposeTransaction!.toJson() : null,
+        "additionalConsumerDataRequest": additionalConsumerDataRequest != null ? additionalConsumerDataRequest!.toJson() : null,
+        "rfuForEMVCo": rfuForEMVCo != null
+            ? List<dynamic>.from(rfuForEMVCo!.map((x) => x.toJson()))
+            : [],
+        "paymentSystemSpecific": paymentSystemSpecific != null
+            ? List<dynamic>.from(paymentSystemSpecific!.map((x) => x.toJson()))
+            : [],
       };
 }

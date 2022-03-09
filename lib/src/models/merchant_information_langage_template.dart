@@ -1,6 +1,5 @@
 import 'package:emvqrcode/src/models/tlv_model.dart';
 
-
 class MerchantInformationLanguageTemplate {
   MerchantInformationLanguageTemplate({
     this.languagePreference,
@@ -37,9 +36,12 @@ class MerchantInformationLanguageTemplate {
       );
 
   Map<String, dynamic> toJson() => {
-        "languagePreference": languagePreference!.toJson(),
-        "merchantName": merchantName!.toJson(),
-        "merchantCity": merchantCity!.toJson(),
-        "rfuForEMVCo": List<dynamic>.from(rfuForEMVCo!.map((x) => x.toJson())),
+        "languagePreference":
+            languagePreference != null ? languagePreference!.toJson() : null,
+        "merchantName": merchantName != null ? merchantName!.toJson() : null,
+        "merchantCity": merchantCity != null ? merchantCity!.toJson() : null,
+        "rfuForEMVCo": rfuForEMVCo != null
+            ? List<dynamic>.from(rfuForEMVCo!.map((x) => x.toJson()))
+            : null,
       };
 }
