@@ -1,70 +1,37 @@
 import 'package:emvqrcode/emvqrcode.dart';
 import 'package:emvqrcode/src/models/tlv_model.dart';
-import 'package:emvqrcode/src/models/set_tlv_model.dart';
 
-class SetMerchantAccountInformation {
-  late MerchantAccountInformation value = MerchantAccountInformation();
+class SetMerchantAccountInformationValue {
+  late MerchantAccountInformationValue value =
+      MerchantAccountInformationValue();
 
-  TLVModel _setGloballyUniqueIdentifier(String value) {
-    return setTLV(value, MerchantAccountInformationID.globallyUniqueIdentifier);
+  setGloballyUniqueIdentifier(String value) {
+    final globallyUniqueIdentifier =
+        setTLV(value, MerchantAccountInformationID.globallyUniqueIdentifier);
+    this.value =
+        this.value.copyWith(globallyUniqueIdentifier: globallyUniqueIdentifier);
   }
 
-  List<TLVModel> _setPaymentNetworkSpecific(List<SetTlvModel> value) {
-    List<TLVModel> paymentNetworkSpecific = [];
-    for (var element in value) {
-      paymentNetworkSpecific.add(setTLV(element.value, element.id));
-    }
-    return paymentNetworkSpecific;
-  }
-
-  addMerchantAccountInformation({
-    String? id,
-    String? globallyUniqueIdentifierValue,
-    List<SetTlvModel>? paymentNetworkSpecificValue,
-  }) {
-    if (id != null &&
-        globallyUniqueIdentifierValue != null &&
-        paymentNetworkSpecificValue != null) {
+  setPaymentNetworkSpecific({String? id, String? value}) {
+    if (id != null && value != null) {
       if (int.parse(id) <
               int.parse(
-                  ID.merchantAccountInformationRangeStart) ||
+                  MerchantAccountInformationID.paymentNetworkSpecificStart) ||
           int.parse(id) >
               int.parse(
-                  ID.merchantAccountInformationRangeEnd)) {
+                  MerchantAccountInformationID.paymentNetworkSpecificEnd)) {
+        this.value = this.value.copyWith(paymentNetworkSpecific: []);
         return;
       }
-      //set globallyUniqueIdentifier tlv
-      TLVModel _globallyUniqueIdentifier =
-          _setGloballyUniqueIdentifier(globallyUniqueIdentifierValue);
 
-      //set paymentNetworkSpecific tlv
-      List<TLVModel> _paymentNetworkSpecific =
-          _setPaymentNetworkSpecific(paymentNetworkSpecificValue);
-
-      String _globally =
-          "${_globallyUniqueIdentifier.tag}${_globallyUniqueIdentifier.length}${_globallyUniqueIdentifier.value}";
-      String _payment = "";
-      for (var element in _paymentNetworkSpecific) {
-        _payment += "${element.tag}${element.length}${element.value}";
+      if (this.value.paymentNetworkSpecific != null) {
+        this.value.paymentNetworkSpecific?.add(setTLV(value, id));
+      } else {
+        List<TLVModel> paymentNetworkSpecific = [];
+        paymentNetworkSpecific.add(setTLV(value, id));
+        this.value =
+            this.value.copyWith(paymentNetworkSpecific: paymentNetworkSpecific);
       }
-
-      // set merchant account information tlv
-      // final mtlv = MerchantAccountInformation(
-      //   tag: id,
-      //   length: l(_globally + _payment),
-      //   value: MerchantAccountInformationValue(
-      //     globallyUniqueIdentifier: _globallyUniqueIdentifier,
-      //     paymentNetworkSpecific: _paymentNetworkSpecific,
-      //   ),
-      // );
-      value = value.copyWith(
-            tag: id,
-            length: l(_globally + _payment),
-            value: MerchantAccountInformationValue(
-              globallyUniqueIdentifier: _globallyUniqueIdentifier,
-              paymentNetworkSpecific: _paymentNetworkSpecific,
-            ),
-          );
     }
   }
 }
