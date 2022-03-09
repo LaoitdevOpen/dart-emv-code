@@ -6,13 +6,12 @@ import 'package:emvqrcode/src/models/merchant_information_langage_template.dart'
 import 'package:emvqrcode/src/models/tlv_model.dart';
 import 'package:emvqrcode/src/models/unreserved_template.dart';
 
+EmvqrModel emvqrModelFromJson(String str) => EmvqrModel.fromJson(json.decode(str));
 
-EMVQR emvqrFromJson(String str) => EMVQR.fromJson(json.decode(str));
+String emvqrModelToJson(EmvqrModel data) => json.encode(data.toJson());
 
-String emvqrToJson(EMVQR data) => json.encode(data.toJson());
-
-class EMVQR {
-  EMVQR({
+class EmvqrModel {
+  EmvqrModel({
     this.payloadFormatIndicator,
     this.pointOfInitiationMethod,
     this.merchantAccountInformation,
@@ -52,7 +51,7 @@ class EMVQR {
   List<TLVModel>? rfuForEmvCo;
   Map<String, UnreservedTemplate>? unreservedTemplates;
 
-  EMVQR copyWith({
+  EmvqrModel copyWith({
     TLVModel? payloadFormatIndicator,
     TLVModel? pointOfInitiationMethod,
     Map<String, MerchantAccountInformation>? merchantAccountInformation,
@@ -72,7 +71,7 @@ class EMVQR {
     List<TLVModel>? rfuForEmvCo,
     Map<String, UnreservedTemplate>? unreservedTemplates,
   }) =>
-      EMVQR(
+      EmvqrModel(
         payloadFormatIndicator:
             payloadFormatIndicator ?? this.payloadFormatIndicator,
         pointOfInitiationMethod:
@@ -102,7 +101,7 @@ class EMVQR {
         unreservedTemplates: unreservedTemplates ?? this.unreservedTemplates,
       );
 
-  factory EMVQR.fromJson(Map<String, dynamic> json) => EMVQR(
+  factory EmvqrModel.fromJson(Map<String, dynamic> json) => EmvqrModel(
         payloadFormatIndicator:
             TLVModel.fromJson(json["payloadFormatIndicator"]),
         pointOfInitiationMethod:
@@ -156,7 +155,9 @@ class EMVQR {
         "crc": crc?.toJson(),
         "merchantInformationLanguageTemplate":
             merchantInformationLanguageTemplate?.toJson(),
-        "rfuForEMVCo": List<dynamic>.from(rfuForEmvCo!.map((x) => x.toJson())),
+        "rfuForEMVCo": rfuForEmvCo != null
+            ? List<dynamic>.from(rfuForEmvCo!.map((x) => x.toJson()))
+            : [],
         "unreservedTemplates": Map.from(unreservedTemplates ?? {})
             .map((k, v) => MapEntry<String, dynamic>(k, v.toJson())),
       };

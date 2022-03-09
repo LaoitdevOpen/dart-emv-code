@@ -24,7 +24,7 @@ import 'package:emvqrcode/src/mpm/set_emv_info/merchant_account_information.dart
 /// emv decode
 EMVDeCode parseEMVQR(String payload) {
   ParserModel p = newParser(payload);
-  EMVQR emvqr = EMVQR();
+  EmvqrModel emvqr = EmvqrModel();
   TLVModel? payloadFormatIndicator;
   TLVModel? pointOfInitiationMethod;
   Map<String, MerchantAccountInformation>? merchantAccountInformation;
@@ -55,7 +55,7 @@ EMVDeCode parseEMVQR(String payload) {
       case ID.pointOfInitiationMethod:
         pointOfInitiationMethod = setTLV(value, id);
         break;
-      case ID.merchantCategory:
+      case ID.merchantCategoryCode:
         merchantCategoryCode = setTLV(value, id);
         break;
       case ID.transactionCurrency:
@@ -146,7 +146,7 @@ EMVDeCode parseEMVQR(String payload) {
     }
   }
 
-  emvqr = EMVQR(
+  emvqr = EmvqrModel(
       payloadFormatIndicator: payloadFormatIndicator,
       pointOfInitiationMethod: pointOfInitiationMethod,
       merchantAccountInformation: merchantAccountInformation,
@@ -401,7 +401,7 @@ UnreservedTemplateValue parseUnreservedTemplate(String payLoad) {
 }
 
 /// emv encode
-EmvEncode generatePayload(EMVQR emv) {
+EmvEncode generatePayload(EmvqrModel emv) {
   String s = "";
   try {
     s += tlvToString(emv.payloadFormatIndicator);
@@ -484,7 +484,7 @@ EmvEncode generatePayload(EMVQR emv) {
 }
 
 // set emv value
-EMVQR setEMVData({
+EmvqrModel setEMVData({
   String? payloadFormatIndicator,
   String? pointOfInitiationMethod,
   Map<String, MerchantAccountInformation>? merchantAccountInformation,
@@ -515,7 +515,7 @@ EMVQR setEMVData({
       : null;
   // merchant category code
   var merchantCategoryCodeTlv = merchantCategoryCode != null
-      ? setTLV(merchantCategoryCode, ID.merchantCategory)
+      ? setTLV(merchantCategoryCode, ID.merchantCategoryCode)
       : null;
   // transaction currency
   var transactionCurrencyTLv = transactionCurrency != null
@@ -551,7 +551,7 @@ EMVQR setEMVData({
       postalCode != null ? setTLV(postalCode, ID.postalCode) : null;
 
   // emv data
-  EMVQR emvData = EMVQR(
+  EmvqrModel emvData = EmvqrModel(
     payloadFormatIndicator: payloadFormatIndicatorTlv,
     pointOfInitiationMethod: pointOfInitiationMethodTlv,
     merchantAccountInformation: merchantAccountInformation,

@@ -27,10 +27,10 @@ class SetMerchantAccountInformation {
         paymentNetworkSpecificValue != null) {
       if (int.parse(id) <
               int.parse(
-                  MerchantAccountInformationID.paymentNetworkSpecificStart) ||
+                  ID.merchantAccountInformationRangeStart) ||
           int.parse(id) >
               int.parse(
-                  MerchantAccountInformationID.paymentNetworkSpecificStart)) {
+                  ID.merchantAccountInformationRangeEnd)) {
         return;
       }
       //set globallyUniqueIdentifier tlv
@@ -49,16 +49,22 @@ class SetMerchantAccountInformation {
       }
 
       // set merchant account information tlv
-      final mtlv = MerchantAccountInformation(
-        tag: id,
-        length: l(_globally + _payment),
-        value: MerchantAccountInformationValue(
-          globallyUniqueIdentifier: _globallyUniqueIdentifier,
-          paymentNetworkSpecific: _paymentNetworkSpecific,
-        ),
-      );
-
-      value = mtlv;
+      // final mtlv = MerchantAccountInformation(
+      //   tag: id,
+      //   length: l(_globally + _payment),
+      //   value: MerchantAccountInformationValue(
+      //     globallyUniqueIdentifier: _globallyUniqueIdentifier,
+      //     paymentNetworkSpecific: _paymentNetworkSpecific,
+      //   ),
+      // );
+      value = value.copyWith(
+            tag: id,
+            length: l(_globally + _payment),
+            value: MerchantAccountInformationValue(
+              globallyUniqueIdentifier: _globallyUniqueIdentifier,
+              paymentNetworkSpecific: _paymentNetworkSpecific,
+            ),
+          );
     }
   }
 }

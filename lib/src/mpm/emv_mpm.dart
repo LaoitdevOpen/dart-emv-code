@@ -13,7 +13,7 @@ class EMVMPM {
     return EMVDeCode(emvqr: emvqr.emvqr, error: null);
   }
 
-  static EmvEncode encode(EMVQR emv) {
+  static EmvEncode encode(EmvqrModel emv) {
     var emvqr = generatePayload(emv);
     return emvqr;
   }

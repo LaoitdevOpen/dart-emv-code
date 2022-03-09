@@ -9,11 +9,11 @@ String emvqrDecodeToJson(EMVDeCode data) => json.encode(data.toJson());
 
 class EMVDeCode {
   EMVDeCode({this.emvqr, this.error});
-  EMVQR? emvqr;
+  EmvqrModel? emvqr;
   EmvError? error;
 
   EMVDeCode copyWith({
-    EMVQR? emvqr,
+    EmvqrModel? emvqr,
     EmvError? error,
   }) =>
       EMVDeCode(
@@ -22,7 +22,7 @@ class EMVDeCode {
       );
 
   factory EMVDeCode.fromJson(Map<String, dynamic> json) => EMVDeCode(
-        emvqr: EMVQR.fromJson(json["emvqr"]),
+        emvqr: EmvqrModel.fromJson(json["emvqr"]),
         error: EmvError.fromJson(json["error"]),
       );
 
