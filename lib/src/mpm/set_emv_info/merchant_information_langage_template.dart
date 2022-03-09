@@ -1,16 +1,11 @@
 import 'package:emvqrcode/src/constants/merchant_information_id.dart';
 import 'package:emvqrcode/src/models/merchant_information_langage_template.dart';
 import 'package:emvqrcode/src/models/tlv_model.dart';
-import 'package:emvqrcode/src/models/set_tlv_model.dart';
 import 'package:emvqrcode/src/mpm/emv_types.dart';
 
-class SetMerchantInformationLangageTemplate {
+class SetMerchantInformationLanguageTemplate {
   late MerchantInformationLanguageTemplate value =
       MerchantInformationLanguageTemplate();
-  // TLVModel? languagePreference;
-  // TLVModel? merchantName;
-  // TLVModel? merchantCity;
-  // List<TLVModel>? rfuForEMVCo;
 
   setLanguagePreferencer(String value) {
     final languagePreference =
@@ -28,19 +23,24 @@ class SetMerchantInformationLangageTemplate {
     this.value = this.value.copyWith(merchantCity: merchantCity);
   }
 
-  setRfuForEMVCo(List<SetTlvModel> value) {
-    List<TLVModel> tlv = [];
-    for (var element in value) {
-      if (int.parse(element.id) <
+  setRfuForEMVCo({String? id, String? value}) {
+    if (id != null && value != null) {
+      if (int.parse(id) <
               int.parse(MerchantInformationID.rfuForEMVCoRangeStart) ||
-          int.parse(element.id) >
+          int.parse(id) >
               int.parse(MerchantInformationID.rfuForEMVCoRangeEnd)) {
         this.value = this.value.copyWith(rfuForEMVCo: []);
         return;
       }
-      tlv.add(setTLV(element.value, element.id));
+
+      if (this.value.rfuForEMVCo != null) {
+        this.value.rfuForEMVCo?.add(setTLV(value, id));
+      } else {
+        List<TLVModel> tlv = [];
+        tlv.add(setTLV(value, id));
+        this.value =
+            this.value.copyWith(rfuForEMVCo: tlv);
+      }
     }
-    // rfuForEMVCo = paymentNetworkSpecific;
-    this.value = this.value.copyWith(rfuForEMVCo: tlv);
   }
 }

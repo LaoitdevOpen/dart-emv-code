@@ -1,5 +1,4 @@
 import 'package:emvqrcode/emvqrcode.dart';
-import 'package:emvqrcode/src/models/set_tlv_model.dart';
 import 'package:emvqrcode/src/mpm/set_emv_info/additional_data_field_template.dart';
 import 'package:emvqrcode/src/mpm/set_emv_info/merchant_account_information.dart';
 import 'package:emvqrcode/src/mpm/set_emv_info/merchant_information_langage_template.dart';
@@ -13,78 +12,47 @@ void main() {
     emv.setPayloadFormatIndicator("00");
     emv.setPointOfInitiationMethod("12");
 
-    final mAccountInfo = SetMerchantAccountInformation();
-    mAccountInfo.addMerchantAccountInformation(
-        id: "03",
-        globallyUniqueIdentifierValue: "qwer",
-        paymentNetworkSpecificValue: [
-          // id: 01 -> 99
-          SetTlvModel(id: "01", value: "asdf"),
-          SetTlvModel(id: "02", value: "asdfg")
-        ]);
-    emv.setMerchantAccountInformation(mAccountInfo.value);
+    /// merchant account information
+    final mAccountInfo = SetMerchantAccountInformationValue();
+    mAccountInfo.setGloballyUniqueIdentifier("IT");
+    mAccountInfo.setPaymentNetworkSpecific(id: "01", value: "abc");
+    mAccountInfo.setPaymentNetworkSpecific(id: "02", value: "def");
+    emv.addMerchantAccountInformation(id: "03", value: mAccountInfo.value);
 
-    final mAccountInfo2 = SetMerchantAccountInformation();
-    mAccountInfo2.addMerchantAccountInformation(
-        id: "04",
-        globallyUniqueIdentifierValue: "qwer",
-        paymentNetworkSpecificValue: [
-          // id: 01 -> 99
-          SetTlvModel(id: "05", value: "asdf"),
-          SetTlvModel(id: "06", value: "asdfg")
-        ]);
-    emv.setMerchantAccountInformation(mAccountInfo2.value);
+    final mAccountInfo2 = SetMerchantAccountInformationValue();
+    mAccountInfo2.setGloballyUniqueIdentifier("IT");
+    mAccountInfo2.setPaymentNetworkSpecific(id: "01", value: "abc");
+    mAccountInfo2.setPaymentNetworkSpecific(id: "02", value: "def");
+    emv.addMerchantAccountInformation(id: "04", value: mAccountInfo2.value);
 
-    final additionData = SetAdditionalDataFieldTemplate();
-    additionData.setBillNumber("0qwea");
-    additionData.setRfuForEMVCo([
-      // id: 10 -> 49
-      SetTlvModel(id: "11", value: "dhdf"),
-    ]);
-    emv.setAdditionalDataFieldTemplate(additionData.value);
+    final additionalData = SetAdditionalDataFieldTemplate();
+    additionalData.setBillNumber("0qwea");
+    additionalData.setRfuForEMVCo(id: "11", value: "00");
+    additionalData.setRfuForEMVCo(id: "12", value: "13");
+    additionalData.setPaymentSystemSpecific(id: "50", value: "0004hoge0104abcd");
+    emv.setAdditionalDataFieldTemplate(additionalData.value);
 
-    final mInfoLang = SetMerchantInformationLangageTemplate();
-    mInfoLang.setLanguagePreferencer("asdf");
-    mInfoLang.setMerchantCity("asfg");
-    mInfoLang.setMerchantName("qwer");
-    mInfoLang.setRfuForEMVCo([
-      // id: 03 -> 99
-      SetTlvModel(id: "65", value: "asdf"),
-    ]);
+    final mInfoLang = SetMerchantInformationLanguageTemplate();
+    mInfoLang.setLanguagePreferencer("LA");
+    mInfoLang.setMerchantCity("Vientaine");
+    mInfoLang.setMerchantName("MW");
+    mInfoLang.setRfuForEMVCo(id: "03",value: "asfg");
     emv.setMerchantInformationLanguageTemplate(mInfoLang.value);
 
-    emv.setRfuForEMVCo([
-      // id: 65 -> 79
-      SetTlvModel(id: "65", value: "asdf"),
-      SetTlvModel(id: "70", value: "asdfg")
-    ]);
+    emv.setRfuForEMVCo(id: "65",value: "bbc");
 
-    // unreserved id: 80 -> 99
-    final unreserved1 = SetUnreservedTemplate();
-    unreserved1.setUnreservedTemplates(
-      id: "89",
-      globallyUniqueIdentifierValue: "qwer",
-      contextSpecificDataValue: [
-        // id: 01 -> 99
-        SetTlvModel(id: "01", value: "asdf"),
-      ],
-    );
-    emv.setUnreservedTemplate(unreserved1.value);
+    final unreserved1 = SetUnreservedTemplateValue();
+    unreserved1.setGloballyUniqueIdentifier("abs");
+    unreserved1.setContextSpecificData(id: "01",value: "qw12");
+    emv.addUnreservedTemplate(id: "89",value: unreserved1.value);
 
-    final unreserved2 = SetUnreservedTemplate();
-    unreserved2.setUnreservedTemplates(
-      id: "81",
-      globallyUniqueIdentifierValue: "qwer",
-      contextSpecificDataValue: [
-        // id: 01 -> 99
-        SetTlvModel(id: "01", value: "asdf"),
-      ],
-    );
-    emv.setUnreservedTemplate(unreserved2.value);
+    final unreserved2 = SetUnreservedTemplateValue();
+    unreserved2.setGloballyUniqueIdentifier("sdf");
+    unreserved2.setContextSpecificData(id: "05",value: "ffff");
+    emv.addUnreservedTemplate(id: "81",value: unreserved2.value);
     print("emv body ----------> ${emv.value.toJson()}");
 
     final emvEncode = EMVMPM.encode(emv.value);
     print("emvcode -------> ${emvEncode.toJson()}");
-    
   });
 }

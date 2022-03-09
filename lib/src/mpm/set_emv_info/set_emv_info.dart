@@ -1,7 +1,6 @@
 import 'package:emvqrcode/emvqrcode.dart';
 import 'package:emvqrcode/src/models/additoinal_data_field_template.dart';
 import 'package:emvqrcode/src/models/merchant_information_langage_template.dart';
-import 'package:emvqrcode/src/models/set_tlv_model.dart';
 import 'package:emvqrcode/src/models/tlv_model.dart';
 import 'package:emvqrcode/src/models/unreserved_template.dart';
 
@@ -118,17 +117,30 @@ class EMVQR {
     }
   }
 
-  // merchant account information
-  setMerchantAccountInformation(
-      MerchantAccountInformation? merchantAccountInformation) {
-    if (merchantAccountInformation != null) {
-      if (value.merchantAccountInformation != null) {
-        value.merchantAccountInformation?[merchantAccountInformation.tag!] =
-            merchantAccountInformation;
+  addMerchantAccountInformation(
+      {String? id, MerchantAccountInformationValue? value}) {
+    if (id != null && value != null) {
+      if (int.parse(id) < int.parse(ID.merchantAccountInformationRangeStart) ||
+          int.parse(id) > int.parse(ID.merchantAccountInformationRangeEnd)) {
+        this.value = this.value.copyWith(unreservedTemplates: {});
+        return;
+      }
+      String _globally =
+          "${value.globallyUniqueIdentifier?.tag}${value.globallyUniqueIdentifier?.length}${value.globallyUniqueIdentifier?.value}";
+      String _payment = "";
+      value.paymentNetworkSpecific?.forEach((element) {
+        _payment += "${element.tag}${element.length}${element.value}";
+      });
+
+      MerchantAccountInformation mTLV = MerchantAccountInformation(
+          tag: id, length: l(_globally + _payment), value: value);
+
+      // add merchant account info
+      if (this.value.merchantAccountInformation != null) {
+        this.value.merchantAccountInformation?[id] = mTLV;
       } else {
-        value = value.copyWith(merchantAccountInformation: {
-          merchantAccountInformation.tag!: merchantAccountInformation
-        });
+        this.value =
+            this.value.copyWith(merchantAccountInformation: {id: mTLV});
       }
     }
   }
@@ -143,15 +155,29 @@ class EMVQR {
   }
 
   // unreserved template
-  setUnreservedTemplate(UnreservedTemplate? unreservedTemplates) {
-    if (unreservedTemplates != null) {
-      if (value.unreservedTemplates != null) {
-        value.unreservedTemplates?[unreservedTemplates.tag!] =
-            unreservedTemplates;
+  addUnreservedTemplate({String? id, UnreservedTemplateValue? value}) {
+    if (id != null && value != null) {
+      if (int.parse(id) < int.parse(ID.unreservedTemplatesRangeStart) ||
+          int.parse(id) > int.parse(ID.unreservedTemplatesRangeEnd)) {
+        this.value = this.value.copyWith(unreservedTemplates: {});
+        return;
+      }
+      String _globally =
+          "${value.globallyUniqueIdentifier?.tag}${value.globallyUniqueIdentifier?.length}${value.globallyUniqueIdentifier?.value}";
+      String _payment = "";
+      value.contextSpecificData?.forEach((element) {
+        _payment += "${element.tag}${element.length}${element.value}";
+      });
+
+      UnreservedTemplate unreservedTemplate = UnreservedTemplate(
+          tag: id, length: l(_globally + _payment), value: value);
+
+      // add merchant account info
+      if (this.value.unreservedTemplates != null) {
+        this.value.unreservedTemplates?[id] = unreservedTemplate;
       } else {
-        value = value.copyWith(unreservedTemplates: {
-          unreservedTemplates.tag!: unreservedTemplates
-        });
+        this.value =
+            this.value.copyWith(unreservedTemplates: {id: unreservedTemplate});
       }
     }
   }
@@ -168,16 +194,21 @@ class EMVQR {
   }
 
   // set rfu for emvcode
-  setRfuForEMVCo(List<SetTlvModel> value) {
-    late List<TLVModel> rfuForEMVCo = [];
-
-    for (var element in value) {
-      if (int.parse(element.id) < int.parse(ID.rfuForEMVCoRangeStart) ||
-          int.parse(element.id) > int.parse(ID.rfuForEMVCoRangeEnd)) {
-        return [];
+  setRfuForEMVCo({String? id, String? value}) {
+    if (id != null && value != null) {
+      if (int.parse(id) < int.parse(ID.rfuForEMVCoRangeStart) ||
+          int.parse(id) > int.parse(ID.rfuForEMVCoRangeEnd)) {
+        this.value = this.value.copyWith(rfuForEmvCo: []);
+        return;
       }
-      rfuForEMVCo.add(setTLV(element.value, element.id));
+
+      if (this.value.rfuForEmvCo != null) {
+        this.value.rfuForEmvCo?.add(setTLV(value, id));
+      } else {
+        List<TLVModel> tlv = [];
+        tlv.add(setTLV(value, id));
+        this.value = this.value.copyWith(rfuForEmvCo: tlv);
+      }
     }
-    this.value = this.value.copyWith(rfuForEmvCo: rfuForEMVCo);
   }
 }
