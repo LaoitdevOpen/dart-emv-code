@@ -1,8 +1,5 @@
 import 'package:emvqrcode/emvqrcode.dart';
-import 'package:emvqrcode/src/models/additoinal_data_field_template.dart';
-import 'package:emvqrcode/src/models/merchant_information_langage_template.dart';
 import 'package:emvqrcode/src/models/set_tlv_model.dart';
-import 'package:emvqrcode/src/models/unreserved_template.dart';
 import 'package:emvqrcode/src/mpm/set_emv_info/additional_data_field_template.dart';
 import 'package:emvqrcode/src/mpm/set_emv_info/merchant_account_information.dart';
 import 'package:emvqrcode/src/mpm/set_emv_info/merchant_information_langage_template.dart';
