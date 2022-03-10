@@ -1,7 +1,7 @@
 import 'package:emvqrcode/src/models/tlv_model.dart';
 
-class MerchantInformationLanguageTemplate {
-  MerchantInformationLanguageTemplate({
+class MerchantInformationLanguageTemplateModel {
+  MerchantInformationLanguageTemplateModel({
     this.languagePreference,
     this.merchantName,
     this.merchantCity,
@@ -12,22 +12,22 @@ class MerchantInformationLanguageTemplate {
   TLVModel? merchantCity;
   List<TLVModel>? rfuForEMVCo;
 
-  MerchantInformationLanguageTemplate copyWith({
+  MerchantInformationLanguageTemplateModel copyWith({
     TLVModel? languagePreference,
     TLVModel? merchantName,
     TLVModel? merchantCity,
     List<TLVModel>? rfuForEMVCo,
   }) =>
-      MerchantInformationLanguageTemplate(
+      MerchantInformationLanguageTemplateModel(
         languagePreference: languagePreference ?? this.languagePreference,
         merchantName: merchantName ?? this.merchantName,
         merchantCity: merchantCity ?? this.merchantCity,
         rfuForEMVCo: rfuForEMVCo ?? this.rfuForEMVCo,
       );
 
-  factory MerchantInformationLanguageTemplate.fromJson(
+  factory MerchantInformationLanguageTemplateModel.fromJson(
           Map<String, dynamic> json) =>
-      MerchantInformationLanguageTemplate(
+      MerchantInformationLanguageTemplateModel(
         languagePreference: TLVModel.fromJson(json["languagePreference"]),
         merchantName: TLVModel.fromJson(json["merchantName"]),
         merchantCity: TLVModel.fromJson(json["merchantCity"]),

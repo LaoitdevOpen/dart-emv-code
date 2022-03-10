@@ -1,7 +1,7 @@
 import 'package:emvqrcode/src/models/tlv_model.dart';
 
-class AdditionalDataFieldTemplate {
-  AdditionalDataFieldTemplate({
+class AdditionalDataFieldTemplateModel {
+  AdditionalDataFieldTemplateModel({
     this.billNumber,
     this.mobileNumber,
     this.storeLabel,
@@ -27,7 +27,7 @@ class AdditionalDataFieldTemplate {
   List<TLVModel>? rfuForEMVCo;
   List<TLVModel>? paymentSystemSpecific;
 
-  AdditionalDataFieldTemplate copyWith({
+  AdditionalDataFieldTemplateModel copyWith({
     TLVModel? billNumber,
     TLVModel? mobileNumber,
     TLVModel? storeLabel,
@@ -40,7 +40,7 @@ class AdditionalDataFieldTemplate {
     List<TLVModel>? rfuForEMVCo,
     List<TLVModel>? paymentSystemSpecific,
   }) =>
-      AdditionalDataFieldTemplate(
+      AdditionalDataFieldTemplateModel(
         billNumber: billNumber ?? this.billNumber,
         mobileNumber: mobileNumber ?? this.mobileNumber,
         storeLabel: storeLabel ?? this.storeLabel,
@@ -56,8 +56,8 @@ class AdditionalDataFieldTemplate {
             paymentSystemSpecific ?? this.paymentSystemSpecific,
       );
 
-  factory AdditionalDataFieldTemplate.fromJson(Map<String, dynamic> json) =>
-      AdditionalDataFieldTemplate(
+  factory AdditionalDataFieldTemplateModel.fromJson(Map<String, dynamic> json) =>
+      AdditionalDataFieldTemplateModel(
         billNumber: TLVModel.fromJson(json["billNumber"]),
         mobileNumber: TLVModel.fromJson(json["mobileNumber"]),
         storeLabel: TLVModel.fromJson(json["storeLabel"]),

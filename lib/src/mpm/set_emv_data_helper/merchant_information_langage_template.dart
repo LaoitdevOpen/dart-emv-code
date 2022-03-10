@@ -3,9 +3,9 @@ import 'package:emvqrcode/src/models/merchant_information_langage_template.dart'
 import 'package:emvqrcode/src/models/tlv_model.dart';
 import 'package:emvqrcode/src/mpm/emv_types.dart';
 
-class SetMerchantInformationLanguageTemplate {
-  late MerchantInformationLanguageTemplate value =
-      MerchantInformationLanguageTemplate();
+class MerchantInformationLanguageTemplate {
+  late MerchantInformationLanguageTemplateModel value =
+      MerchantInformationLanguageTemplateModel();
 
   setLanguagePreferencer(String value) {
     final languagePreference =

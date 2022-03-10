@@ -3,7 +3,7 @@ import 'package:emvqrcode/src/constants/unreserved_template_id.dart';
 import 'package:emvqrcode/src/models/tlv_model.dart';
 import 'package:emvqrcode/src/models/unreserved_template.dart';
 
-class SetUnreservedTemplateValue {
+class UnreservedTemplate {
   late UnreservedTemplateValue value = UnreservedTemplateValue();
 
   setGloballyUniqueIdentifier(String value) {

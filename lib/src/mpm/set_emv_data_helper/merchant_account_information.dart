@@ -1,7 +1,7 @@
 import 'package:emvqrcode/emvqrcode.dart';
 import 'package:emvqrcode/src/models/tlv_model.dart';
 
-class SetMerchantAccountInformationValue {
+class MerchantAccountInformation {
   late MerchantAccountInformationValue value =
       MerchantAccountInformationValue();
 

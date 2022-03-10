@@ -34,7 +34,7 @@ class EmvqrModel {
 
   TLVModel? payloadFormatIndicator;
   TLVModel? pointOfInitiationMethod;
-  Map<String, MerchantAccountInformation>? merchantAccountInformation;
+  Map<String, MerchantAccountInformationModel>? merchantAccountInformation;
   TLVModel? merchantCategoryCode;
   TLVModel? transactionCurrency;
   TLVModel? transactionAmount;
@@ -45,16 +45,16 @@ class EmvqrModel {
   TLVModel? merchantName;
   TLVModel? merchantCity;
   TLVModel? postalCode;
-  AdditionalDataFieldTemplate? additionalDataFieldTemplate;
+  AdditionalDataFieldTemplateModel? additionalDataFieldTemplate;
   TLVModel? crc;
-  MerchantInformationLanguageTemplate? merchantInformationLanguageTemplate;
+  MerchantInformationLanguageTemplateModel? merchantInformationLanguageTemplate;
   List<TLVModel>? rfuForEmvCo;
-  Map<String, UnreservedTemplate>? unreservedTemplates;
+  Map<String, UnreservedTemplateModel>? unreservedTemplates;
 
   EmvqrModel copyWith({
     TLVModel? payloadFormatIndicator,
     TLVModel? pointOfInitiationMethod,
-    Map<String, MerchantAccountInformation>? merchantAccountInformation,
+    Map<String, MerchantAccountInformationModel>? merchantAccountInformation,
     TLVModel? merchantCategoryCode,
     TLVModel? transactionCurrency,
     TLVModel? transactionAmount,
@@ -65,11 +65,11 @@ class EmvqrModel {
     TLVModel? merchantName,
     TLVModel? merchantCity,
     TLVModel? postalCode,
-    AdditionalDataFieldTemplate? additionalDataFieldTemplate,
+    AdditionalDataFieldTemplateModel? additionalDataFieldTemplate,
     TLVModel? crc,
-    MerchantInformationLanguageTemplate? merchantInformationLanguageTemplate,
+    MerchantInformationLanguageTemplateModel? merchantInformationLanguageTemplate,
     List<TLVModel>? rfuForEmvCo,
-    Map<String, UnreservedTemplate>? unreservedTemplates,
+    Map<String, UnreservedTemplateModel>? unreservedTemplates,
   }) =>
       EmvqrModel(
         payloadFormatIndicator:
@@ -107,8 +107,8 @@ class EmvqrModel {
         pointOfInitiationMethod:
             TLVModel.fromJson(json["pointOfInitiationMethod"]),
         merchantAccountInformation: Map.from(json["MerchantAccountInformation"])
-            .map((k, v) => MapEntry<String, MerchantAccountInformation>(
-                k, MerchantAccountInformation.fromJson(v))),
+            .map((k, v) => MapEntry<String, MerchantAccountInformationModel>(
+                k, MerchantAccountInformationModel.fromJson(v))),
         merchantCategoryCode: TLVModel.fromJson(json["merchantCategoryCode"]),
         transactionCurrency: TLVModel.fromJson(json["transactionCurrency"]),
         transactionAmount: TLVModel.fromJson(json["transactionAmount"]),
@@ -122,17 +122,17 @@ class EmvqrModel {
         merchantName: TLVModel.fromJson(json["merchantName"]),
         merchantCity: TLVModel.fromJson(json["merchantCity"]),
         postalCode: TLVModel.fromJson(json["postalCode"]),
-        additionalDataFieldTemplate: AdditionalDataFieldTemplate.fromJson(
+        additionalDataFieldTemplate: AdditionalDataFieldTemplateModel.fromJson(
             json["additionalDataFieldTemplate"]),
         crc: TLVModel.fromJson(json["crc"]),
         merchantInformationLanguageTemplate:
-            MerchantInformationLanguageTemplate.fromJson(
+            MerchantInformationLanguageTemplateModel.fromJson(
                 json["merchantInformationLanguageTemplate"]),
         rfuForEmvCo: List<TLVModel>.from(
             json["rfuForEMVCo"].map((x) => TLVModel.fromJson(x))),
         unreservedTemplates: Map.from(json["unreservedTemplates"]).map((k, v) =>
-            MapEntry<String, UnreservedTemplate>(
-                k, UnreservedTemplate.fromJson(v))),
+            MapEntry<String, UnreservedTemplateModel>(
+                k, UnreservedTemplateModel.fromJson(v))),
       );
 
   Map<String, dynamic> toJson() => {

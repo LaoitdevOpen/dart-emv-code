@@ -19,7 +19,6 @@ import 'package:emvqrcode/src/models/parser_model.dart';
 import 'package:emvqrcode/src/models/tlv_model.dart';
 import 'package:emvqrcode/src/models/unreserved_template.dart';
 import 'package:emvqrcode/src/mpm/emv_parser.dart';
-import 'package:emvqrcode/src/mpm/set_emv_info/merchant_account_information.dart';
 
 /// emv decode
 EMVDeCode parseEMVQR(String payload) {
@@ -27,7 +26,7 @@ EMVDeCode parseEMVQR(String payload) {
   EmvqrModel emvqr = EmvqrModel();
   TLVModel? payloadFormatIndicator;
   TLVModel? pointOfInitiationMethod;
-  Map<String, MerchantAccountInformation>? merchantAccountInformation;
+  Map<String, MerchantAccountInformationModel>? merchantAccountInformation;
   TLVModel? merchantCategoryCode;
   TLVModel? transactionCurrency;
   TLVModel? transactionAmount;
@@ -38,11 +37,11 @@ EMVDeCode parseEMVQR(String payload) {
   TLVModel? merchantName;
   TLVModel? merchantCity;
   TLVModel? postalCode;
-  AdditionalDataFieldTemplate? additionalDataFieldTemplate;
+  AdditionalDataFieldTemplateModel? additionalDataFieldTemplate;
   TLVModel? crc;
-  MerchantInformationLanguageTemplate? merchantInformationLanguageTemplate;
+  MerchantInformationLanguageTemplateModel? merchantInformationLanguageTemplate;
   List<TLVModel> rfuForEMVCo = [];
-  Map<String, UnreservedTemplate>? unreservedTemplates;
+  Map<String, UnreservedTemplateModel>? unreservedTemplates;
 
   while (next(p)) {
     String? id = pid(p);
@@ -109,7 +108,7 @@ EMVDeCode parseEMVQR(String payload) {
         if (betweenRes["within"]) {
           MerchantAccountInformationValue merchantValue =
               parseMerchantAccountInformation(value);
-          MerchantAccountInformation mTLV =
+          MerchantAccountInformationModel mTLV =
               addMerchantAccountInformation(id, merchantValue);
           merchantAccountInformation = {id: mTLV};
           continue;
@@ -139,7 +138,7 @@ EMVDeCode parseEMVQR(String payload) {
         if (betweenRes["within"]) {
           UnreservedTemplateValue unreservedTemplate =
               parseUnreservedTemplate(value);
-          UnreservedTemplate uTLV =
+          UnreservedTemplateModel uTLV =
               addUnreservedTemplates(id, unreservedTemplate);
           unreservedTemplates = {id: uTLV};
         }
@@ -168,7 +167,7 @@ EMVDeCode parseEMVQR(String payload) {
   return EMVDeCode(emvqr: emvqr, error: null);
 }
 
-MerchantAccountInformation addMerchantAccountInformation(
+MerchantAccountInformationModel addMerchantAccountInformation(
     String id, MerchantAccountInformationValue value) {
   String _globally =
       "${value.globallyUniqueIdentifier?.tag}${value.globallyUniqueIdentifier?.length}${value.globallyUniqueIdentifier?.value}";
@@ -177,12 +176,12 @@ MerchantAccountInformation addMerchantAccountInformation(
     _payment += "${element.tag}${element.length}${element.value}";
   });
 
-  MerchantAccountInformation mTLV = MerchantAccountInformation(
+  MerchantAccountInformationModel mTLV = MerchantAccountInformationModel(
       tag: id, length: l(_globally + _payment), value: value);
   return mTLV;
 }
 
-UnreservedTemplate addUnreservedTemplates(
+UnreservedTemplateModel addUnreservedTemplates(
     String id, UnreservedTemplateValue value) {
   String _globally =
       "${value.globallyUniqueIdentifier?.tag}${value.globallyUniqueIdentifier?.length}${value.globallyUniqueIdentifier?.value}";
@@ -190,7 +189,7 @@ UnreservedTemplate addUnreservedTemplates(
   value.contextSpecificData?.forEach((element) {
     _contextSpec += "${element.tag}${element.length}${element.value}";
   });
-  UnreservedTemplate uTLV = UnreservedTemplate(
+  UnreservedTemplateModel uTLV = UnreservedTemplateModel(
     tag: id,
     length: l(_globally + _contextSpec),
     value: value,
@@ -236,7 +235,7 @@ Map<String, dynamic> between(String id, String start, String end) {
   };
 }
 
-AdditionalDataFieldTemplate parseAdditionalDataFieldTemplate(String payLoad) {
+AdditionalDataFieldTemplateModel parseAdditionalDataFieldTemplate(String payLoad) {
   ParserModel p = newParser(payLoad);
 
   // AdditionalDataFieldTemplate data
@@ -287,7 +286,7 @@ AdditionalDataFieldTemplate parseAdditionalDataFieldTemplate(String payLoad) {
     }
   }
 
-  return AdditionalDataFieldTemplate(
+  return AdditionalDataFieldTemplateModel(
     billNumber: billNumber,
     mobileNumber: mobileNumber,
     storeLabel: storeLabel,
@@ -302,7 +301,7 @@ AdditionalDataFieldTemplate parseAdditionalDataFieldTemplate(String payLoad) {
   );
 }
 
-MerchantInformationLanguageTemplate parseMerchantInformationLanguageTemplate(
+MerchantInformationLanguageTemplateModel parseMerchantInformationLanguageTemplate(
     String payLoad) {
   ParserModel p = newParser(payLoad);
 
@@ -328,7 +327,7 @@ MerchantInformationLanguageTemplate parseMerchantInformationLanguageTemplate(
     }
   }
 
-  return MerchantInformationLanguageTemplate(
+  return MerchantInformationLanguageTemplateModel(
     languagePreference: languagePreference,
     merchantName: merchantName,
     merchantCity: merchantCity,
@@ -487,7 +486,7 @@ EmvEncode generatePayload(EmvqrModel emv) {
 EmvqrModel setEMVData({
   String? payloadFormatIndicator,
   String? pointOfInitiationMethod,
-  Map<String, MerchantAccountInformation>? merchantAccountInformation,
+  Map<String, MerchantAccountInformationModel>? merchantAccountInformation,
   String? merchantCategoryCode,
   String? transactionCurrency,
   String? transactionAmount,
@@ -498,10 +497,10 @@ EmvqrModel setEMVData({
   String? merchantName,
   String? merchantCity,
   String? postalCode,
-  AdditionalDataFieldTemplate? additionalDataFieldTemplate,
-  MerchantInformationLanguageTemplate? merchantInformationLanguageTemplate,
+  AdditionalDataFieldTemplateModel? additionalDataFieldTemplate,
+  MerchantInformationLanguageTemplateModel? merchantInformationLanguageTemplate,
   List<TLVModel>? rfuForEmvCo,
-  Map<String, UnreservedTemplate>? unreservedTemplates,
+  Map<String, UnreservedTemplateModel>? unreservedTemplates,
 }) {
   ///set emv value
   ///
@@ -576,7 +575,7 @@ EmvqrModel setEMVData({
 
 // additional templete to string
 String additionalTemplateToString(
-    AdditionalDataFieldTemplate? additionalDataFieldTemplate) {
+    AdditionalDataFieldTemplateModel? additionalDataFieldTemplate) {
   String billNo = tlvToString(additionalDataFieldTemplate?.billNumber);
   String mobileNo = tlvToString(additionalDataFieldTemplate?.mobileNumber);
   String storeLabel = tlvToString(additionalDataFieldTemplate?.storeLabel);
@@ -616,7 +615,7 @@ String additionalTemplateToString(
 
 // merchant info language to string
 merchantInfoLanguageTemplateToStrng(
-    MerchantInformationLanguageTemplate? merchantInfoLang) {
+    MerchantInformationLanguageTemplateModel? merchantInfoLang) {
   String languagePreference = tlvToString(merchantInfoLang?.languagePreference);
   String merchantName = tlvToString(merchantInfoLang?.merchantName);
   String merchantCity = tlvToString(merchantInfoLang?.merchantCity);

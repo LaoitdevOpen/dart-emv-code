@@ -3,8 +3,8 @@ import 'package:emvqrcode/src/models/additoinal_data_field_template.dart';
 import 'package:emvqrcode/src/models/tlv_model.dart';
 import 'package:emvqrcode/src/mpm/emv_types.dart';
 
-class SetAdditionalDataFieldTemplate {
-  late AdditionalDataFieldTemplate value = AdditionalDataFieldTemplate();
+class AdditionalDataFieldTemplate {
+  late AdditionalDataFieldTemplateModel value = AdditionalDataFieldTemplateModel();
 
   setBillNumber(String value) {
     final billNumber = setTLV(value, AdditionalID.billNumber);

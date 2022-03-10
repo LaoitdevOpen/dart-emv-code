@@ -2,14 +2,14 @@ import 'dart:convert';
 
 import 'package:emvqrcode/src/models/tlv_model.dart';
 
-MerchantAccountInformation merchantAccountInformationFromJson(String str) =>
-    MerchantAccountInformation.fromJson(json.decode(str));
+MerchantAccountInformationModel merchantAccountInformationFromJson(String str) =>
+    MerchantAccountInformationModel.fromJson(json.decode(str));
 
-String merchantAccountInformationToJson(MerchantAccountInformation data) =>
+String merchantAccountInformationToJson(MerchantAccountInformationModel data) =>
     json.encode(data.toJson());
 
-class MerchantAccountInformation {
-  MerchantAccountInformation({
+class MerchantAccountInformationModel {
+  MerchantAccountInformationModel({
     this.tag,
     this.length,
     this.value,
@@ -19,19 +19,19 @@ class MerchantAccountInformation {
   final String? length;
   final MerchantAccountInformationValue? value;
 
-  MerchantAccountInformation copyWith({
+  MerchantAccountInformationModel copyWith({
     String? tag,
     String? length,
     MerchantAccountInformationValue? value,
   }) =>
-      MerchantAccountInformation(
+      MerchantAccountInformationModel(
         tag: tag ?? this.tag,
         length: length ?? this.length,
         value: value ?? this.value,
       );
 
-  factory MerchantAccountInformation.fromJson(Map<String, dynamic> json) =>
-      MerchantAccountInformation(
+  factory MerchantAccountInformationModel.fromJson(Map<String, dynamic> json) =>
+      MerchantAccountInformationModel(
         tag: json["tag"],
         length: json["length"],
         value: MerchantAccountInformationValue.fromJson(json["value"]),

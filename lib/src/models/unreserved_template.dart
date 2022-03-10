@@ -7,13 +7,13 @@ import 'dart:convert';
 import 'package:emvqrcode/src/models/tlv_model.dart';
 
 
-UnreservedTemplate unreservedTemplateFromJson(String str) => UnreservedTemplate.fromJson(json.decode(str));
+UnreservedTemplateModel unreservedTemplateFromJson(String str) => UnreservedTemplateModel.fromJson(json.decode(str));
 
-String unreservedTemplateToJson(UnreservedTemplate data) => json.encode(data.toJson());
+String unreservedTemplateToJson(UnreservedTemplateModel data) => json.encode(data.toJson());
 
 
-class UnreservedTemplate {
-    UnreservedTemplate({
+class UnreservedTemplateModel {
+    UnreservedTemplateModel({
         this.tag,
         this.length,
         this.value,
@@ -23,18 +23,18 @@ class UnreservedTemplate {
     String? length;
     UnreservedTemplateValue? value;
 
-    UnreservedTemplate copyWith({
+    UnreservedTemplateModel copyWith({
         String? tag,
         String? length,
         UnreservedTemplateValue? value,
     }) => 
-        UnreservedTemplate(
+        UnreservedTemplateModel(
             tag: tag ?? this.tag,
             length: length ?? this.length,
             value: value ?? this.value,
         );
 
-    factory UnreservedTemplate.fromJson(Map<String, dynamic> json) => UnreservedTemplate(
+    factory UnreservedTemplateModel.fromJson(Map<String, dynamic> json) => UnreservedTemplateModel(
         tag: json["tag"],
         length: json["length"],
         value: UnreservedTemplateValue.fromJson(json["value"]),

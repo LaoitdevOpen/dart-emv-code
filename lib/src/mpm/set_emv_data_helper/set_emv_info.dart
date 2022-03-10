@@ -1,8 +1,10 @@
 import 'package:emvqrcode/emvqrcode.dart';
-import 'package:emvqrcode/src/models/additoinal_data_field_template.dart';
-import 'package:emvqrcode/src/models/merchant_information_langage_template.dart';
 import 'package:emvqrcode/src/models/tlv_model.dart';
 import 'package:emvqrcode/src/models/unreserved_template.dart';
+import 'package:emvqrcode/src/mpm/set_emv_data_helper/additional_data_field_template.dart';
+import 'package:emvqrcode/src/mpm/set_emv_data_helper/merchant_account_information.dart';
+import 'package:emvqrcode/src/mpm/set_emv_data_helper/merchant_information_langage_template.dart';
+import 'package:emvqrcode/src/mpm/set_emv_data_helper/unreserved_template.dart';
 
 class EMVQR {
   late EmvqrModel value = EmvqrModel();
@@ -118,7 +120,7 @@ class EMVQR {
   }
 
   addMerchantAccountInformation(
-      {String? id, MerchantAccountInformationValue? value}) {
+      {String? id, MerchantAccountInformation? value}) {
     if (id != null && value != null) {
       if (int.parse(id) < int.parse(ID.merchantAccountInformationRangeStart) ||
           int.parse(id) > int.parse(ID.merchantAccountInformationRangeEnd)) {
@@ -126,14 +128,14 @@ class EMVQR {
         return;
       }
       String _globally =
-          "${value.globallyUniqueIdentifier?.tag}${value.globallyUniqueIdentifier?.length}${value.globallyUniqueIdentifier?.value}";
+          "${value.value.globallyUniqueIdentifier?.tag}${value.value.globallyUniqueIdentifier?.length}${value.value.globallyUniqueIdentifier?.value}";
       String _payment = "";
-      value.paymentNetworkSpecific?.forEach((element) {
+      value.value.paymentNetworkSpecific?.forEach((element) {
         _payment += "${element.tag}${element.length}${element.value}";
       });
 
-      MerchantAccountInformation mTLV = MerchantAccountInformation(
-          tag: id, length: l(_globally + _payment), value: value);
+      MerchantAccountInformationModel mTLV = MerchantAccountInformationModel(
+          tag: id, length: l(_globally + _payment), value: value.value);
 
       // add merchant account info
       if (this.value.merchantAccountInformation != null) {
@@ -150,12 +152,12 @@ class EMVQR {
       AdditionalDataFieldTemplate? additionalDataFieldTemplate) {
     if (additionalDataFieldTemplate != null) {
       value = value.copyWith(
-          additionalDataFieldTemplate: additionalDataFieldTemplate);
+          additionalDataFieldTemplate: additionalDataFieldTemplate.value);
     }
   }
 
   // unreserved template
-  addUnreservedTemplate({String? id, UnreservedTemplateValue? value}) {
+  addUnreservedTemplate({String? id, UnreservedTemplate? value}) {
     if (id != null && value != null) {
       if (int.parse(id) < int.parse(ID.unreservedTemplatesRangeStart) ||
           int.parse(id) > int.parse(ID.unreservedTemplatesRangeEnd)) {
@@ -163,14 +165,14 @@ class EMVQR {
         return;
       }
       String _globally =
-          "${value.globallyUniqueIdentifier?.tag}${value.globallyUniqueIdentifier?.length}${value.globallyUniqueIdentifier?.value}";
+          "${value.value.globallyUniqueIdentifier?.tag}${value.value.globallyUniqueIdentifier?.length}${value.value.globallyUniqueIdentifier?.value}";
       String _payment = "";
-      value.contextSpecificData?.forEach((element) {
+      value.value.contextSpecificData?.forEach((element) {
         _payment += "${element.tag}${element.length}${element.value}";
       });
 
-      UnreservedTemplate unreservedTemplate = UnreservedTemplate(
-          tag: id, length: l(_globally + _payment), value: value);
+      UnreservedTemplateModel unreservedTemplate = UnreservedTemplateModel(
+          tag: id, length: l(_globally + _payment), value: value.value);
 
       // add merchant account info
       if (this.value.unreservedTemplates != null) {
@@ -189,7 +191,7 @@ class EMVQR {
     if (merchantInformationLanguageTemplate != null) {
       value = value.copyWith(
           merchantInformationLanguageTemplate:
-              merchantInformationLanguageTemplate);
+              merchantInformationLanguageTemplate.value);
     }
   }
 
