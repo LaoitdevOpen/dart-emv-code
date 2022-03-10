@@ -52,7 +52,7 @@ void main() {
     emv.addUnreservedTemplate(id: "81",value: unreserved2);
     print("emv body ----------> ${emv.value.toJson()}");
 
-    final emvEncode = EMVMPM.encode(emv.value);
+    final emvEncode = EMVMPM.encode(emv);
     print("emvcode -------> ${emvEncode.toJson()}");
   });
 }

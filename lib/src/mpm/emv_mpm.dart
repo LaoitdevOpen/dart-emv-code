@@ -2,6 +2,7 @@ import 'package:emvqrcode/src/models/emv_decode_model.dart';
 import 'package:emvqrcode/src/models/emv_encode_mode.dart';
 import 'package:emvqrcode/src/models/emvqr_model.dart';
 import 'package:emvqrcode/src/mpm/emv_types.dart';
+import 'package:emvqrcode/src/mpm/set_emv_data_helper/set_emv_info.dart';
 
 class EMVMPM {
   
@@ -13,8 +14,8 @@ class EMVMPM {
     return EMVDeCode(emvqr: emvqr.emvqr, error: null);
   }
 
-  static EmvEncode encode(EmvqrModel emv) {
-    var emvqr = generatePayload(emv);
+  static EmvEncode encode(EMVQR emv) {
+    var emvqr = generatePayload(emv.value);
     return emvqr;
   }
 }
