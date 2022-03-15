@@ -75,8 +75,8 @@ void main() {
     additionalData.setBillNumber("0qwea");
     additionalData.setMerchantTaxID("tax id");
     additionalData.setMerchantChannel("cha");
-    additionalData.addRfuForEMVCo(id: "11", value: "00");
-    additionalData.addRfuForEMVCo(id: "12", value: "13");
+    additionalData.addRfuForEMVCo(id: "12", value: "00");
+    additionalData.addRfuForEMVCo(id: "13", value: "13");
     additionalData.addPaymentSystemSpecific(id: "50", value: "123");
     additionalData.addPaymentSystemSpecific(id: "51", value: "123");
     emv.setAdditionalDataFieldTemplate(additionalData);
@@ -117,8 +117,11 @@ void main() {
     final emvEncode = EMVMPM.encode(emv);
     print("emv encode -------> ${emvEncode.toJson()}");
 
+    final check = checksumEmvQr(emvEncode.value ?? "");
+    print(check);
+
     final emvdecode = EMVMPM.decode(
-        "0f020001021203200002IT0103abc0203def04200002IT0103abc0203def624601050qwea1006tax id1103cha1202135003123510312364410002LA0102MW0209Vientaine0304asfg0404asfg6503bbc6603bbb89230003abs0104qw120204qw1281230003sdf0504ffff0604ffff63042E4E");
+        "00020001021203200002IT0103abc0203def04200002IT0103abc0203def624601050qwea1006tax id1103cha1202135003123510312364410002LA0102MW0209Vientaine0304asfg0404asfg6503bbc6603bbb89230003abs0104qw120204qw1281230003sdf0504ffff0604ffff63042E4E");
     print("emv decode ------> ${emvdecode.toJson()}");
   });
 }

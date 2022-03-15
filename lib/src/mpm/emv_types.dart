@@ -679,8 +679,11 @@ String _format(String id, String value) {
   return "${id}0$valueLength$value".trim();
 }
 
-/// check if it's emvqr
-bool checkEmvQr(String value) {
+/// checksum check
+/// 
+/// check if [value] is true
+/// [value] is emvqrcode
+bool checksumEmvQr(String value) {
   final emqrForChecksum = value.substring(0, value.length - 4);
   final emqrForCheckEmv = value.substring(value.length - 4, value.length);
   var table = CRC16().makeTable(CRC().crc16CcittFalse);
