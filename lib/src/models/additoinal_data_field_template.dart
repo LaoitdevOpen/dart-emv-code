@@ -2,6 +2,43 @@ import 'package:emvqrcode/src/models/tlv_model.dart';
 
 class AdditionalDataFieldTemplateModel {
   AdditionalDataFieldTemplateModel({
+    this.tag,
+    this.length,
+    this.value,
+  });
+
+  String? tag;
+  String? length;
+  AdditionalDataFieldTemplateValue? value;
+
+  AdditionalDataFieldTemplateModel copyWith({
+    String? tag,
+    String? length,
+    AdditionalDataFieldTemplateValue? value,
+  }) =>
+      AdditionalDataFieldTemplateModel(
+        tag: tag ?? this.tag,
+        length: length ?? this.length,
+        value: value ?? this.value,
+      );
+
+  factory AdditionalDataFieldTemplateModel.fromJson(
+          Map<String, dynamic> json) =>
+      AdditionalDataFieldTemplateModel(
+        tag: json["tag"],
+        length: json["length"],
+        value: AdditionalDataFieldTemplateValue.fromJson(json["value"]),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "tag": tag,
+        "length": length,
+        "value": value?.toJson(),
+      };
+}
+
+class AdditionalDataFieldTemplateValue {
+  AdditionalDataFieldTemplateValue({
     this.billNumber,
     this.mobileNumber,
     this.storeLabel,
@@ -11,6 +48,8 @@ class AdditionalDataFieldTemplateModel {
     this.terminalLabel,
     this.purposeTransaction,
     this.additionalConsumerDataRequest,
+    this.merchantTaxId,
+    this.merchantChannel,
     this.rfuForEMVCo,
     this.paymentSystemSpecific,
   });
@@ -24,10 +63,12 @@ class AdditionalDataFieldTemplateModel {
   TLVModel? terminalLabel;
   TLVModel? purposeTransaction;
   TLVModel? additionalConsumerDataRequest;
+  TLVModel? merchantTaxId;
+  TLVModel? merchantChannel;
   List<TLVModel>? rfuForEMVCo;
   List<TLVModel>? paymentSystemSpecific;
 
-  AdditionalDataFieldTemplateModel copyWith({
+  AdditionalDataFieldTemplateValue copyWith({
     TLVModel? billNumber,
     TLVModel? mobileNumber,
     TLVModel? storeLabel,
@@ -37,10 +78,12 @@ class AdditionalDataFieldTemplateModel {
     TLVModel? terminalLabel,
     TLVModel? purposeTransaction,
     TLVModel? additionalConsumerDataRequest,
+    TLVModel? merchantTaxId,
+    TLVModel? merchantChannel,
     List<TLVModel>? rfuForEMVCo,
     List<TLVModel>? paymentSystemSpecific,
   }) =>
-      AdditionalDataFieldTemplateModel(
+      AdditionalDataFieldTemplateValue(
         billNumber: billNumber ?? this.billNumber,
         mobileNumber: mobileNumber ?? this.mobileNumber,
         storeLabel: storeLabel ?? this.storeLabel,
@@ -51,13 +94,16 @@ class AdditionalDataFieldTemplateModel {
         purposeTransaction: purposeTransaction ?? this.purposeTransaction,
         additionalConsumerDataRequest:
             additionalConsumerDataRequest ?? this.additionalConsumerDataRequest,
+        merchantTaxId: merchantTaxId ?? this.merchantTaxId,
+        merchantChannel: merchantChannel ?? this.merchantChannel,
         rfuForEMVCo: rfuForEMVCo ?? this.rfuForEMVCo,
         paymentSystemSpecific:
             paymentSystemSpecific ?? this.paymentSystemSpecific,
       );
 
-  factory AdditionalDataFieldTemplateModel.fromJson(Map<String, dynamic> json) =>
-      AdditionalDataFieldTemplateModel(
+  factory AdditionalDataFieldTemplateValue.fromJson(
+          Map<String, dynamic> json) =>
+      AdditionalDataFieldTemplateValue(
         billNumber: TLVModel.fromJson(json["billNumber"]),
         mobileNumber: TLVModel.fromJson(json["mobileNumber"]),
         storeLabel: TLVModel.fromJson(json["storeLabel"]),
@@ -68,6 +114,8 @@ class AdditionalDataFieldTemplateModel {
         purposeTransaction: TLVModel.fromJson(json["purposeTransaction"]),
         additionalConsumerDataRequest:
             TLVModel.fromJson(json["additionalConsumerDataRequest"]),
+        merchantTaxId: TLVModel.fromJson(json["merchantTaxID"]),
+        merchantChannel: TLVModel.fromJson(json["merchantChannel"]),
         rfuForEMVCo: List<TLVModel>.from(
             json["rfuForEMVCo"].map((x) => TLVModel.fromJson(x))),
         paymentSystemSpecific: List<TLVModel>.from(
@@ -79,11 +127,17 @@ class AdditionalDataFieldTemplateModel {
         "mobileNumber": mobileNumber != null ? mobileNumber!.toJson() : null,
         "storeLabel": storeLabel != null ? storeLabel!.toJson() : null,
         "loyaltyNumber": loyaltyNumber != null ? loyaltyNumber!.toJson() : null,
-        "referenceLabel": referenceLabel != null ? referenceLabel!.toJson() : null,
+        "referenceLabel":
+            referenceLabel != null ? referenceLabel!.toJson() : null,
         "customerLabel": customerLabel != null ? customerLabel!.toJson() : null,
         "terminalLabel": terminalLabel != null ? terminalLabel!.toJson() : null,
-        "purposeTransaction": purposeTransaction != null ? purposeTransaction!.toJson() : null,
-        "additionalConsumerDataRequest": additionalConsumerDataRequest != null ? additionalConsumerDataRequest!.toJson() : null,
+        "purposeTransaction":
+            purposeTransaction != null ? purposeTransaction!.toJson() : null,
+        "additionalConsumerDataRequest": additionalConsumerDataRequest != null
+            ? additionalConsumerDataRequest!.toJson()
+            : null,
+        "merchantTaxID": merchantTaxId != null ? merchantTaxId!.toJson() : null,
+        "merchantChannel": merchantChannel != null ? merchantChannel!.toJson() : null,
         "rfuForEMVCo": rfuForEMVCo != null
             ? List<dynamic>.from(rfuForEMVCo!.map((x) => x.toJson()))
             : [],
