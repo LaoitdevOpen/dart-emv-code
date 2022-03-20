@@ -22,8 +22,6 @@ import 'package:emvqrcode/src/mpm/emv_parser.dart';
 
 // ========================  emv decode ==============================
 EMVDeCode parseEMVQR(String payload) {
-  ParserModel p = newParser(payload);
-  EmvqrModel emvqr = EmvqrModel();
   TLVModel? payloadFormatIndicator;
   TLVModel? pointOfInitiationMethod;
   Map<String, MerchantAccountInformationModel>? merchantAccountInformation = {};
@@ -42,6 +40,16 @@ EMVDeCode parseEMVQR(String payload) {
   MerchantInformationLanguageTemplateModel? merchantInformationLanguageTemplate;
   List<TLVModel> rfuForEMVCo = [];
   Map<String, UnreservedTemplateModel>? unreservedTemplates = {};
+
+  final verify = verifyEmvQr(payload);
+  if (!verify) {
+    return EMVDeCode(
+        emvqr: null,
+        error: EmvError(
+            message: "emv data has changed", type: EmvErrorType.verifyqrErr));
+  }
+  ParserModel p = newParser(payload);
+  EmvqrModel emvqr = EmvqrModel();
 
   while (next(p)) {
     String? id = pid(p);
@@ -679,11 +687,11 @@ String _format(String id, String value) {
   return "${id}0$valueLength$value".trim();
 }
 
-/// checksum check
-/// 
+/// verify emvqr
+///
 /// check if [value] is true
 /// [value] is emvqrcode
-bool checksumEmvQr(String value) {
+bool verifyEmvQr(String value) {
   final emqrForChecksum = value.substring(0, value.length - 4);
   final emqrForCheckEmv = value.substring(value.length - 4, value.length);
   var table = CRC16().makeTable(CRC().crc16CcittFalse);

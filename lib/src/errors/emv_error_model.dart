@@ -3,7 +3,7 @@ enum EmvErrorType{
   notEmvType,
   generateQrErr,
   valueLength,
-  checksumErr,
+  verifyqrErr,
   idErr,
   value,
 }

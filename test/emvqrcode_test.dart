@@ -4,39 +4,12 @@ import 'package:emvqrcode/src/mpm/set_emv_data_helper/merchant_account_informati
 import 'package:emvqrcode/src/mpm/set_emv_data_helper/merchant_information_langage_template.dart';
 import 'package:emvqrcode/src/mpm/set_emv_data_helper/set_emv_info.dart';
 import 'package:emvqrcode/src/mpm/set_emv_data_helper/unreserved_template.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   test("set emv value", () {
-    // 00 02 00
-    // 01 02 12
-    // 03 20
-    // 00 02 IT
-    // 01 03 abc
-    // 02 03 def
-    // 04 20
-    // 00 02 IT
-    // 01 03 abc
-    // 02 03 def
-    //#addtionalData
-    // 62 28
-    // 01 05 0qwea //9
-    // 11 02 00
-    // 12 02 13
-    // 50 03 123 //7
-    // 64 33
-    // 00 02 LA
-    // 01 02 MW
-    // 02 09 Vientaine
-    // 03 04 asfg
-    // 65 03 bbc
-    // 89 15
-    // 00 03 abs
-    // 01 04 qw12
-    //81 15
-    //00 03 sdf
-    //05 04 ffff
-    // 63 04 DC02
+    
 
     final emv = EMVQR();
 
@@ -112,16 +85,17 @@ void main() {
     // crc
     // 63 04 3502
 
-    print("emv body ----------> ${emv.value.toJson()}");
+    debugPrint("emv body ----------> ${emv.value.toJson()}");
 
     final emvEncode = EMVMPM.encode(emv);
-    print("emv encode -------> ${emvEncode.toJson()}");
+    debugPrint("emv encode -------> ${emvEncode.toJson()}");
 
-    final check = checksumEmvQr(emvEncode.value ?? "");
-    print(check);
-
+    // final check = verifyEmvQr(emvEncode.value ?? "");
+  
     final emvdecode = EMVMPM.decode(
         "00020001021203200002IT0103abc0203def04200002IT0103abc0203def624601050qwea1006tax id1103cha1202135003123510312364410002LA0102MW0209Vientaine0304asfg0404asfg6503bbc6603bbb89230003abs0104qw120204qw1281230003sdf0504ffff0604ffff63042E4E");
-    print("emv decode ------> ${emvdecode.toJson()}");
+   
+      debugPrint("emv decode ------> ${emvdecode.toJson()}");
+   
   });
 }
