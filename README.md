@@ -4,13 +4,13 @@ a flutter plugin for decode and genrate emv-mpm qrcode
 
 ## Usage
 
-Decode func
+#### Decode func
 ```dart
     final emvdecode = EMVMPM.decode(emvqr);
     debugPrint("emv decode ------> ${emvdecode.toJson()}");
 ```
 
-Generate func
+#### Generate func
 ```dart
     final emv = EMVQR();
 
@@ -56,21 +56,21 @@ Generate func
 ```
 <hr>
 
-### add Merchant Account Information function
+#### add Merchant Account Information function
 ```dart
     final mcAccountInfo = MerchantAccountInformation();
 ```
 
-### add Additional Data Field Template function
+####add Additional Data Field Template function
 ```dart
     final additionalData = AdditionalDataFieldTemplate();
 ```
 
-### add Merchant Information Language Template function
+#### add Merchant Information Language Template function
 ```dart
     final mcInfoLang = MerchantInformationLanguageTemplate();
 ```
-### add Unreserved Template function
+#### add Unreserved Template function
 ```dart
     final unreserved = UnreservedTemplate();
 ```
