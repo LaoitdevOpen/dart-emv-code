@@ -46,7 +46,7 @@ EMVDeCode parseEMVQR(String payload) {
     return EMVDeCode(
         emvqr: null,
         error: EmvError(
-            message: "emv data has changed", type: EmvErrorType.verifyqrErr));
+            message: "The emv data was wrong", type: EmvErrorType.verifyqrErr));
   }
   ParserModel p = newParser(payload);
   EmvqrModel emvqr = EmvqrModel();
@@ -694,8 +694,8 @@ String _format(String id, String value) {
 bool verifyEmvQr(String value) {
   final emqrForChecksum = value.substring(0, value.length - 4);
   final emqrForCheckEmv = value.substring(value.length - 4, value.length);
-  var table = CRC16().makeTable(CRC().crc16CcittFalse);
-  var checksum = CRC16().checkSum(emqrForChecksum.codeUnits, table);
+  final table = CRC16().makeTable(CRC().crc16CcittFalse);
+  final checksum = CRC16().checkSum(emqrForChecksum.codeUnits, table);
 
   if (checksum.err != null) {
     return false;

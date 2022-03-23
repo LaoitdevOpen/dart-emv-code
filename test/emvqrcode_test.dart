@@ -8,9 +8,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  test("set emv value", () {
-    
-
+  test("set emv data & encode", () {
     final emv = EMVQR();
 
     // 00 02 00
@@ -76,26 +74,27 @@ void main() {
     unreserved1.addContextSpecificData(id: "02", value: "qw12");
     emv.addUnreservedTemplate(id: "89", value: unreserved1);
 
-    final unreserved2 = UnreservedTemplate();
-    unreserved2.setGloballyUniqueIdentifier("sdf");
-    unreserved2.addContextSpecificData(id: "05", value: "ffff");
-    unreserved2.addContextSpecificData(id: "06", value: "ffff");
-    emv.addUnreservedTemplate(id: "81", value: unreserved2);
-
     // crc
     // 63 04 3502
 
-    debugPrint("emv body ----------> ${emv.value.toJson()}");
-
+    debugPrint("set value ----------> ${emv.value.toJson()}");
     final emvEncode = EMVMPM.encode(emv);
-    debugPrint("emv encode -------> ${emvEncode.toJson()}");
+    debugPrint("result -------> ${emvEncode.toJson()}");
+  });
 
-    // final check = verifyEmvQr(emvEncode.value ?? "");
-  
-    final emvdecode = EMVMPM.decode(
-        "00020001021203200002IT0103abc0203def04200002IT0103abc0203def624601050qwea1006tax id1103cha1202135003123510312364410002LA0102MW0209Vientaine0304asfg0404asfg6503bbc6603bbb89230003abs0104qw120204qw1281230003sdf0504ffff0604ffff63042E4E");
-   
-      debugPrint("emv decode ------> ${emvdecode.toJson()}");
-   
+  test(" decode emvqr ", () {
+    String data =
+        "00020001021203200002IT0103abc0203def04200002IT0103abc0203def624601050qwea1006tax id1103cha1202135003123510312364410002LA0102MW0209Vientaine0304asfg0404asfg6503bbc6603bbb89230003abs0104qw120204qw1281230003sdf0504ffff0604ffff63042E4E";
+    final emvdecode = EMVMPM.decode(data);
+
+    debugPrint("result ------> ${emvdecode.toJson()}");
+  });
+
+  test(" wrong emvqr ", () {
+    String wrongData =
+        "00020101021138670016A00526628466257701082771041802030010324ZPOSUALNJBWWVYSEIRIESGFE6304D1B9";
+    final emvdecode = EMVMPM.decode(wrongData);
+
+    debugPrint("result ------> ${emvdecode.toJson()}");
   });
 }
