@@ -550,6 +550,7 @@ EmvEncode generatePayload(EmvqrModel emv) {
     s += tlvToString(emv.valueOfConvenienceFeeFixed);
     s += tlvToString(emv.valueOfConvenienceFeePercentage);
     s += tlvToString(emv.countryCode);
+    s += tlvToString(emv.merchantName);
     s += tlvToString(emv.merchantCity);
     s += tlvToString(emv.postalCode);
 

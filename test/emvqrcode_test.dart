@@ -11,32 +11,57 @@ void main() {
   test(
     "bcel test",
     () {
-      final emv = EMVQR();
 
-      // 00 02 00
-      emv.setPayloadFormatIndicator("01");
-
-      // 01 02 12
-      emv.setPointOfInitiationMethod("11");
-
-      // 03 20
-      //00 02 IT
-      //01 03 abc
-      //02 03 def
-      /// merchant account information
-      final mAccountInfo = MerchantAccountInformation();
-      mAccountInfo.setGloballyUniqueIdentifier("BCEL");
-      mAccountInfo.addPaymentNetworkSpecific(id: "01", value: "ONEPROOF");
-      mAccountInfo.addPaymentNetworkSpecific(id: "02", value: "TRANSFER");
-      mAccountInfo.addPaymentNetworkSpecific(id: "03", value: "ZU60I52A2WQ0");
-      mAccountInfo.addPaymentNetworkSpecific(
-          id: "04", value: "202203232716775");
-      emv.addMerchantAccountInformation(id: "33", value: mAccountInfo);
-      final emvencode = EMVMPM.encode(emv);
+      final emvqr = EMVQR();
+      // 00 02 01        // 00 02 01
+      emvqr.setPayloadFormatIndicator("01");
+      // 01 02 12        // 01 02 12
+      emvqr.setPointOfInitiationMethod("12");
+      // 29 28                    //
+      //    00 07 D123456         //
+      //    13 13 JCB1234567890   // 13 13 JCB1234567890
+      final merchantAccountInformationJCB = MerchantAccountInformation();
+      merchantAccountInformationJCB.setGloballyUniqueIdentifier("D123456");
+      merchantAccountInformationJCB.addPaymentNetworkSpecific(
+          id: "13", value: "JCB1234567890");
+      emvqr.addMerchantAccountInformation(
+          id: "29", value: merchantAccountInformationJCB);
+      // 31 31                     //
+      //    00 07 M123456          //
+      //    04 16 MASTER1234567890 // 04 16 MASTER1234567890 
+      final merchantAccountInformationMaster = MerchantAccountInformation();
+      merchantAccountInformationMaster.setGloballyUniqueIdentifier("M123456");
+      merchantAccountInformationMaster.addPaymentNetworkSpecific(
+          id: "04", value: "MASTER1234567890");
+      emvqr.addMerchantAccountInformation(
+          id: "31", value: merchantAccountInformationMaster);
+      // 52 04 5311      // 52 04 5311 
+      emvqr.setMerchantCategoryCode("5311");
+      // 53 03 392       // 53 03 392 
+      emvqr.setTransactionCurrency("392");
+      // 54 07 999.123   // 54 07 999.123 
+      emvqr.setTransactionAmount("999.123");
+      // 58 02 JP        // 58 02 JP 
+      emvqr.setCountryCode("JP");
+      // 59 06 DONGRI    // 59 06 DONGRI 
+      emvqr.setMerchantName("DONGRI");
+      // 60 05 TOKYO     // 60 05 TOKYO 
+      emvqr.setMerchantCity("TOKYO");
+      // 62 24           // 62 24 
+      //    01 04 hoge   //    01 04 hoge       
+      //    05 04 fuga   //    05 04 fuga     
+      //    07 04 piyo   //    07 04 piyo    
+      final additionalTemplate = AdditionalDataFieldTemplate();
+      additionalTemplate.setBillNumber("hoge");
+      additionalTemplate.setReferenceLabel("fuga");
+      additionalTemplate.setTerminalLabel("piyo");
+      emvqr.setAdditionalDataFieldTemplate(additionalTemplate);
+      // 63 04 9599  // 63 04 C343
+      final emvencode = EMVMPM.encode(emvqr);
       debugPrint("custom ------> ${emvencode.toJson()}");
 
       String data =
-          "00020101021133670004BCEL0108ONEPROOF0208TRANSFER0312ZU60I52A2WQ004152022032327167756304F45A";
+          "0002010102121313JCB12345678900416MASTER12345678905204531153033925407999.1235802JP5906DONGRI6005TOKYO62240104hoge0504fuga0704piyo6304C343";
 
       expect(emvencode.value, equals(data));
     },
