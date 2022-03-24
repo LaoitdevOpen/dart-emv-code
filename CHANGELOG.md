@@ -1,3 +1,5 @@
+## 1.0.2
+update license
 ## 1.0.1
 update to using dart sdk and docs
 
