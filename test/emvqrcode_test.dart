@@ -4,9 +4,8 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   test(
-    "bcel test",
+    "encode emv code",
     () {
-
       final emvqr = EMVQR();
       // 00 02 01        // 00 02 01
       emvqr.setPayloadFormatIndicator("01");
@@ -23,29 +22,29 @@ void main() {
           id: "29", value: merchantAccountInformationJCB);
       // 31 31                     //
       //    00 07 M123456          //
-      //    04 16 MASTER1234567890 // 04 16 MASTER1234567890 
+      //    04 16 MASTER1234567890 // 04 16 MASTER1234567890
       final merchantAccountInformationMaster = MerchantAccountInformation();
       merchantAccountInformationMaster.setGloballyUniqueIdentifier("M123456");
       merchantAccountInformationMaster.addPaymentNetworkSpecific(
           id: "04", value: "MASTER1234567890");
       emvqr.addMerchantAccountInformation(
           id: "31", value: merchantAccountInformationMaster);
-      // 52 04 5311      // 52 04 5311 
+      // 52 04 5311      // 52 04 5311
       emvqr.setMerchantCategoryCode("5311");
-      // 53 03 392       // 53 03 392 
+      // 53 03 392       // 53 03 392
       emvqr.setTransactionCurrency("392");
-      // 54 07 999.123   // 54 07 999.123 
+      // 54 07 999.123   // 54 07 999.123
       emvqr.setTransactionAmount("999.123");
-      // 58 02 JP        // 58 02 JP 
+      // 58 02 JP        // 58 02 JP
       emvqr.setCountryCode("JP");
-      // 59 06 DONGRI    // 59 06 DONGRI 
+      // 59 06 DONGRI    // 59 06 DONGRI
       emvqr.setMerchantName("DONGRI");
-      // 60 05 TOKYO     // 60 05 TOKYO 
+      // 60 05 TOKYO     // 60 05 TOKYO
       emvqr.setMerchantCity("TOKYO");
-      // 62 24           // 62 24 
-      //    01 04 hoge   //    01 04 hoge       
-      //    05 04 fuga   //    05 04 fuga     
-      //    07 04 piyo   //    07 04 piyo    
+      // 62 24           // 62 24
+      //    01 04 hoge   //    01 04 hoge
+      //    05 04 fuga   //    05 04 fuga
+      //    07 04 piyo   //    07 04 piyo
       final additionalTemplate = AdditionalDataFieldTemplate();
       additionalTemplate.setBillNumber("hoge");
       additionalTemplate.setReferenceLabel("fuga");

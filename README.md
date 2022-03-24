@@ -1,8 +1,9 @@
-a flutter plugin for decode and genrate emv-mpm qrcode
+a flutter package for decode and encode emv QR code
 
-<hr>
 
 ## Usage
+
++ **MPM**
 
 #### Decode func
 ```dart
@@ -74,6 +75,11 @@ a flutter plugin for decode and genrate emv-mpm qrcode
 ```dart
     final unreserved = UnreservedTemplate();
 ```
+
+# TODO
+
++ implement CPM
+
 ## Credits 
 
  <li>https://github.com/dongri/emv-qrcode</li>

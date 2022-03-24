@@ -1,7 +1,7 @@
 name: emvqrcode
-description: a flutter plugin for decode and genrate emvqrcode.
+description: a flutter package for decode and encode emv QR code
 version: 1.0.0
-homepage: https://github.com/Boutsakolaiy/emvqrcode.git
+homepage: https://github.com/LaoitdevOpen/dart-emv-code
 
 environment:
   sdk: ">=2.14.0 <3.0.0"
