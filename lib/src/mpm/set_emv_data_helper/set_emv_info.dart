@@ -227,28 +227,28 @@ class EMVQR {
   /// /// [value] is AdditionalDataFieldTemplate()
   setAdditionalDataFieldTemplate(AdditionalDataFieldTemplate? value) {
     if (value != null) {
-      String billNumber = tlvToString(value.value.billNumber) ?? "";
-      String mobileNumber = tlvToString(value.value.mobileNumber) ?? "";
-      String storeLabel = tlvToString(value.value.storeLabel) ?? "";
-      String loyaltyNumber = tlvToString(value.value.loyaltyNumber) ?? "";
-      String referenceLabel = tlvToString(value.value.referenceLabel) ?? "";
-      String customerLabel = tlvToString(value.value.customerLabel) ?? "";
-      String terminalLabel = tlvToString(value.value.terminalLabel) ?? "";
+      String billNumber = tlvToString(value.value.billNumber) ;
+      String mobileNumber = tlvToString(value.value.mobileNumber) ;
+      String storeLabel = tlvToString(value.value.storeLabel) ;
+      String loyaltyNumber = tlvToString(value.value.loyaltyNumber) ;
+      String referenceLabel = tlvToString(value.value.referenceLabel) ;
+      String customerLabel = tlvToString(value.value.customerLabel) ;
+      String terminalLabel = tlvToString(value.value.terminalLabel) ;
       String purposeTransaction =
-          tlvToString(value.value.purposeTransaction) ?? "";
+          tlvToString(value.value.purposeTransaction) ;
       String additionalConsumerDataRequest =
-          tlvToString(value.value.additionalConsumerDataRequest) ?? "";
-      String merchantTaxId = tlvToString(value.value.merchantTaxId) ?? "";
-      String merchantChannel = tlvToString(value.value.merchantChannel) ?? "";
+          tlvToString(value.value.additionalConsumerDataRequest) ;
+      String merchantTaxId = tlvToString(value.value.merchantTaxId) ;
+      String merchantChannel = tlvToString(value.value.merchantChannel) ;
 
       String rfuForEMVCo = "";
       value.value.rfuForEMVCo?.forEach((element) {
-        rfuForEMVCo += tlvToString(element) ?? "";
+        rfuForEMVCo += tlvToString(element) ;
       });
 
       String paymentSystemSpecific = "";
       value.value.paymentSystemSpecific?.forEach((element) {
-        paymentSystemSpecific += tlvToString(element) ?? "";
+        paymentSystemSpecific += tlvToString(element) ;
       });
       String length = l(billNumber +
           mobileNumber +
@@ -282,12 +282,12 @@ class EMVQR {
       MerchantInformationLanguageTemplate? value) {
     if (value != null) {
       String languagePreference =
-          tlvToString(value.value.languagePreference) ?? "";
-      String merchantName = tlvToString(value.value.merchantName) ?? "";
-      String merchantCity = tlvToString(value.value.merchantCity) ?? "";
+          tlvToString(value.value.languagePreference) ;
+      String merchantName = tlvToString(value.value.merchantName);
+      String merchantCity = tlvToString(value.value.merchantCity);
       String rfuForEMVCo = "";
       value.value.rfuForEMVCo?.forEach((element) {
-        rfuForEMVCo += tlvToString(element) ?? "";
+        rfuForEMVCo += tlvToString(element) ;
       });
       MerchantInformationLanguageTemplateModel merchantInfoLanguageTemplate =
           MerchantInformationLanguageTemplateModel(

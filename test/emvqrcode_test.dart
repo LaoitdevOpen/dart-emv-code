@@ -8,6 +8,39 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
+  test(
+    "bcel test",
+    () {
+      final emv = EMVQR();
+
+      // 00 02 00
+      emv.setPayloadFormatIndicator("01");
+
+      // 01 02 12
+      emv.setPointOfInitiationMethod("11");
+
+      // 03 20
+      //00 02 IT
+      //01 03 abc
+      //02 03 def
+      /// merchant account information
+      final mAccountInfo = MerchantAccountInformation();
+      mAccountInfo.setGloballyUniqueIdentifier("BCEL");
+      mAccountInfo.addPaymentNetworkSpecific(id: "01", value: "ONEPROOF");
+      mAccountInfo.addPaymentNetworkSpecific(id: "02", value: "TRANSFER");
+      mAccountInfo.addPaymentNetworkSpecific(id: "03", value: "ZU60I52A2WQ0");
+      mAccountInfo.addPaymentNetworkSpecific(
+          id: "04", value: "202203232716775");
+      emv.addMerchantAccountInformation(id: "33", value: mAccountInfo);
+      final emvencode = EMVMPM.encode(emv);
+      debugPrint("custom ------> ${emvencode.toJson()}");
+
+      String data =
+          "00020101021133670004BCEL0108ONEPROOF0208TRANSFER0312ZU60I52A2WQ004152022032327167756304F45A";
+
+      expect(emvencode.value, equals(data));
+    },
+  );
   test("set emv data & encode", () {
     final emv = EMVQR();
 
@@ -80,7 +113,7 @@ void main() {
     debugPrint("set value ----------> ${emv.value.toJson()}");
     final emvEncode = EMVMPM.encode(emv);
     debugPrint("result -------> ${emvEncode.toJson()}");
-  });
+  }, skip: true);
 
   test(" decode emvqr ", () {
     String data =
@@ -88,7 +121,7 @@ void main() {
     final emvdecode = EMVMPM.decode(data);
 
     debugPrint("result ------> ${emvdecode.toJson()}");
-  });
+  }, skip: true);
 
   test(" wrong emvqr ", () {
     String wrongData =
@@ -96,5 +129,5 @@ void main() {
     final emvdecode = EMVMPM.decode(wrongData);
 
     debugPrint("result ------> ${emvdecode.toJson()}");
-  });
+  }, skip: true);
 }

@@ -190,8 +190,12 @@ TLVModel setTLV(String v, String id) {
   return tlv;
 }
 
-String? tlvToString(TLVModel? tlv) =>
-    "${tlv?.tag ?? ""}${tlv?.length ?? ""}${tlv?.value ?? ""}";
+String tlvToString(TLVModel? tlv) {
+  if (tlv != null && tlv.tag != null && tlv.tag != null && tlv.tag != null) {
+    return "${tlv.tag}${tlv.length}${tlv.value}";
+  }
+  return "";
+}
 
 Map<String, dynamic> between(String id, String start, String end) {
   int idNum;
@@ -310,27 +314,27 @@ AdditionalDataFieldTemplateValue _parseAdditionalDataFieldTemplate(
 
 AdditionalDataFieldTemplateModel _setAdditionalDataFieldTemplate(
     AdditionalDataFieldTemplateValue value) {
-  String billNumber = tlvToString(value.billNumber) ?? "";
-  String mobileNumber = tlvToString(value.mobileNumber) ?? "";
-  String storeLabel = tlvToString(value.storeLabel) ?? "";
-  String loyaltyNumber = tlvToString(value.loyaltyNumber) ?? "";
-  String referenceLabel = tlvToString(value.referenceLabel) ?? "";
-  String customerLabel = tlvToString(value.customerLabel) ?? "";
-  String terminalLabel = tlvToString(value.terminalLabel) ?? "";
-  String purposeTransaction = tlvToString(value.purposeTransaction) ?? "";
+  String billNumber = tlvToString(value.billNumber);
+  String mobileNumber = tlvToString(value.mobileNumber);
+  String storeLabel = tlvToString(value.storeLabel);
+  String loyaltyNumber = tlvToString(value.loyaltyNumber);
+  String referenceLabel = tlvToString(value.referenceLabel);
+  String customerLabel = tlvToString(value.customerLabel);
+  String terminalLabel = tlvToString(value.terminalLabel);
+  String purposeTransaction = tlvToString(value.purposeTransaction);
   String additionalConsumerDataRequest =
-      tlvToString(value.additionalConsumerDataRequest) ?? "";
-  String merchantTaxId = tlvToString(value.merchantTaxId) ?? "";
-  String merchantChannel = tlvToString(value.merchantChannel) ?? "";
+      tlvToString(value.additionalConsumerDataRequest);
+  String merchantTaxId = tlvToString(value.merchantTaxId);
+  String merchantChannel = tlvToString(value.merchantChannel);
 
   String rfuForEMVCo = "";
   value.rfuForEMVCo?.forEach((element) {
-    rfuForEMVCo += tlvToString(element) ?? "";
+    rfuForEMVCo += tlvToString(element);
   });
 
   String paymentSystemSpecific = "";
   value.paymentSystemSpecific?.forEach((element) {
-    paymentSystemSpecific += tlvToString(element) ?? "";
+    paymentSystemSpecific += tlvToString(element);
   });
   String length = l(billNumber +
       mobileNumber +
@@ -398,12 +402,12 @@ MerchantInformationLanguageTemplateValue
 MerchantInformationLanguageTemplateModel
     _setMerchantInformationLanguageTemplate(
         MerchantInformationLanguageTemplateValue value) {
-  String languagePreference = tlvToString(value.languagePreference) ?? "";
-  String merchantName = tlvToString(value.merchantName) ?? "";
-  String merchantCity = tlvToString(value.merchantCity) ?? "";
+  String languagePreference = tlvToString(value.languagePreference);
+  String merchantName = tlvToString(value.merchantName);
+  String merchantCity = tlvToString(value.merchantCity);
   String rfuForEMVCo = "";
   value.rfuForEMVCo?.forEach((element) {
-    rfuForEMVCo += tlvToString(element) ?? "";
+    rfuForEMVCo += tlvToString(element);
   });
   MerchantInformationLanguageTemplateModel merchantInfoLanguageTemplate =
       MerchantInformationLanguageTemplateModel(
@@ -514,8 +518,8 @@ UnreservedTemplateModel _addUnreservedTemplates(
 EmvEncode generatePayload(EmvqrModel emv) {
   String s = "";
   try {
-    s += tlvToString(emv.payloadFormatIndicator) ?? "";
-    s += tlvToString(emv.pointOfInitiationMethod) ?? "";
+    s += tlvToString(emv.payloadFormatIndicator);
+    s += tlvToString(emv.pointOfInitiationMethod);
     List<String> keys = [];
 
     if (emv.merchantAccountInformation != null) {
@@ -531,47 +535,46 @@ EmvEncode generatePayload(EmvqrModel emv) {
           .firstWhere((element) => element.key == key);
 
       String _globallyUnique =
-          tlvToString(merchantAcInfo?.value.value?.globallyUniqueIdentifier) ??
-              "";
+          tlvToString(merchantAcInfo?.value.value?.globallyUniqueIdentifier);
       String _paymentNS = "";
       merchantAcInfo?.value.value?.paymentNetworkSpecific?.forEach((tlv) {
-        _paymentNS += tlvToString(tlv) ?? "";
+        _paymentNS += tlvToString(tlv);
       });
       s +=
           "${merchantAcInfo?.value.tag}${merchantAcInfo?.value.length}$_globallyUnique$_paymentNS";
     }
-    s += tlvToString(emv.merchantCategoryCode) ?? "";
-    s += tlvToString(emv.transactionCurrency) ?? "";
-    s += tlvToString(emv.transactionAmount) ?? "";
-    s += tlvToString(emv.tipOrConvenienceIndicator) ?? "";
-    s += tlvToString(emv.valueOfConvenienceFeeFixed) ?? "";
-    s += tlvToString(emv.valueOfConvenienceFeePercentage) ?? "";
-    s += tlvToString(emv.countryCode) ?? "";
-    s += tlvToString(emv.merchantCity) ?? "";
-    s += tlvToString(emv.postalCode) ?? "";
+    s += tlvToString(emv.merchantCategoryCode);
+    s += tlvToString(emv.transactionCurrency);
+    s += tlvToString(emv.transactionAmount);
+    s += tlvToString(emv.tipOrConvenienceIndicator);
+    s += tlvToString(emv.valueOfConvenienceFeeFixed);
+    s += tlvToString(emv.valueOfConvenienceFeePercentage);
+    s += tlvToString(emv.countryCode);
+    s += tlvToString(emv.merchantCity);
+    s += tlvToString(emv.postalCode);
 
     // addition data
-    s += _additionalTemplateToString(emv.additionalDataFieldTemplate) ?? "";
+    s += _additionalTemplateToString(emv.additionalDataFieldTemplate);
 
     // merchant Info Language Template
     s += _merchantInfoLanguageTemplateToStrng(
-            emv.merchantInformationLanguageTemplate) ??
-        "";
+        emv.merchantInformationLanguageTemplate);
 
     // rfu
     emv.rfuForEmvCo?.forEach((tlv) {
-      s += tlvToString(tlv) ?? "";
+      s += tlvToString(tlv);
     });
 
     // unreserverved templates
     emv.unreservedTemplates?.forEach((key, value) {
-      s += "${value.tag}";
-      s += "${value.length}";
-      s += tlvToString(value.value?.globallyUniqueIdentifier) ?? "";
-      // s += tlvToString(value.value?.globallyUniqueIdentifier) ?? "";
-      value.value?.contextSpecificData?.forEach((element) {
-        s += tlvToString(element) ?? "";
-      });
+      if (value.tag != null && value.length != null && value.value != null) {
+        s += value.tag ?? "";
+        s += value.length ?? "";
+        s += tlvToString(value.value?.globallyUniqueIdentifier);
+        value.value?.contextSpecificData?.forEach((element) {
+          s += tlvToString(element);
+        });
+      }
     });
 
     final crcFormat = _formatCrc(s);
@@ -580,7 +583,7 @@ EmvEncode generatePayload(EmvqrModel emv) {
       return EmvEncode(
           value: s,
           error: EmvError(
-              message: "can not get crc value",
+              message: "generate emvqr error",
               type: EmvErrorType.generateQrErr));
     }
 
@@ -595,30 +598,32 @@ EmvEncode generatePayload(EmvqrModel emv) {
 }
 
 // additional templete to string
-String? _additionalTemplateToString(AdditionalDataFieldTemplateModel? value) {
-  if (value != null) {
-    String billNumber = tlvToString(value.value?.billNumber) ?? "";
-    String mobileNumber = tlvToString(value.value?.mobileNumber) ?? "";
-    String storeLabel = tlvToString(value.value?.storeLabel) ?? "";
-    String loyaltyNumber = tlvToString(value.value?.loyaltyNumber) ?? "";
-    String referenceLabel = tlvToString(value.value?.referenceLabel) ?? "";
-    String customerLabel = tlvToString(value.value?.customerLabel) ?? "";
-    String terminalLabel = tlvToString(value.value?.terminalLabel) ?? "";
-    String purposeTransaction =
-        tlvToString(value.value?.purposeTransaction) ?? "";
+String _additionalTemplateToString(AdditionalDataFieldTemplateModel? value) {
+  if (value != null &&
+      value.tag != null &&
+      value.length != null &&
+      value.value != null) {
+    String billNumber = tlvToString(value.value?.billNumber);
+    String mobileNumber = tlvToString(value.value?.mobileNumber);
+    String storeLabel = tlvToString(value.value?.storeLabel);
+    String loyaltyNumber = tlvToString(value.value?.loyaltyNumber);
+    String referenceLabel = tlvToString(value.value?.referenceLabel);
+    String customerLabel = tlvToString(value.value?.customerLabel);
+    String terminalLabel = tlvToString(value.value?.terminalLabel);
+    String purposeTransaction = tlvToString(value.value?.purposeTransaction);
     String additionalConsumerDataRequest =
-        tlvToString(value.value?.additionalConsumerDataRequest) ?? "";
-    String merchantTaxId = tlvToString(value.value?.merchantTaxId) ?? "";
-    String merchantChannel = tlvToString(value.value?.merchantChannel) ?? "";
+        tlvToString(value.value?.additionalConsumerDataRequest);
+    String merchantTaxId = tlvToString(value.value?.merchantTaxId);
+    String merchantChannel = tlvToString(value.value?.merchantChannel);
 
     String rfuForEMVCo = "";
     value.value?.rfuForEMVCo?.forEach((element) {
-      rfuForEMVCo += tlvToString(element) ?? "";
+      rfuForEMVCo += tlvToString(element);
     });
 
     String paymentSystemSpecific = "";
     value.value?.paymentSystemSpecific?.forEach((element) {
-      paymentSystemSpecific += tlvToString(element) ?? "";
+      paymentSystemSpecific += tlvToString(element);
     });
     String additionStr = billNumber +
         mobileNumber +
@@ -641,21 +646,27 @@ String? _additionalTemplateToString(AdditionalDataFieldTemplateModel? value) {
 }
 
 // merchant info language to string
-String? _merchantInfoLanguageTemplateToStrng(
+String _merchantInfoLanguageTemplateToStrng(
     MerchantInformationLanguageTemplateModel? merchantInfoLang) {
-  final mInfo = merchantInfoLang?.value;
+  if (merchantInfoLang != null &&
+      merchantInfoLang.tag != null &&
+      merchantInfoLang.value != null) {
+    final mInfo = merchantInfoLang.value;
 
-  String languagePreference = tlvToString(mInfo?.languagePreference) ?? "";
-  String merchantName = tlvToString(mInfo?.merchantName) ?? "";
-  String merchantCity = tlvToString(mInfo?.merchantCity) ?? "";
-  String rfuForEMVCo = "";
+    String languagePreference = tlvToString(mInfo?.languagePreference);
+    String merchantName = tlvToString(mInfo?.merchantName);
+    String merchantCity = tlvToString(mInfo?.merchantCity);
+    String rfuForEMVCo = "";
 
-  mInfo?.rfuForEMVCo?.forEach((tlv) {
-    rfuForEMVCo += tlvToString(tlv) ?? "";
-  });
-  String mStr = languagePreference + merchantName + merchantCity + rfuForEMVCo;
-
-  return "${merchantInfoLang?.tag}${merchantInfoLang?.length}$mStr";
+    mInfo?.rfuForEMVCo?.forEach((tlv) {
+      rfuForEMVCo += tlvToString(tlv);
+    });
+    String mStr =
+        languagePreference + merchantName + merchantCity + rfuForEMVCo;
+    return "${merchantInfoLang.tag}${merchantInfoLang.length}$mStr";
+  } else {
+    return "";
+  }
 }
 
 Map<String, dynamic> _formatCrc(String value) {
