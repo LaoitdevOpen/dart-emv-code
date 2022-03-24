@@ -57,10 +57,10 @@ void main(List<String> args) {
   /**
    * decode emv qr code
    */
-  // final emvqrcode =
-  //     "00020001021203200002IT0103abc0203def04200002IT0103abc0203def625201050qwea1006tax id1103cha1202001302135003123510312364410002LA0102MW0209Vientaine0304asfg0404asfg6503bbc6603bbb89230003abs0104qw120204qw126304735A";
-  // final emvDecode = EMVMPM.decode(emvqrcode);
-  // print("result -------> ${emvDecode.toJson()}");
+  final emvqrcode =
+      "00020001021203200002IT0103abc0203def04200002IT0103abc0203def625201050qwea1006tax id1103cha1202001302135003123510312364410002LA0102MW0209Vientaine0304asfg0404asfg6503bbc6603bbb89230003abs0104qw120204qw126304735A";
+  final emvDecode = EMVMPM.decode(emvqrcode);
+  print("result -------> ${emvDecode.toJson()}");
 
   /**
    * decode wrong emv qr code
@@ -77,7 +77,7 @@ void main(List<String> args) {
    * decode not emv qr code
    */
   String notEmvQrcode = "https://laoitdev.com";
-  final emvDecode = EMVMPM.decode(notEmvQrcode);
-  print("result ------> ${emvDecode.toJson()}");
+  final notEmvDecode = EMVMPM.decode(notEmvQrcode);
+  print("result ------> ${notEmvDecode.toJson()}");
   //result ------> {emvqr: null, error: {type: EmvErrorType.verifyqrErr, message: The emv data was wrong}}
 }

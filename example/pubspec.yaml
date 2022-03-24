@@ -7,12 +7,5 @@ environment:
   sdk: ">=2.14.0 <3.0.0"
 
 dependencies:
-  flutter:
-    sdk: flutter
-
   emvqrcode:
     path: ../
-
-dev_dependencies:
-  flutter_test:
-    sdk: flutter

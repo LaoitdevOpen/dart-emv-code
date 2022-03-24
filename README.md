@@ -1,4 +1,4 @@
-a flutter package for decode and encode emv QR code
+a dart package for decode and encode emv QR code
 
 
 ## Usage
@@ -82,4 +82,4 @@ a flutter package for decode and encode emv QR code
 
 ## Credits 
 
- <li>https://github.com/dongri/emv-qrcode</li>
+ - https://github.com/dongri/emv-qrcode
