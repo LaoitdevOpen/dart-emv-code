@@ -145,8 +145,8 @@ void main() {
   test(" wrong emvqr ", () {
     String wrongData =
         "00020101021138670016A00526628466257701082771041802030010324ZPOSUALNJBWWVYSEIRIESGFE6304D1B9";
-    final emvdecode = EMVMPM.decode(wrongData);
+    final emvdecode = verifyEmvQr(wrongData);
 
-    expect(emvdecode.error, isNotNull);
+    expect(emvdecode, false);
   });
 }

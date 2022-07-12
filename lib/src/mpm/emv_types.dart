@@ -41,13 +41,13 @@ EMVDeCode parseEMVQR(String payload) {
   List<TLVModel> rfuForEMVCo = [];
   Map<String, UnreservedTemplateModel>? unreservedTemplates = {};
 
-  final verify = verifyEmvQr(payload);
-  if (!verify) {
-    return EMVDeCode(
-        emvqr: null,
-        error: EmvError(
-            message: "The emv data was wrong", type: EmvErrorType.verifyqrErr));
-  }
+  // final verify = verifyEmvQr(payload);
+  // if (!verify) {
+  //   return EMVDeCode(
+  //       emvqr: null,
+  //       error: EmvError(
+  //           message: "The emv data was wrong", type: EmvErrorType.verifyqrErr));
+  // }
   ParserModel p = newParser(payload);
   EmvqrModel emvqr = EmvqrModel();
 
@@ -701,8 +701,7 @@ String _format(String id, String value) {
 
 /// verify emvqr
 ///
-/// check if [value] is true
-/// [value] is emvqrcode
+/// check if emv data is true
 bool verifyEmvQr(String value) {
   final emqrForChecksum = value.substring(0, value.length - 4);
   final emqrForCheckEmv = value.substring(value.length - 4, value.length);
