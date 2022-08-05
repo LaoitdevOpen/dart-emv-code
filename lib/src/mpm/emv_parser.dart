@@ -11,8 +11,8 @@ const int valueLengthWordCount = 2;
 ParserModel newParser(String payload) {
   return ParserModel(
     current: -1,
-    max: utf8.encode(payload).length,
-    source: utf8.encode(payload),
+    max: payload.codeUnits.length,
+    source: payload.codeUnits,
     error: null,
   );
 }
@@ -56,7 +56,7 @@ int valueLength(ParserModel? p) {
       return 0;
     }
 
-    String strValueLength = utf8.decode(p.source!.sublist(start, end));
+    String strValueLength = String.fromCharCodes(p.source!.sublist(start, end));
 
     try {
       final len = int.parse(strValueLength, radix: 10);
@@ -86,7 +86,7 @@ String pid(ParserModel? p) {
       return "";
     }
 
-    String id = utf8.decode(p.source!.sublist(start, end));
+    String id = String.fromCharCodes(p.source!.sublist(start, end));
     return id;
   }
   return "";
@@ -109,7 +109,7 @@ String pValue(ParserModel? p) {
       p.error = outOfRangeErr(fnValue, p.current!, p.max!, start, end);
       return "";
     }
-    return utf8.decode(p.source!.sublist(start, end));
+    return String.fromCharCodes(p.source!.sublist(start, end));
   }
   return "";
 }

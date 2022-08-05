@@ -671,11 +671,8 @@ String _merchantInfoLanguageTemplateToStrng(
 }
 
 Map<String, dynamic> _formatCrc(String value) {
-  // create crc16 table
-  var table = CRC16().makeTable(CRC().crc16CcittFalse);
-
   // checksum
-  final crcValue = CRC16().checkSum("$value${ID.crc}04".codeUnits, table);
+  final crcValue = CRC16().checkSum(utf8.encode("$value${ID.crc}04"));
 
   if (crcValue.err != null) {
     return {"value": null, "err": crcValue.err};
@@ -705,8 +702,7 @@ String _format(String id, String value) {
 bool verifyEmvQr(String value) {
   final emqrForChecksum = value.substring(0, value.length - 4);
   final emqrForCheckEmv = value.substring(value.length - 4, value.length);
-  final table = CRC16().makeTable(CRC().crc16CcittFalse);
-  final checksum = CRC16().checkSum(emqrForChecksum.codeUnits, table);
+  final checksum = CRC16().checkSum(utf8.encode(emqrForChecksum));
 
   if (checksum.err != null) {
     return false;
