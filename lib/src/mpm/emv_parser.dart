@@ -11,8 +11,8 @@ const int valueLengthWordCount = 2;
 ParserModel newParser(String payload) {
   return ParserModel(
     current: -1,
-    max: utf8.encode(payload).length,
-    source: utf8.encode(payload),
+    max: payload.runes.length,
+    source: payload.runes.toList(),
     error: null,
   );
 }
@@ -109,7 +109,7 @@ String pValue(ParserModel? p) {
       p.error = outOfRangeErr(fnValue, p.current!, p.max!, start, end);
       return "";
     }
-    return utf8.decode(p.source!.sublist(start, end));
+    return String.fromCharCodes(p.source!.sublist(start, end));
   }
   return "";
 }

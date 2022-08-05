@@ -142,6 +142,14 @@ void main() {
     expect(emvdecode.emvqr, isNotNull);
   });
 
+  test("decode emvqr with multi-byte chars", () {
+    final String data =
+        "000600000001021126320011com.example0113aaaaaaaaaaaaa5204549953033915405123455802JP5920ShopName in Japanese6005Tokyo6108111-111164230002JA0107日本語のネーム0202東京6304442A";
+    final emvDecode = EMVMPM.decode(data);
+    print("result -------> ${emvDecode.toJson()}");
+    expect(emvDecode.emvqr, isNotNull);
+  });
+
   test(" wrong emvqr ", () {
     String wrongData =
         "00020101021138670016A00526628466257701082771041802030010324ZPOSUALNJBWWVYSEIRIESGFE6304D1B9";
