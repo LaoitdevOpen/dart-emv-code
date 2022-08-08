@@ -79,6 +79,7 @@ a dart package for decode and encode emv QR code
 # TODO
 
 + Update documentation
++ add decode CPM
 
 ## Credits 
 

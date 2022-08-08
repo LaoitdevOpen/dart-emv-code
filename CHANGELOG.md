@@ -1,4 +1,8 @@
 
+## 1.0.4
+
++ Fix decode and crc QR codes including multi-byte chars like Japanese or chinese.
+
 ## 1.0.3
 
 + support cpm
