@@ -177,10 +177,7 @@ EMVDeCode parseEMVQR(String payload) {
 }
 
 String l(String value) {
-  if (utf8.encode(value).length > 10) {
-    return "${utf8.encode(value).length}";
-  }
-  return "0${utf8.encode(value).length}";
+  return "${utf8.encode(value).length}".padLeft(2, '0');
 }
 
 /// set tlv value
