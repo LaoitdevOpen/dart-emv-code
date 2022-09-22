@@ -203,7 +203,7 @@ class EMVQR {
       });
 
       MerchantAccountInformationModel mTLV = MerchantAccountInformationModel(
-          tag: id, length: l(_globally + _payment), value: value.value);
+          tag: id, length: getValueLength(_globally + _payment), value: value.value);
 
       // add merchant account info
       if (this.value.merchantAccountInformation != null) {
@@ -243,7 +243,7 @@ class EMVQR {
       value.value.paymentSystemSpecific?.forEach((element) {
         paymentSystemSpecific += tlvToString(element) ;
       });
-      String length = l(billNumber +
+      String length = getValueLength(billNumber +
           mobileNumber +
           storeLabel +
           loyaltyNumber +
@@ -285,7 +285,7 @@ class EMVQR {
       MerchantInformationLanguageTemplateModel merchantInfoLanguageTemplate =
           MerchantInformationLanguageTemplateModel(
               tag: ID.merchantInformationLanguageTemplate,
-              length: l(languagePreference +
+              length: getValueLength(languagePreference +
                   merchantName +
                   merchantCity +
                   rfuForEMVCo),
@@ -343,7 +343,7 @@ class EMVQR {
       });
 
       UnreservedTemplateModel unreservedTemplate = UnreservedTemplateModel(
-          tag: id, length: l(_globally + _payment), value: value.value);
+          tag: id, length: getValueLength(_globally + _payment), value: value.value);
 
       // add merchant account info
       if (this.value.unreservedTemplates != null) {
