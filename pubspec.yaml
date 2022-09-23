@@ -1,6 +1,6 @@
 name: emvqrcode
 description: a dart package for decode and encode emv QR code
-version: 1.0.2
+version: 1.0.4
 homepage: https://github.com/LaoitdevOpen/dart-emv-code
 
 environment:
@@ -11,3 +11,4 @@ dev_dependencies:
   test: ^1.16.0
 dependencies: 
   convert: ^3.0.1
+  crclib: ^3.0.0
