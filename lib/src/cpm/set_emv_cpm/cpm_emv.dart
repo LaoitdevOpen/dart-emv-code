@@ -1,7 +1,7 @@
-import 'package:emvqrcode/src/cpm/set_emv_cpm/application_template.dart';
-import 'package:emvqrcode/src/cpm/set_emv_cpm/common_data_template.dart';
-import 'package:emvqrcode/src/models/cmp/application_template_model.dart';
-import 'package:emvqrcode/src/models/cmp/common_data_template_model.dart';
+import '../../models/cmp/application_template_model.dart';
+import '../../models/cmp/common_data_template_model.dart';
+import 'application_template.dart';
+import 'common_data_template.dart';
 
 class CPM {
   String? _dataPayloadFormatIndicator;

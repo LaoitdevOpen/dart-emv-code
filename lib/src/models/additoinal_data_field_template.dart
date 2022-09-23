@@ -1,4 +1,4 @@
-import 'package:emvqrcode/src/models/tlv_model.dart';
+import 'tlv_model.dart';
 
 class AdditionalDataFieldTemplateModel {
   AdditionalDataFieldTemplateModel({
@@ -137,7 +137,8 @@ class AdditionalDataFieldTemplateValue {
             ? additionalConsumerDataRequest!.toJson()
             : null,
         "merchantTaxID": merchantTaxId != null ? merchantTaxId!.toJson() : null,
-        "merchantChannel": merchantChannel != null ? merchantChannel!.toJson() : null,
+        "merchantChannel":
+            merchantChannel != null ? merchantChannel!.toJson() : null,
         "rfuForEMVCo": rfuForEMVCo != null
             ? List<dynamic>.from(rfuForEMVCo!.map((x) => x.toJson()))
             : [],

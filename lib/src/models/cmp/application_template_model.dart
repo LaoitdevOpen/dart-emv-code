@@ -1,4 +1,4 @@
-import 'package:emvqrcode/src/models/cmp/ber_tvl.dart';
+import 'ber_tvl.dart';
 
 class ApplicationTemplateModel {
   ApplicationTemplateModel(
@@ -29,7 +29,7 @@ class ApplicationTemplateModel {
         "ApplicationSpecificTransparentTemplates":
             applicationSpecificTransparentTemplates == null
                 ? []
-                : List<dynamic>.from(
-                    applicationSpecificTransparentTemplates!.map((x) => x.toJson())),
+                : List<dynamic>.from(applicationSpecificTransparentTemplates!
+                    .map((x) => x.toJson())),
       };
 }

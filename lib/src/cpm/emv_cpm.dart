@@ -1,10 +1,11 @@
 import 'dart:convert';
 
 import 'package:convert/convert.dart';
-import 'package:emvqrcode/src/constants/cpm/id.dart';
-import 'package:emvqrcode/src/constants/cpm/tag.dart';
-import 'package:emvqrcode/src/cpm/set_emv_cpm/cpm_emv.dart';
-import 'package:emvqrcode/src/models/cmp/ber_tvl.dart';
+
+import '../constants/cpm/id.dart';
+import '../constants/cpm/tag.dart';
+import '../models/cmp/ber_tvl.dart';
+import 'set_emv_cpm/cpm_emv.dart';
 
 class EMVCPM {
   String? generatePayload(CPM cpm) {

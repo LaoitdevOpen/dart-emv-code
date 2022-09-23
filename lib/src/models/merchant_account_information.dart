@@ -1,8 +1,9 @@
 import 'dart:convert';
 
-import 'package:emvqrcode/src/models/tlv_model.dart';
+import 'tlv_model.dart';
 
-MerchantAccountInformationModel merchantAccountInformationFromJson(String str) =>
+MerchantAccountInformationModel merchantAccountInformationFromJson(
+        String str) =>
     MerchantAccountInformationModel.fromJson(json.decode(str));
 
 String merchantAccountInformationToJson(MerchantAccountInformationModel data) =>
@@ -64,7 +65,8 @@ class MerchantAccountInformationValue {
             paymentNetworkSpecific ?? this.paymentNetworkSpecific,
       );
 
-  factory MerchantAccountInformationValue.fromJson(Map<String, dynamic> json) => MerchantAccountInformationValue(
+  factory MerchantAccountInformationValue.fromJson(Map<String, dynamic> json) =>
+      MerchantAccountInformationValue(
         globallyUniqueIdentifier:
             TLVModel.fromJson(json["globallyUniqueIdentifier"]),
         paymentNetworkSpecific: List<TLVModel>.from(
@@ -77,4 +79,3 @@ class MerchantAccountInformationValue {
             List<dynamic>.from(paymentNetworkSpecific!.map((x) => x.toJson())),
       };
 }
-

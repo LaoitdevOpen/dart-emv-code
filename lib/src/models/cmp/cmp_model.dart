@@ -1,5 +1,5 @@
-import 'package:emvqrcode/src/models/cmp/application_template_model.dart';
-import 'package:emvqrcode/src/models/cmp/common_data_template_model.dart';
+import 'application_template_model.dart';
+import 'common_data_template_model.dart';
 
 class CpmModel {
   CpmModel(

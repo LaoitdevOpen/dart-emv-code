@@ -1,12 +1,13 @@
 import 'dart:convert';
 
-import 'package:emvqrcode/src/models/additoinal_data_field_template.dart';
-import 'package:emvqrcode/src/models/merchant_account_information.dart';
-import 'package:emvqrcode/src/models/merchant_information_langage_template.dart';
-import 'package:emvqrcode/src/models/tlv_model.dart';
-import 'package:emvqrcode/src/models/unreserved_template.dart';
+import 'additoinal_data_field_template.dart';
+import 'merchant_account_information.dart';
+import 'merchant_information_langage_template.dart';
+import 'tlv_model.dart';
+import 'unreserved_template.dart';
 
-EmvqrModel emvqrModelFromJson(String str) => EmvqrModel.fromJson(json.decode(str));
+EmvqrModel emvqrModelFromJson(String str) =>
+    EmvqrModel.fromJson(json.decode(str));
 
 String emvqrModelToJson(EmvqrModel data) => json.encode(data.toJson());
 
@@ -67,7 +68,8 @@ class EmvqrModel {
     TLVModel? postalCode,
     AdditionalDataFieldTemplateModel? additionalDataFieldTemplate,
     TLVModel? crc,
-    MerchantInformationLanguageTemplateModel? merchantInformationLanguageTemplate,
+    MerchantInformationLanguageTemplateModel?
+        merchantInformationLanguageTemplate,
     List<TLVModel>? rfuForEmvCo,
     Map<String, UnreservedTemplateModel>? unreservedTemplates,
   }) =>

@@ -1,24 +1,23 @@
 import 'dart:convert';
 
-import 'package:emvqrcode/src/constants/additional_id.dart';
-import 'package:emvqrcode/src/constants/emv_id.dart';
-import 'package:emvqrcode/src/constants/merchant_account_information_id.dart';
-import 'package:emvqrcode/src/constants/merchant_information_id.dart';
-import 'package:emvqrcode/src/constants/unreserved_template_id.dart';
-import 'package:emvqrcode/src/crc16/crc.dart';
-import 'package:emvqrcode/src/crc16/crc16.dart';
-import 'package:emvqrcode/src/errors/emv_error_model.dart';
-import 'package:emvqrcode/src/errors/emv_pattern_err.dart';
-import 'package:emvqrcode/src/models/additoinal_data_field_template.dart';
-import 'package:emvqrcode/src/models/emv_decode_model.dart';
-import 'package:emvqrcode/src/models/emv_encode_mode.dart';
-import 'package:emvqrcode/src/models/emvqr_model.dart';
-import 'package:emvqrcode/src/models/merchant_account_information.dart';
-import 'package:emvqrcode/src/models/merchant_information_langage_template.dart';
-import 'package:emvqrcode/src/models/parser_model.dart';
-import 'package:emvqrcode/src/models/tlv_model.dart';
-import 'package:emvqrcode/src/models/unreserved_template.dart';
-import 'package:emvqrcode/src/mpm/emv_parser.dart';
+import '../constants/additional_id.dart';
+import '../constants/emv_id.dart';
+import '../constants/merchant_account_information_id.dart';
+import '../constants/merchant_information_id.dart';
+import '../constants/unreserved_template_id.dart';
+import '../crc16/crc16.dart';
+import '../errors/emv_error_model.dart';
+import '../errors/emv_pattern_err.dart';
+import '../models/additoinal_data_field_template.dart';
+import '../models/emv_decode_model.dart';
+import '../models/emv_encode_mode.dart';
+import '../models/emvqr_model.dart';
+import '../models/merchant_account_information.dart';
+import '../models/merchant_information_langage_template.dart';
+import '../models/parser_model.dart';
+import '../models/tlv_model.dart';
+import '../models/unreserved_template.dart';
+import 'emv_parser.dart';
 
 // ========================  emv decode ==============================
 EMVDeCode parseEMVQR(String payload) {
@@ -41,13 +40,6 @@ EMVDeCode parseEMVQR(String payload) {
   List<TLVModel> rfuForEMVCo = [];
   Map<String, UnreservedTemplateModel>? unreservedTemplates = {};
 
-  // final verify = verifyEmvQr(payload);
-  // if (!verify) {
-  //   return EMVDeCode(
-  //       emvqr: null,
-  //       error: EmvError(
-  //           message: "The emv data was wrong", type: EmvErrorType.verifyqrErr));
-  // }
   ParserModel p = newParser(payload);
   EmvqrModel emvqr = EmvqrModel();
 
@@ -176,17 +168,14 @@ EMVDeCode parseEMVQR(String payload) {
   return EMVDeCode(emvqr: emvqr, error: null);
 }
 
-String l(String value) {
-  if (utf8.encode(value).length > 10) {
-    return "${utf8.encode(value).length}";
-  }
-  return "0${utf8.encode(value).length}";
+String getValueLength(String value) {
+  return "${utf8.encode(value).length}".padLeft(2, '0');
 }
 
 /// set tlv value
 
 TLVModel setTLV(String v, String id) {
-  TLVModel tlv = TLVModel(tag: id, length: l(v), value: v);
+  TLVModel tlv = TLVModel(tag: id, length: getValueLength(v), value: v);
   return tlv;
 }
 
@@ -336,7 +325,7 @@ AdditionalDataFieldTemplateModel _setAdditionalDataFieldTemplate(
   value.paymentSystemSpecific?.forEach((element) {
     paymentSystemSpecific += tlvToString(element);
   });
-  String length = l(billNumber +
+  String length = getValueLength(billNumber +
       mobileNumber +
       storeLabel +
       loyaltyNumber +
@@ -412,8 +401,8 @@ MerchantInformationLanguageTemplateModel
   MerchantInformationLanguageTemplateModel merchantInfoLanguageTemplate =
       MerchantInformationLanguageTemplateModel(
           tag: ID.merchantInformationLanguageTemplate,
-          length:
-              l(languagePreference + merchantName + merchantCity + rfuForEMVCo),
+          length: getValueLength(
+              languagePreference + merchantName + merchantCity + rfuForEMVCo),
           value: value);
 
   return merchantInfoLanguageTemplate;
@@ -463,7 +452,7 @@ MerchantAccountInformationModel _addMerchantAccountInformation(
   });
 
   MerchantAccountInformationModel mTLV = MerchantAccountInformationModel(
-      tag: id, length: l(_globally + _payment), value: value);
+      tag: id, length: getValueLength(_globally + _payment), value: value);
   return mTLV;
 }
 
@@ -508,7 +497,7 @@ UnreservedTemplateModel _addUnreservedTemplates(
   });
   UnreservedTemplateModel uTLV = UnreservedTemplateModel(
     tag: id,
-    length: l(_globally + _contextSpec),
+    length: getValueLength(_globally + _contextSpec),
     value: value,
   );
   return uTLV;
@@ -681,19 +670,13 @@ Map<String, dynamic> _formatCrc(String value) {
     for (var i = crcValueString.length; i < 4; i++) {
       crcValueString = "0$crcValueString";
     }
-    return {
-      "value": _format(ID.crc, crcValueString.toUpperCase()),
-      "err": null
-    };
+    return {"value": format(ID.crc, crcValueString.toUpperCase()), "err": null};
   }
 }
 
-String _format(String id, String value) {
-  final valueLength = utf8.encode(value).length;
-  if (valueLength > 10) {
-    return "$id$valueLength$value".trim();
-  }
-  return "${id}0$valueLength$value".trim();
+String format(String id, String value) {
+  final valueLength = "${utf8.encode(value).length}".padLeft(2, '0');
+  return "$id$valueLength$value".trim();
 }
 
 /// verify emvqr

@@ -1,7 +1,7 @@
-import 'package:emvqrcode/src/models/emv_decode_model.dart';
-import 'package:emvqrcode/src/models/emv_encode_mode.dart';
-import 'package:emvqrcode/src/mpm/emv_types.dart';
-import 'package:emvqrcode/src/mpm/set_emv_data_helper/set_emv_info.dart';
+import '../models/emv_decode_model.dart';
+import '../models/emv_encode_mode.dart';
+import 'emv_types.dart';
+import 'set_emv_data_helper/set_emv_info.dart';
 
 /// emv mpm type
 class EMVMPM {

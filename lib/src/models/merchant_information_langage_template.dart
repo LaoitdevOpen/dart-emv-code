@@ -1,4 +1,4 @@
-import 'package:emvqrcode/src/models/tlv_model.dart';
+import 'tlv_model.dart';
 
 class MerchantInformationLanguageTemplateModel {
   MerchantInformationLanguageTemplateModel({
