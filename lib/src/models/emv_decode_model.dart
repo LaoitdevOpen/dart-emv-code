@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:emvqrcode/src/errors/emv_error_model.dart';
-import 'package:emvqrcode/src/models/emvqr_model.dart';
+import '../errors/emv_error_model.dart';
+import 'emvqr_model.dart';
 
 EMVDeCode emvqrDecodeFromJson(String str) =>
     EMVDeCode.fromJson(json.decode(str));

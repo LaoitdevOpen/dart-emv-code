@@ -1,5 +1,6 @@
 import 'package:crclib/catalog.dart';
-import 'package:emvqrcode/src/crc16/crc_model.dart';
+
+import 'crc_model.dart';
 
 // 65535 is int maxvalue
 // 65536 is int maxLength

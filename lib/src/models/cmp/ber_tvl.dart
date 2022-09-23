@@ -1,7 +1,3 @@
-// To parse this JSON data, do
-//
-//     final  BerTvl =  BerTvlFromJson(jsonString);
-
 import 'dart:convert';
 
 BerTvl berTvlFromJson(String str) => BerTvl.fromJson(json.decode(str));

@@ -1,4 +1,4 @@
-import 'package:emvqrcode/src/models/cmp/ber_tvl.dart';
+import 'ber_tvl.dart';
 
 class CommonDataTemplateModel {
   CommonDataTemplateModel({this.berTvl, this.commonDataTransparentTemplates});

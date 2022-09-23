@@ -1,10 +1,6 @@
-import '../errors/emv_error_model.dart';
-
-// To parse this JSON data, do
-//
-//     final parserModel = parserModelFromJson(jsonString);
-
 import 'dart:convert';
+
+import '../errors/emv_error_model.dart';
 
 ParserModel parserModelFromJson(String str) =>
     ParserModel.fromJson(json.decode(str));

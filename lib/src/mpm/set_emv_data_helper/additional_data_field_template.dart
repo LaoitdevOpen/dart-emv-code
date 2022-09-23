@@ -1,8 +1,8 @@
-import 'package:emvqrcode/src/constants/additional_id.dart';
-import 'package:emvqrcode/src/errors/set_emv_value_err.dart';
-import 'package:emvqrcode/src/models/additoinal_data_field_template.dart';
-import 'package:emvqrcode/src/models/tlv_model.dart';
-import 'package:emvqrcode/src/mpm/emv_types.dart';
+import '../../constants/additional_id.dart';
+import '../../errors/set_emv_value_err.dart';
+import '../../models/additoinal_data_field_template.dart';
+import '../../models/tlv_model.dart';
+import '../emv_types.dart';
 
 /// set additional data field template
 class AdditionalDataFieldTemplate {
