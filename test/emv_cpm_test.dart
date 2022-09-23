@@ -1,8 +1,4 @@
-import 'package:emvqrcode/src/cpm/set_emv_cpm/application_template.dart';
-import 'package:emvqrcode/src/cpm/emv_cpm.dart';
-import 'package:emvqrcode/src/cpm/set_emv_cpm/common_data_template.dart';
-import 'package:emvqrcode/src/cpm/set_emv_cpm/cpm_emv.dart';
-import 'package:emvqrcode/src/models/cmp/ber_tvl.dart';
+import 'package:emvqrcode/emvqrcode.dart';
 import 'package:test/test.dart';
 
 void main() {
