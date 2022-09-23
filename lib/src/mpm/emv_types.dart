@@ -40,13 +40,6 @@ EMVDeCode parseEMVQR(String payload) {
   List<TLVModel> rfuForEMVCo = [];
   Map<String, UnreservedTemplateModel>? unreservedTemplates = {};
 
-  // final verify = verifyEmvQr(payload);
-  // if (!verify) {
-  //   return EMVDeCode(
-  //       emvqr: null,
-  //       error: EmvError(
-  //           message: "The emv data was wrong", type: EmvErrorType.verifyqrErr));
-  // }
   ParserModel p = newParser(payload);
   EmvqrModel emvqr = EmvqrModel();
 
