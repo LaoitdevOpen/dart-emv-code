@@ -1,4 +1,13 @@
 
+## 1.0.5
+
++ fix issue [invalid length value #3](https://github.com/LaoitdevOpen/dart-emv-code/pull/3)
++ update document
++ update example
++ update test
++ refactor code
+
+
 ## 1.0.4
 
 + Fix decode and crc QR codes including multi-byte chars like Japanese or chinese.
