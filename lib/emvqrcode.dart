@@ -1,5 +1,13 @@
 library emvqrcode;
 
+// export cpm
+export 'src/cpm/set_emv_cpm/application_template.dart';
+export 'src/cpm/set_emv_cpm/common_data_template.dart';
+export 'src/cpm/set_emv_cpm/cpm_emv.dart';
+export 'src/models/cmp/ber_tvl.dart';
+export 'src/cpm/emv_cpm.dart';
+
+// export mpm
 export 'src/models/additoinal_data_field_template.dart';
 export 'src/models/emvqr_model.dart';
 export 'src/models/merchant_account_information.dart';
