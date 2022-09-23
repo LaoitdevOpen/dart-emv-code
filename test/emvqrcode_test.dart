@@ -51,12 +51,11 @@ void main() {
       emvqr.setAdditionalDataFieldTemplate(additionalTemplate);
       // 63 04 9599  // 63 04 C343
       final emvencode = EMVMPM.encode(emvqr);
-      print("custom ------> ${emvencode.toJson()}");
 
       String data =
           "00020101021229280007D1234561313JCB123456789031310007M1234560416MASTER12345678905204531153033925407999.1235802JP5906DONGRI6005TOKYO62240104hoge0504fuga0704piyo63049599";
 
-      expect(data, emvencode.value);
+      expect(emvencode.value, data);
     },
   );
   test("set emv data & encode", () {
@@ -129,12 +128,11 @@ void main() {
     // 63 04 3502
 
     final emvEncode = EMVMPM.encode(emv);
-    expect(
-        "00020001021203200002IT0103abc0203def04200002IT0103abc0203def625201050qwea1006tax id1103cha1202001302135003123510312364410002LA0102MW0209Vientaine0304asfg0404asfg6503bbc6603bbb89230003abs0104qw120204qw126304735A",
-        emvEncode.value);
+    expect(emvEncode.value,
+        "00020001021203200002IT0103abc0203def04200002IT0103abc0203def625201050qwea1006tax id1103cha1202001302135003123510312364410002LA0102MW0209Vientaine0304asfg0404asfg6503bbc6603bbb89230003abs0104qw120204qw126304735A");
   });
 
-  test(" decode emvqr ", () {
+  test("decode emvCo", () {
     String data =
         "00020001021203200002IT0103abc0203def04200002IT0103abc0203def624601050qwea1006tax id1103cha1202135003123510312364410002LA0102MW0209Vientaine0304asfg0404asfg6503bbc6603bbb89230003abs0104qw120204qw1281230003sdf0504ffff0604ffff63042E4E";
     final emvdecode = EMVMPM.decode(data);
@@ -142,7 +140,7 @@ void main() {
     expect(emvdecode.emvqr, isNotNull);
   });
 
-  test(" wrong emvqr ", () {
+  test("emvCo wrong crc", () {
     String wrongData =
         "00020101021138670016A00526628466257701082771041802030010324ZPOSUALNJBWWVYSEIRIESGFE6304D1B9";
     final emvdecode = verifyEmvQr(wrongData);
