@@ -4,7 +4,7 @@ void main(List<String> args) {
   /**
    * generate emv QR code
    */
-  final emv = EMVQR();
+  final emv = MPMQR();
 
   emv.setPayloadFormatIndicator("00");
   emv.setPointOfInitiationMethod("12");
@@ -70,7 +70,7 @@ void main(List<String> args) {
   String emvQrcode =
       "00020101021138670016A00526628466257701082771041802030010324ZPOSUALNJBWWVYSEIRIESGFE6304D1B9";
   // verify emvqr
-  final verified = verifyEmvQr(emvQrcode);
+  final verified = verifyMPMEmvCo(emvQrcode);
   print("result ------> $verified");
 
   /**
@@ -83,7 +83,7 @@ void main(List<String> args) {
 
 // ---------- CPM QRcode -------------------//
 
-  final qr = CPM();
+  final qr = CPMQR();
 
   qr.setDataPayloadFormatIndicator("CPV01");
 

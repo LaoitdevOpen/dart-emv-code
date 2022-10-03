@@ -2,13 +2,14 @@ import 'dart:convert';
 
 import 'package:convert/convert.dart';
 
-import '../constants/cpm/id.dart';
-import '../constants/cpm/tag.dart';
-import '../models/cmp/ber_tvl.dart';
+import '../../constants/cpm/id.dart';
+import '../../constants/cpm/tag.dart';
+import '../../models/cpm/ber_tvl.dart';
 import 'set_emv_cpm/cpm_emv.dart';
 
+/// emv mpm (Consumer Presented Mode)
 class EMVCPM {
-  String? generatePayload(CPM cpm) {
+  String? generatePayload(CPMQR cpm) {
     try {
       String payload = "";
       payload += _format(

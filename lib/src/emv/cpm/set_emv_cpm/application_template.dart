@@ -1,4 +1,4 @@
-import '../../models/cmp/ber_tvl.dart';
+import '../../../models/cpm/ber_tvl.dart';
 
 class ApplicationTemplate {
   BerTvl? _berTvl;

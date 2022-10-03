@@ -3,7 +3,7 @@ import 'package:test/test.dart';
 
 void main() {
   test("encode cmp qrcode", () {
-    final qr = CPM();
+    final qr = CPMQR();
     qr.setDataPayloadFormatIndicator("CPV01");
 
     final appTemplate1 = ApplicationTemplate();

@@ -1,9 +1,9 @@
-import '../../models/cmp/application_template_model.dart';
-import '../../models/cmp/common_data_template_model.dart';
+import '../../../models/cpm/application_template_model.dart';
+import '../../../models/cpm/common_data_template_model.dart';
 import 'application_template.dart';
 import 'common_data_template.dart';
 
-class CPM {
+class CPMQR {
   String? _dataPayloadFormatIndicator;
   final List<ApplicationTemplateModel> _applicationTemplates = [];
   final List<CommonDataTemplateModel> _commonDataTemplates = [];

@@ -28,13 +28,13 @@ class TLVModel {
 
   factory TLVModel.fromJson(Map<String, dynamic> json) => TLVModel(
         tag: json["tag"],
-        length: json["lenght"],
+        length: json["length"],
         value: json["value"],
       );
 
   Map<String, dynamic> toJson() => {
         "tag": tag,
-        "lenght": length,
+        "length": length,
         "value": value,
       };
 }

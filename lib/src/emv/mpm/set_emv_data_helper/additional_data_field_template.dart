@@ -1,8 +1,6 @@
-import '../../constants/additional_id.dart';
-import '../../errors/set_emv_value_err.dart';
-import '../../models/additoinal_data_field_template.dart';
-import '../../models/tlv_model.dart';
-import '../emv_types.dart';
+import '../../../../emvqrcode.dart';
+import '../../../constants/additional_id.dart';
+import '../../../errors/set_emv_value_err.dart';
 
 /// set additional data field template
 class AdditionalDataFieldTemplate {

@@ -1,9 +1,9 @@
-import '../../../emvqrcode.dart';
-import '../../constants/emv_id.dart';
-import '../../errors/set_emv_value_err.dart';
+import '../../../../emvqrcode.dart';
+import '../../../constants/emv_id.dart';
+import '../../../errors/set_emv_value_err.dart';
 
 /// set emv value
-class EMVQR {
+class MPMQR {
   late EmvqrModel value = EmvqrModel();
 
   /// Set payload format inficator
