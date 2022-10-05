@@ -31,4 +31,14 @@ class CPMQR {
           commonDataTemplate.commonDataTransparentTemplates,
     ));
   }
+
+  Map<String, dynamic> toJson() => {
+        "DataPayloadFormatIndicator": _dataPayloadFormatIndicator,
+        "ApplicationTemplates": _applicationTemplates.isEmpty
+            ? _applicationTemplates
+            : List<dynamic>.from(_applicationTemplates.map((x) => x.toJson())),
+        "CommonDataTemplates": _commonDataTemplates.isEmpty
+            ? _commonDataTemplates
+            : List<dynamic>.from(_commonDataTemplates.map((x) => x.toJson())),
+      };
 }
