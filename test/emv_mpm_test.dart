@@ -5,11 +5,11 @@ void main() {
   test(
     "encode emv code",
     () {
-      final emvqr = EMVQR();
+      final mpmqr = MPMQR();
       // 00 02 01        // 00 02 01
-      emvqr.setPayloadFormatIndicator("01");
+      mpmqr.setPayloadFormatIndicator("01");
       // 01 02 12        // 01 02 12
-      emvqr.setPointOfInitiationMethod("12");
+      mpmqr.setPointOfInitiationMethod("12");
       // 29 28                    //
       //    00 07 D123456         //
       //    13 13 JCB1234567890   // 13 13 JCB1234567890
@@ -17,7 +17,7 @@ void main() {
       merchantAccountInformationJCB.setGloballyUniqueIdentifier("D123456");
       merchantAccountInformationJCB.addPaymentNetworkSpecific(
           id: "13", value: "JCB1234567890");
-      emvqr.addMerchantAccountInformation(
+      mpmqr.addMerchantAccountInformation(
           id: "29", value: merchantAccountInformationJCB);
       // 31 31                     //
       //    00 07 M123456          //
@@ -26,20 +26,20 @@ void main() {
       merchantAccountInformationMaster.setGloballyUniqueIdentifier("M123456");
       merchantAccountInformationMaster.addPaymentNetworkSpecific(
           id: "04", value: "MASTER1234567890");
-      emvqr.addMerchantAccountInformation(
+      mpmqr.addMerchantAccountInformation(
           id: "31", value: merchantAccountInformationMaster);
       // 52 04 5311      // 52 04 5311
-      emvqr.setMerchantCategoryCode("5311");
+      mpmqr.setMerchantCategoryCode("5311");
       // 53 03 392       // 53 03 392
-      emvqr.setTransactionCurrency("392");
+      mpmqr.setTransactionCurrency("392");
       // 54 07 999.123   // 54 07 999.123
-      emvqr.setTransactionAmount("999.123");
+      mpmqr.setTransactionAmount("999.123");
       // 58 02 JP        // 58 02 JP
-      emvqr.setCountryCode("JP");
+      mpmqr.setCountryCode("JP");
       // 59 06 DONGRI    // 59 06 DONGRI
-      emvqr.setMerchantName("DONGRI");
+      mpmqr.setMerchantName("DONGRI");
       // 60 05 TOKYO     // 60 05 TOKYO
-      emvqr.setMerchantCity("TOKYO");
+      mpmqr.setMerchantCity("TOKYO");
       // 62 24           // 62 24
       //    01 04 hoge   //    01 04 hoge
       //    05 04 fuga   //    05 04 fuga
@@ -48,9 +48,9 @@ void main() {
       additionalTemplate.setBillNumber("hoge");
       additionalTemplate.setReferenceLabel("fuga");
       additionalTemplate.setTerminalLabel("piyo");
-      emvqr.setAdditionalDataFieldTemplate(additionalTemplate);
+      mpmqr.setAdditionalDataFieldTemplate(additionalTemplate);
       // 63 04 9599  // 63 04 C343
-      final emvencode = EMVMPM.encode(emvqr);
+      final emvencode = EMVMPM.encode(mpmqr);
 
       String data =
           "00020101021229280007D1234561313JCB123456789031310007M1234560416MASTER12345678905204531153033925407999.1235802JP5906DONGRI6005TOKYO62240104hoge0504fuga0704piyo63049599";
@@ -59,7 +59,7 @@ void main() {
     },
   );
   test("set emv data & encode", () {
-    final emv = EMVQR();
+    final emv = MPMQR();
 
     // 00 02 00
     emv.setPayloadFormatIndicator("00");
@@ -143,7 +143,7 @@ void main() {
   test("emvCo wrong crc", () {
     String wrongData =
         "00020101021138670016A00526628466257701082771041802030010324ZPOSUALNJBWWVYSEIRIESGFE6304D1B9";
-    final emvdecode = verifyEmvQr(wrongData);
+    final emvdecode = verifyMPMEmvCo(wrongData);
 
     expect(emvdecode, false);
   });
@@ -152,7 +152,7 @@ void main() {
     String data =
         "00020101021229300012D156000000000510A93FO3230Q31280012D15600000001030812345678520441115802CN5914BEST TRANSPORT6007BEIJING64200002ZH0104最佳运输0202北京540523.7253031565502016233030412340603***0708A60086670902ME91320016A0112233449988770708123456786304A13A";
     final emvdecode = EMVMPM.decode(data);
-    final isValid = verifyEmvQr(data);
+    final isValid = verifyMPMEmvCo(data);
     expect(emvdecode.emvqr, isNotNull);
     expect(isValid, true);
   });
@@ -160,7 +160,7 @@ void main() {
   test("decode emvqr with chinese with wrong crc", () {
     String data =
         "00020101021229300012D156000000000510A93FO3230Q31280012D15600000001030812345678520441115802CN5914BEST TRANSPORT6007BEIJING64200002ZH0104最佳运输0202北京540523.7253031565502016233030412340603***0708A60086670902ME91320016A0112233449988770708123456786304XXXX";
-    final isValid = verifyEmvQr(data);
+    final isValid = verifyMPMEmvCo(data);
     expect(isValid, false);
   });
 }

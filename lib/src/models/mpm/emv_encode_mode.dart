@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import '../errors/emv_error_model.dart';
+import '../../errors/emv_error_model.dart';
 
 EmvEncode emvEncodeFromJson(String str) => EmvEncode.fromJson(json.decode(str));
 String emvEncodeToJson(EmvEncode data) => json.encode(data.toJson());

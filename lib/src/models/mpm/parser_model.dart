@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import '../errors/emv_error_model.dart';
+import '../../errors/emv_error_model.dart';
 
 ParserModel parserModelFromJson(String str) =>
     ParserModel.fromJson(json.decode(str));

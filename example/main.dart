@@ -4,7 +4,7 @@ void main(List<String> args) {
   /**
    * generate emv QR code
    */
-  final emv = EMVQR();
+  final emv = MPMQR();
 
   emv.setPayloadFormatIndicator("00");
   emv.setPointOfInitiationMethod("12");
@@ -70,7 +70,7 @@ void main(List<String> args) {
   String emvQrcode =
       "00020101021138670016A00526628466257701082771041802030010324ZPOSUALNJBWWVYSEIRIESGFE6304D1B9";
   // verify emvqr
-  final verified = verifyEmvQr(emvQrcode);
+  final verified = verifyMPMEmvCo(emvQrcode);
   print("result ------> $verified");
 
   /**
@@ -83,38 +83,34 @@ void main(List<String> args) {
 
 // ---------- CPM QRcode -------------------//
 
-  final qr = CPM();
+  final qr = CPMQR();
 
   qr.setDataPayloadFormatIndicator("CPV01");
 
   final appTemplate1 = ApplicationTemplate();
   appTemplate1.setBerTvl(
-    BerTvl(
-        dataApplicationDefinitionFileName: "A0000000555555",
-        dataApplicationLabel: "Product1"),
+    dataApplicationDefinitionFileName: "A0000000555555",
+    dataApplicationLabel: "Product1",
   );
   qr.addApplicationTemplate(appTemplate1);
 
   final appTemplate2 = ApplicationTemplate();
-  appTemplate2.setBerTvl(BerTvl(
+  appTemplate2.setBerTvl(
       dataApplicationDefinitionFileName: "A0000000666666",
-      dataApplicationLabel: "Product2"));
+      dataApplicationLabel: "Product2");
   qr.addApplicationTemplate(appTemplate2);
 
   final cdt = CommonDataTemplate();
   cdt.setBerTvl(
-    BerTvl(
-        dataApplicationPan: "1234567890123458",
-        dataCardholderName: "CARDHOLDER/EMV",
-        dataLanguagePreference: "ruesdeen"),
+    dataApplicationPan: "1234567890123458",
+    dataCardholderName: "CARDHOLDER/EMV",
+    dataLanguagePreference: "ruesdeen",
   );
   cdt.addCommonDataTransparentTemplates(
-    BerTvl(
-      dataIssuerApplicationData: '06010A03000000',
-      dataApplicationCryptogram: "584FD385FA234BCC",
-      dataApplicationTransactionCounter: "0001",
-      dataUnpredictableNumber: "6D58EF13",
-    ),
+    dataIssuerApplicationData: '06010A03000000',
+    dataApplicationCryptogram: "584FD385FA234BCC",
+    dataApplicationTransactionCounter: "0001",
+    dataUnpredictableNumber: "6D58EF13",
   );
   qr.addCommonDataTemplate(cdt);
 

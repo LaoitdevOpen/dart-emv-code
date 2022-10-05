@@ -1,22 +1,17 @@
 import 'dart:convert';
 
-import '../constants/additional_id.dart';
-import '../constants/emv_id.dart';
-import '../constants/merchant_account_information_id.dart';
-import '../constants/merchant_information_id.dart';
-import '../constants/unreserved_template_id.dart';
-import '../crc16/crc16.dart';
-import '../errors/emv_error_model.dart';
-import '../errors/emv_pattern_err.dart';
-import '../models/additoinal_data_field_template.dart';
-import '../models/emv_decode_model.dart';
-import '../models/emv_encode_mode.dart';
-import '../models/emvqr_model.dart';
-import '../models/merchant_account_information.dart';
-import '../models/merchant_information_langage_template.dart';
-import '../models/parser_model.dart';
-import '../models/tlv_model.dart';
-import '../models/unreserved_template.dart';
+import '../../../emvqrcode.dart';
+import '../../constants/additional_id.dart';
+import '../../constants/emv_id.dart';
+import '../../constants/merchant_account_information_id.dart';
+import '../../constants/merchant_information_id.dart';
+import '../../constants/unreserved_template_id.dart';
+import '../../crc16/crc16.dart';
+import '../../errors/emv_error_model.dart';
+import '../../errors/emv_pattern_err.dart';
+import '../../models/mpm/emv_decode_model.dart';
+import '../../models/mpm/emv_encode_mode.dart';
+import '../../models/mpm/parser_model.dart';
 import 'emv_parser.dart';
 
 // ========================  emv decode ==============================
@@ -682,7 +677,7 @@ String format(String id, String value) {
 /// verify emvqr
 ///
 /// check if emv data is true
-bool verifyEmvQr(String value) {
+bool verifyMPMEmvCo(String value) {
   final emqrForChecksum = value.substring(0, value.length - 4);
   final emqrForCheckEmv = value.substring(value.length - 4, value.length);
   final checksum = CRC16().checkSum(utf8.encode(emqrForChecksum));

@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import '../errors/emv_error_model.dart';
+import '../../errors/emv_error_model.dart';
 import 'emvqr_model.dart';
 
 EMVDeCode emvqrDecodeFromJson(String str) =>

@@ -2,16 +2,17 @@ import 'dart:convert';
 
 import 'package:convert/convert.dart';
 
-import '../constants/cpm/id.dart';
-import '../constants/cpm/tag.dart';
-import '../models/cmp/ber_tvl.dart';
+import '../../constants/cpm/id.dart';
+import '../../constants/cpm/tag.dart';
+import '../../models/cpm/ber_tvl.dart';
 import 'set_emv_cpm/cpm_emv.dart';
 
+/// emv mpm (Consumer Presented Mode)
 class EMVCPM {
-  String? generatePayload(CPM cpm) {
+  String? generatePayload(CPMQR cpm) {
     try {
       String payload = "";
-      payload += _format(
+      payload += _formatBerTvlVal(
             id: ID.payloadFormatIndicator,
             value: _toHex(cpm.dataPayloadFormatIndicator),
           ) ??
@@ -30,13 +31,13 @@ class EMVCPM {
                 in specificTransparentTemplates) {
               String _specificTransparentTemplate =
                   _formattingTemplate(specificTransparentTemplate) ?? "";
-              _applicationTemplate += _format(
+              _applicationTemplate += _formatBerTvlVal(
                       id: ID.applicationSpecificTransparentTemplate,
                       value: _specificTransparentTemplate) ??
                   "";
             }
           }
-          payload += _format(
+          payload += _formatBerTvlVal(
                   id: ID.applicationTemplate, value: _applicationTemplate) ??
               "";
         }
@@ -51,15 +52,15 @@ class EMVCPM {
             for (var transparentTemplate in transparentTemplates) {
               String _transparentTemplate =
                   _formattingTemplate(transparentTemplate) ?? "";
-              _commonDataTemplate += _format(
+              _commonDataTemplate += _formatBerTvlVal(
                       id: ID.commonDataTransparentTemplate,
                       value: _transparentTemplate) ??
                   "";
             }
           }
-          payload +=
-              _format(id: ID.commonDataTemplate, value: _commonDataTemplate) ??
-                  "";
+          payload += _formatBerTvlVal(
+                  id: ID.commonDataTemplate, value: _commonDataTemplate) ??
+              "";
         }
       }
       final decoded = hex.decode(payload);
@@ -83,7 +84,7 @@ class EMVCPM {
     return "";
   }
 
-  String? _format({String? id, String? value}) {
+  String? _formatBerTvlVal({String? id, String? value}) {
     if (id != null && id.isNotEmpty && value != null && value.isNotEmpty) {
       final length = (value.length ~/ 2);
       String hexLength = length.toRadixString(16);
@@ -102,14 +103,14 @@ class EMVCPM {
       String template = "";
       // format file name
       if (berTvl.dataApplicationDefinitionFileName != null) {
-        template += _format(
+        template += _formatBerTvlVal(
                 id: TAG.applicationDefinitionFileName,
                 value: berTvl.dataApplicationDefinitionFileName) ??
             "";
       }
       // format label
       if (berTvl.dataApplicationLabel != null) {
-        template += _format(
+        template += _formatBerTvlVal(
                 id: TAG.applicationLabel,
                 value: _toHex(berTvl.dataApplicationLabel)) ??
             "";
@@ -117,76 +118,76 @@ class EMVCPM {
 
       // format label
       if (berTvl.dataTrack2EquivalentData != null) {
-        template += _format(
+        template += _formatBerTvlVal(
                 id: TAG.track2EquivalentData,
                 value: berTvl.dataTrack2EquivalentData) ??
             "";
       }
 
       if (berTvl.dataApplicationPan != null) {
-        template +=
-            _format(id: TAG.applicationPAN, value: berTvl.dataApplicationPan) ??
-                "";
+        template += _formatBerTvlVal(
+                id: TAG.applicationPAN, value: berTvl.dataApplicationPan) ??
+            "";
       }
       if (berTvl.dataCardholderName != null) {
-        template += _format(
+        template += _formatBerTvlVal(
                 id: TAG.cardholderName,
                 value: _toHex(berTvl.dataCardholderName)) ??
             "";
       }
       if (berTvl.dataLanguagePreference != null) {
-        template += _format(
+        template += _formatBerTvlVal(
                 id: TAG.languagePreference,
                 value: _toHex(berTvl.dataLanguagePreference)) ??
             "";
       }
       if (berTvl.dataIssuerUrl != null) {
-        template +=
-            _format(id: TAG.issuerURL, value: _toHex(berTvl.dataIssuerUrl)) ??
-                "";
+        template += _formatBerTvlVal(
+                id: TAG.issuerURL, value: _toHex(berTvl.dataIssuerUrl)) ??
+            "";
       }
       if (berTvl.dataApplicationVersionNumber != null) {
-        template += _format(
+        template += _formatBerTvlVal(
                 id: TAG.applicationVersionNumber,
                 value: berTvl.dataApplicationVersionNumber) ??
             "";
       }
       if (berTvl.dataIssuerApplicationData != null) {
-        template += _format(
+        template += _formatBerTvlVal(
                 id: TAG.issuerApplicationData,
                 value: berTvl.dataIssuerApplicationData) ??
             "";
       }
       if (berTvl.dataTokenRequestorId != null) {
-        template += _format(
+        template += _formatBerTvlVal(
                 id: TAG.tokenRequestorID, value: berTvl.dataTokenRequestorId) ??
             "";
       }
       if (berTvl.dataPaymentAccountReference != null) {
-        template += _format(
+        template += _formatBerTvlVal(
                 id: TAG.paymentAccountReference,
                 value: berTvl.dataPaymentAccountReference) ??
             "";
       }
       if (berTvl.dataLast4DigitsOfPan != null) {
-        template += _format(
+        template += _formatBerTvlVal(
                 id: TAG.last4DigitsOfPAN, value: berTvl.dataLast4DigitsOfPan) ??
             "";
       }
       if (berTvl.dataApplicationCryptogram != null) {
-        template += _format(
+        template += _formatBerTvlVal(
                 id: TAG.applicationCryptogram,
                 value: berTvl.dataApplicationCryptogram) ??
             "";
       }
       if (berTvl.dataApplicationTransactionCounter != null) {
-        template += _format(
+        template += _formatBerTvlVal(
                 id: TAG.applicationTransactionCounter,
                 value: berTvl.dataApplicationTransactionCounter) ??
             "";
       }
       if (berTvl.dataUnpredictableNumber != null) {
-        template += _format(
+        template += _formatBerTvlVal(
                 id: TAG.unpredictableNumber,
                 value: berTvl.dataUnpredictableNumber) ??
             "";

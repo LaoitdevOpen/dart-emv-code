@@ -1,5 +1,5 @@
-import '../errors/emv_error_model.dart';
-import '../models/parser_model.dart';
+import '../../errors/emv_error_model.dart';
+import '../../models/mpm/parser_model.dart';
 
 const int idWordCount = 2;
 const int valueLengthWordCount = 2;

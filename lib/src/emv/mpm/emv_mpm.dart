@@ -1,9 +1,9 @@
-import '../models/emv_decode_model.dart';
-import '../models/emv_encode_mode.dart';
+import '../../models/mpm/emv_decode_model.dart';
+import '../../models/mpm/emv_encode_mode.dart';
 import 'emv_types.dart';
 import 'set_emv_data_helper/set_emv_info.dart';
 
-/// emv mpm type
+/// emv mpm (Merchant Presented Mode)
 class EMVMPM {
   /// mpm decode
   static EMVDeCode decode(String payLoad) {
@@ -15,7 +15,7 @@ class EMVMPM {
   }
 
   /// mpm encode
-  static EmvEncode encode(EMVQR emv) {
+  static EmvEncode encode(MPMQR emv) {
     var emvqr = generatePayload(emv.value);
     return emvqr;
   }
