@@ -68,8 +68,10 @@ class MerchantInformationLanguageTemplateValue {
         languagePreference: TLVModel.fromJson(json["languagePreference"]),
         merchantName: TLVModel.fromJson(json["merchantName"]),
         merchantCity: TLVModel.fromJson(json["merchantCity"]),
-        rfuForEMVCo: List<TLVModel>.from(
-            json["rfuForEMVCo"].map((x) => TLVModel.fromJson(x))),
+        rfuForEMVCo: json["rfuForEMVCo"] == null
+            ? []
+            : List<TLVModel>.from(
+                json["rfuForEMVCo"].map((x) => TLVModel.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -79,6 +81,6 @@ class MerchantInformationLanguageTemplateValue {
         "merchantCity": merchantCity != null ? merchantCity!.toJson() : null,
         "rfuForEMVCo": rfuForEMVCo != null
             ? List<dynamic>.from(rfuForEMVCo!.map((x) => x.toJson()))
-            : null,
+            : [],
       };
 }

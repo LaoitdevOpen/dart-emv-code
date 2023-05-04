@@ -152,7 +152,7 @@ class EmvqrModel {
         "countryCode": countryCode?.toJson(),
         "merchantName": merchantName?.toJson(),
         "merchantCity": merchantCity?.toJson(),
-        "postalCode": postalCode?.toString(),
+        "postalCode": postalCode?.toJson(),
         "additionalDataFieldTemplate": additionalDataFieldTemplate?.toJson(),
         "crc": crc?.toJson(),
         "merchantInformationLanguageTemplate":
