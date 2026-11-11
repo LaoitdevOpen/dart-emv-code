@@ -1,6 +1,6 @@
 import '../../constants/merchant_information_id.dart';
 import '../../errors/set_emv_value_err.dart';
-import '../../models/merchant_information_langage_template.dart';
+import '../../models/merchant_information_language_template.dart';
 import '../../models/tlv_model.dart';
 import '../emv_types.dart';
 
@@ -12,7 +12,7 @@ class MerchantInformationLanguageTemplate {
   /// Set language preferencer
   ///
   /// length of [value] is 2.
-  setLanguagePreferencer(String value) {
+  void setLanguagePreferencer(String value) {
     if (value.length != 2) {
       throw ValueLengthErr(title: "LanguagePreferencer", length: "2");
     }
@@ -24,7 +24,7 @@ class MerchantInformationLanguageTemplate {
   /// Set merchant name
   ///
   /// length of [value] is 1 up to 25.
-  setMerchantName(String value) {
+  void setMerchantName(String value) {
     if (value.length > 25) {
       throw MaxValueLengthErr(title: "MerchantName", length: "25");
     }
@@ -35,7 +35,7 @@ class MerchantInformationLanguageTemplate {
   /// Set merchant city
   ///
   /// length of [value] is 1 up to 15.
-  setMerchantCity(String value) {
+  void setMerchantCity(String value) {
     if (value.length > 15) {
       throw MaxValueLengthErr(title: "MerchantCity", length: "25");
     }
@@ -47,7 +47,7 @@ class MerchantInformationLanguageTemplate {
   ///
   /// RFU for EMVCo is list type. u can add more than one item.
   /// [id] id is "03" to "99".
-  addRfuForEMVCo({String? id, String? value}) {
+  void addRfuForEMVCo({String? id, String? value}) {
     if (id != null && value != null) {
       if (int.parse(id) <
               int.parse(MerchantInformationID.rfuForEMVCoRangeStart) ||

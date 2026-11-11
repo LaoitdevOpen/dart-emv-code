@@ -18,7 +18,7 @@ class EMVCPM {
           "";
       if (cpm.applicationTemplates.isNotEmpty) {
         for (var applicationTemplate in cpm.applicationTemplates) {
-          String _applicationTemplate =
+          String applicationTemplateStr =
               _formattingTemplate(applicationTemplate.berTvl ?? BerTvl()) ?? "";
 
           if (applicationTemplate.applicationSpecificTransparentTemplates !=
@@ -28,37 +28,37 @@ class EMVCPM {
                     [];
             for (var specificTransparentTemplate
                 in specificTransparentTemplates) {
-              String _specificTransparentTemplate =
+              String specificTransparentTemplateStr =
                   _formattingTemplate(specificTransparentTemplate) ?? "";
-              _applicationTemplate += _format(
+              applicationTemplateStr += _format(
                       id: ID.applicationSpecificTransparentTemplate,
-                      value: _specificTransparentTemplate) ??
+                      value: specificTransparentTemplateStr) ??
                   "";
             }
           }
           payload += _format(
-                  id: ID.applicationTemplate, value: _applicationTemplate) ??
+                  id: ID.applicationTemplate, value: applicationTemplateStr) ??
               "";
         }
       }
       if (cpm.commonDataTemplates.isNotEmpty) {
         for (var commonDataTemplate in cpm.commonDataTemplates) {
-          String _commonDataTemplate =
+          String commonDataTemplateStr =
               _formattingTemplate(commonDataTemplate.berTvl ?? BerTvl()) ?? "";
           if (commonDataTemplate.commonDataTransparentTemplates != null) {
             final transparentTemplates =
                 commonDataTemplate.commonDataTransparentTemplates ?? [];
             for (var transparentTemplate in transparentTemplates) {
-              String _transparentTemplate =
+              String transparentTemplateStr =
                   _formattingTemplate(transparentTemplate) ?? "";
-              _commonDataTemplate += _format(
+              commonDataTemplateStr += _format(
                       id: ID.commonDataTransparentTemplate,
-                      value: _transparentTemplate) ??
+                      value: transparentTemplateStr) ??
                   "";
             }
           }
           payload +=
-              _format(id: ID.commonDataTemplate, value: _commonDataTemplate) ??
+              _format(id: ID.commonDataTemplate, value: commonDataTemplateStr) ??
                   "";
         }
       }
@@ -74,10 +74,10 @@ class EMVCPM {
   String _toHex(String? value) {
     if (value != null && value.isNotEmpty) {
       // gen byte data
-      final _src = utf8.encode(value);
+      final srcStr = utf8.encode(value);
 
       // hex
-      final hexCode = hex.encode(_src);
+      final hexCode = hex.encode(srcStr);
       return hexCode;
     }
     return "";

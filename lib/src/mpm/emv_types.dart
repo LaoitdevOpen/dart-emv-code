@@ -9,12 +9,12 @@ import '../crc16/crc16.dart';
 import '../errors/emv_error_model.dart';
 import '../errors/emv_pattern_err.dart';
 import '../errors/set_emv_value_err.dart';
-import '../models/additoinal_data_field_template.dart';
+import '../models/additional_data_field_template.dart';
 import '../models/emv_decode_model.dart';
 import '../models/emv_encode_mode.dart';
 import '../models/emvqr_model.dart';
 import '../models/merchant_account_information.dart';
-import '../models/merchant_information_langage_template.dart';
+import '../models/merchant_information_language_template.dart';
 import '../models/parser_model.dart';
 import '../models/tlv_model.dart';
 import '../models/unreserved_template.dart';
@@ -450,15 +450,15 @@ MerchantAccountInformationValue _parseMerchantAccountInformation(
 
 MerchantAccountInformationModel _addMerchantAccountInformation(
     String id, MerchantAccountInformationValue value) {
-  String _globally =
+  String globally =
       "${value.globallyUniqueIdentifier?.tag}${value.globallyUniqueIdentifier?.length}${value.globallyUniqueIdentifier?.value}";
-  String _payment = "";
+  String payment = "";
   value.paymentNetworkSpecific?.forEach((element) {
-    _payment += "${element.tag}${element.length}${element.value}";
+    payment += "${element.tag}${element.length}${element.value}";
   });
 
   MerchantAccountInformationModel mTLV = MerchantAccountInformationModel(
-      tag: id, length: getValueLength(_globally + _payment), value: value);
+      tag: id, length: getValueLength(globally + payment), value: value);
   return mTLV;
 }
 
@@ -495,15 +495,15 @@ UnreservedTemplateValue _parseUnreservedTemplate(String payLoad) {
 
 UnreservedTemplateModel _addUnreservedTemplates(
     String id, UnreservedTemplateValue value) {
-  String _globally =
+  String globally =
       "${value.globallyUniqueIdentifier?.tag}${value.globallyUniqueIdentifier?.length}${value.globallyUniqueIdentifier?.value}";
-  String _contextSpec = "";
+  String contextSpec = "";
   value.contextSpecificData?.forEach((element) {
-    _contextSpec += "${element.tag}${element.length}${element.value}";
+    contextSpec += "${element.tag}${element.length}${element.value}";
   });
   UnreservedTemplateModel uTLV = UnreservedTemplateModel(
     tag: id,
-    length: getValueLength(_globally + _contextSpec),
+    length: getValueLength(globally + contextSpec),
     value: value,
   );
   return uTLV;
@@ -529,14 +529,14 @@ EmvEncode generatePayload(EmvqrModel emv) {
       final merchantAcInfo = emv.merchantAccountInformation?.entries
           .firstWhere((element) => element.key == key);
 
-      String _globallyUnique =
+      String globallyUnique =
           tlvToString(merchantAcInfo?.value.value?.globallyUniqueIdentifier);
-      String _paymentNS = "";
+      String paymentNS = "";
       merchantAcInfo?.value.value?.paymentNetworkSpecific?.forEach((tlv) {
-        _paymentNS += tlvToString(tlv);
+        paymentNS += tlvToString(tlv);
       });
       s +=
-          "${merchantAcInfo?.value.tag}${merchantAcInfo?.value.length}$_globallyUnique$_paymentNS";
+          "${merchantAcInfo?.value.tag}${merchantAcInfo?.value.length}$globallyUnique$paymentNS";
     }
     s += tlvToString(emv.merchantCategoryCode);
     s += tlvToString(emv.transactionCurrency);
