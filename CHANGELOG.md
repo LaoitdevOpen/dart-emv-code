@@ -1,3 +1,14 @@
+## Unreleased
+
++ require Dart SDK `^3.8.0`
++ fix `postalCode` being serialised as `Instance of 'TLVModel'` in `toJson`
++ fix `toJson` crash on merchant account information without payment network items
++ fix MPM lengths: count characters, and reject values longer than 99
++ fix `verifyEmvQr` and `tlvToString` on incomplete input
++ `setTransactionCurrency` now reports the right field name in its error
++ add unit tests for MPM, CPM, CRC16, models and errors
++ document field rules, error handling and decode/verify results in the README
+
 
 ## 1.0.5
 
