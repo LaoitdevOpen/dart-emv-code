@@ -9,11 +9,11 @@ class ApplicationTemplate {
   List<BerTvl> get applicationSpecificTransparentTemplates =>
       _applicationSpecificTransparentTemplates;
 
-  addApplicationSpecificTransparentTemplates(BerTvl berTvl) {
+  void addApplicationSpecificTransparentTemplates(BerTvl berTvl) {
     _applicationSpecificTransparentTemplates.add(berTvl);
   }
 
-  setBerTvl(BerTvl? berTvl) {
+  void setBerTvl(BerTvl? berTvl) {
     _berTvl = berTvl;
   }
 }

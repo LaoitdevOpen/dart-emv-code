@@ -1,8 +1,8 @@
 import 'dart:convert';
 
-import 'additoinal_data_field_template.dart';
+import 'additional_data_field_template.dart';
 import 'merchant_account_information.dart';
-import 'merchant_information_langage_template.dart';
+import 'merchant_information_language_template.dart';
 import 'tlv_model.dart';
 import 'unreserved_template.dart';
 
@@ -152,7 +152,7 @@ class EmvqrModel {
         "countryCode": countryCode?.toJson(),
         "merchantName": merchantName?.toJson(),
         "merchantCity": merchantCity?.toJson(),
-        "postalCode": postalCode?.toString(),
+        "postalCode": postalCode?.toJson(),
         "additionalDataFieldTemplate": additionalDataFieldTemplate?.toJson(),
         "crc": crc?.toJson(),
         "merchantInformationLanguageTemplate":

@@ -1,6 +1,6 @@
 import '../../constants/additional_id.dart';
 import '../../errors/set_emv_value_err.dart';
-import '../../models/additoinal_data_field_template.dart';
+import '../../models/additional_data_field_template.dart';
 import '../../models/tlv_model.dart';
 import '../emv_types.dart';
 
@@ -12,7 +12,7 @@ class AdditionalDataFieldTemplate {
   /// Set bill number
   ///
   /// length limit of [value] 1 up to 25.
-  setBillNumber(String value) {
+  void setBillNumber(String value) {
     if (value.length > 25) {
       throw MaxValueLengthErr(title: "BillNumber", length: "25");
     }
@@ -23,7 +23,7 @@ class AdditionalDataFieldTemplate {
   /// Set mobile number
   ///
   /// length of [value] is 1 up to 25.
-  setMobileNumber(String value) {
+  void setMobileNumber(String value) {
     if (value.length > 25) {
       throw MaxValueLengthErr(title: "MobileNumber", length: "25");
     }
@@ -34,7 +34,7 @@ class AdditionalDataFieldTemplate {
   /// Set store label
   ///
   /// length of [value] is 1 up to 25.
-  setStoreLabel(String value) {
+  void setStoreLabel(String value) {
     if (value.length > 25) {
       throw MaxValueLengthErr(title: "StoreLabel", length: "25");
     }
@@ -45,7 +45,7 @@ class AdditionalDataFieldTemplate {
   /// Set loyalty number
   ///
   /// length of [value] is 1 up to 25.
-  setLoyaltyNumber(String value) {
+  void setLoyaltyNumber(String value) {
     if (value.length > 25) {
       throw MaxValueLengthErr(title: "LoyaltyNumber", length: "25");
     }
@@ -56,7 +56,7 @@ class AdditionalDataFieldTemplate {
   /// Set reference label
   ///
   /// length of [value] is 1 up to 25.
-  setReferenceLabel(String value) {
+  void setReferenceLabel(String value) {
     if (value.length > 25) {
       throw MaxValueLengthErr(title: "ReferenceLabel", length: "25");
     }
@@ -67,7 +67,7 @@ class AdditionalDataFieldTemplate {
   /// Set customer label
   ///
   /// length of [value] is 1 up to 25.
-  setCustomerLabel(String value) {
+  void setCustomerLabel(String value) {
     if (value.length > 25) {
       throw MaxValueLengthErr(title: "CustomerLabel", length: "25");
     }
@@ -78,7 +78,7 @@ class AdditionalDataFieldTemplate {
   /// Set terminal label
   ///
   /// length of [value] is 1 up to 25.
-  setTerminalLabel(String value) {
+  void setTerminalLabel(String value) {
     if (value.length > 25) {
       throw MaxValueLengthErr(title: "TerminalLabel", length: "25");
     }
@@ -89,7 +89,7 @@ class AdditionalDataFieldTemplate {
   /// Set purpose transaction
   ///
   /// length of [value] is 1 up to 25.
-  setPurposeTransaction(String value) {
+  void setPurposeTransaction(String value) {
     if (value.length > 25) {
       throw MaxValueLengthErr(title: "PurposeTransaction", length: "25");
     }
@@ -100,7 +100,7 @@ class AdditionalDataFieldTemplate {
   /// Set additional consumer data request
   ///
   /// length of [value] is 1 up to 3.
-  setAdditionalConsumerDataRequest(String value) {
+  void setAdditionalConsumerDataRequest(String value) {
     if (value.length > 3) {
       throw MaxValueLengthErr(
           title: "AdditionalConsumerDataRequest", length: "3");
@@ -115,7 +115,7 @@ class AdditionalDataFieldTemplate {
   /// merchant tax id
   ///
   /// length of [value] is 1 up to 20.
-  setMerchantTaxID(String value) {
+  void setMerchantTaxID(String value) {
     if (value.length > 20) {
       throw MaxValueLengthErr(title: "MerchantTaxID", length: "20");
     }
@@ -126,7 +126,7 @@ class AdditionalDataFieldTemplate {
   /// Set merchant channel
   ///
   /// length of [value] is 3.
-  setMerchantChannel(String value) {
+  void setMerchantChannel(String value) {
     if (value.length != 3) {
       throw ValueLengthErr(title: "MerchantChannel", length: "3");
     }
@@ -139,7 +139,7 @@ class AdditionalDataFieldTemplate {
   ///
   /// RFU for EMVCo is list type. u can add more than one item.
   /// [id] id is "12" to "49"
-  addRfuForEMVCo({String? id, String? value}) {
+  void addRfuForEMVCo({String? id, String? value}) {
     if (id != null && value != null) {
       if (int.parse(id) < int.parse(AdditionalID.rfuForEMVCoRangeStart) ||
           int.parse(id) > int.parse(AdditionalID.rfuForEMVCoRangeEnd)) {
@@ -161,7 +161,7 @@ class AdditionalDataFieldTemplate {
   ///
   /// payment system specific is list type. u can add more than one item.
   /// [id] id is "50" to "99".
-  addPaymentSystemSpecific({String? id, String? value}) {
+  void addPaymentSystemSpecific({String? id, String? value}) {
     if (id != null && value != null) {
       if (int.parse(id) <
               int.parse(

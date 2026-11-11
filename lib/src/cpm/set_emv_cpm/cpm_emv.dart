@@ -13,18 +13,18 @@ class CPM {
       _applicationTemplates;
   List<CommonDataTemplateModel> get commonDataTemplates => _commonDataTemplates;
 
-  setDataPayloadFormatIndicator(String value) {
+  void setDataPayloadFormatIndicator(String value) {
     _dataPayloadFormatIndicator = value;
   }
 
-  addApplicationTemplate(ApplicationTemplate applicationTemplate) {
+  void addApplicationTemplate(ApplicationTemplate applicationTemplate) {
     _applicationTemplates.add(ApplicationTemplateModel(
         berTvl: applicationTemplate.berTvl,
         applicationSpecificTransparentTemplates:
             applicationTemplate.applicationSpecificTransparentTemplates));
   }
 
-  addCommonDataTemplate(CommonDataTemplate commonDataTemplate) {
+  void addCommonDataTemplate(CommonDataTemplate commonDataTemplate) {
     _commonDataTemplates.add(CommonDataTemplateModel(
       berTvl: commonDataTemplate.berTvl,
       commonDataTransparentTemplates:

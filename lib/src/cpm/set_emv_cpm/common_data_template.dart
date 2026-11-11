@@ -9,11 +9,11 @@ class CommonDataTemplate {
   List<BerTvl>? get commonDataTransparentTemplates =>
       _commonDataTransparentTemplates;
 
-  addCommonDataTransparentTemplates(BerTvl berTvl) {
+  void addCommonDataTransparentTemplates(BerTvl berTvl) {
     _commonDataTransparentTemplates.add(berTvl);
   }
 
-  setBerTvl(BerTvl? berTvl) {
+  void setBerTvl(BerTvl? berTvl) {
     _berTvl = berTvl;
   }
 }
