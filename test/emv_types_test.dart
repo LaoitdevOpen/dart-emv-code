@@ -6,8 +6,8 @@ void main() {
   group('getValueLength', () {
     test('pads to two digits', () => expect(getValueLength('abc'), '03'));
     test('empty string is 00', () => expect(getValueLength(''), '00'));
-    test('counts UTF-8 bytes, not characters',
-        () => expect(getValueLength('最佳'), '06'));
+    test('counts characters, not UTF-8 bytes',
+        () => expect(getValueLength('最佳'), '02'));
   });
 
   group('setTLV', () {
@@ -35,8 +35,8 @@ void main() {
   group('format', () {
     test('adds id and byte length',
         () => expect(format('63', 'ABCD'), '6304ABCD'));
-    test('length of multi-byte value uses UTF-8 bytes',
-        () => expect(format('59', '最'), '5903最'));
+    test('length of multi-byte value counts characters',
+        () => expect(format('59', '最'), '5901最'));
   });
 
   group('between', () {

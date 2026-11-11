@@ -8,6 +8,7 @@ import '../constants/unreserved_template_id.dart';
 import '../crc16/crc16.dart';
 import '../errors/emv_error_model.dart';
 import '../errors/emv_pattern_err.dart';
+import '../errors/set_emv_value_err.dart';
 import '../models/additoinal_data_field_template.dart';
 import '../models/emv_decode_model.dart';
 import '../models/emv_encode_mode.dart';
@@ -169,7 +170,12 @@ EMVDeCode parseEMVQR(String payload) {
 }
 
 String getValueLength(String value) {
-  return "${utf8.encode(value).length}".padLeft(2, '0');
+  // EMV MPM lengths count characters (the CRC is computed over UTF-8 bytes).
+  final length = value.length;
+  if (length > 99) {
+    throw MaxValueLengthErr(title: "value", length: "99");
+  }
+  return "$length".padLeft(2, '0');
 }
 
 /// set tlv value
@@ -675,7 +681,7 @@ Map<String, dynamic> _formatCrc(String value) {
 }
 
 String format(String id, String value) {
-  final valueLength = "${utf8.encode(value).length}".padLeft(2, '0');
+  final valueLength = getValueLength(value);
   return "$id$valueLength$value".trim();
 }
 
