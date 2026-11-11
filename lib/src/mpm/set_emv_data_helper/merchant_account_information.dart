@@ -1,6 +1,5 @@
 import '../../../emvqrcode.dart';
 import '../../constants/merchant_account_information_id.dart';
-import '../../errors/set_emv_value_err.dart';
 
 /// set merchant account information
 class MerchantAccountInformation {

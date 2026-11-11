@@ -168,10 +168,23 @@ Ids are checked too: merchant account information `02`-`51`, RFU for EMVCo
 ```dart
 try {
   emv.setCountryCode("LAO");
-} catch (e) {
+} on ValueLengthErr catch (e) {
   print(e); // length of countryCode value must be 2
 }
 ```
+
+The exceptions are exported from the package:
+
+| Exception | Thrown when |
+| --------- | ----------- |
+| `ValueLengthErr` | a value must be an exact length and is not |
+| `MaxValueLengthErr` | a value is longer than its maximum |
+| `InvalidId` | an id is outside its allowed range |
+
+`decode` and `encode` report problems through `error`, an `EmvError` whose
+`type` is an `EmvErrorType` (for example `notEmvType`).
+
+See [`example/main.dart`](example/main.dart) for a complete walkthrough.
 
 Lengths count characters, not UTF-8 bytes, as the EMV MPM spec requires, so a
 name such as `最佳运输` has length `04`. The CRC is still computed over the UTF-8

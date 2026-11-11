@@ -1,5 +1,4 @@
 import 'package:emvqrcode/emvqrcode.dart';
-import 'package:emvqrcode/src/errors/emv_error_model.dart';
 import 'package:emvqrcode/src/models/emv_decode_model.dart';
 import 'package:emvqrcode/src/models/emv_encode_mode.dart';
 import 'package:test/test.dart';

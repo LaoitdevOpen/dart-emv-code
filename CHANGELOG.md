@@ -6,6 +6,8 @@
 + fix MPM lengths: count characters, and reject values longer than 99
 + fix `verifyEmvQr` and `tlvToString` on incomplete input
 + `setTransactionCurrency` now reports the right field name in its error
++ export `ValueLengthErr`, `MaxValueLengthErr`, `InvalidId` and `EmvError` so they can be caught by type
++ add error handling to the example
 + add unit tests for MPM, CPM, CRC16, models and errors
 + document field rules, error handling and decode/verify results in the README
 

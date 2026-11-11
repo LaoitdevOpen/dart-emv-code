@@ -6,6 +6,10 @@ export 'src/cpm/set_emv_cpm/cpm_emv.dart';
 export 'src/models/cmp/ber_tvl.dart';
 export 'src/cpm/emv_cpm.dart';
 
+// export errors
+export 'src/errors/emv_error_model.dart';
+export 'src/errors/set_emv_value_err.dart';
+
 // export mpm
 export 'src/models/additional_data_field_template.dart';
 export 'src/models/emvqr_model.dart';

@@ -1,5 +1,4 @@
 import 'package:emvqrcode/emvqrcode.dart';
-import 'package:emvqrcode/src/errors/set_emv_value_err.dart';
 import 'package:test/test.dart';
 
 void main() {
