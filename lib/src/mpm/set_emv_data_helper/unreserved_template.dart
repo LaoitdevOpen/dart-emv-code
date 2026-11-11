@@ -1,6 +1,5 @@
 import '../../../emvqrcode.dart';
 import '../../constants/unreserved_template_id.dart';
-import '../../errors/set_emv_value_err.dart';
 
 /// set unreserved template value
 class UnreservedTemplate {
@@ -9,7 +8,7 @@ class UnreservedTemplate {
   /// globally unique indentifier
   ///
   /// length of [value] is 1 up to 32
-  setGloballyUniqueIdentifier(String value) {
+  void setGloballyUniqueIdentifier(String value) {
     if (value.length > 32) {
       throw MaxValueLengthErr(title: "GloballyUniqueIdentifier", length: "32");
     }
@@ -23,7 +22,7 @@ class UnreservedTemplate {
   ///
   /// context specific d ata is list type. u can add more than one item.
   /// [id] id is "01" to "99"
-  addContextSpecificData({String? id, String? value}) {
+  void addContextSpecificData({String? id, String? value}) {
     if (id != null && value != null) {
       if (int.parse(id) <
               int.parse(UnreservedTemplateID.contextSpecificDataStart) ||

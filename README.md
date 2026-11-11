@@ -5,42 +5,77 @@
 > information about EMVCO
 > [www.emvco.com](https://www.emvco.com/)
 
-## Usage
+## Requirements
+
+Dart SDK `^3.8.0` or newer.
 
 ## Install
 
-Run this command:
-
 ```cmd
-
 // flutter
 $> flutter pub add emvqrcode
 
 // or for dart
 $> dart pub add emvqrcode
-
 ```
 
 pubspec.yaml:
 
 ```yaml
 dependencies:
-  emvqrcode: ^1.0.5
+  emvqrcode: ^1.1.0
 ```
 
-### MPM
-
-#### Decode
+Then import it:
 
 ```dart
-    cost emvqr = "00020001021203200002IT0103abc0203def04200002IT0103abc0203def624601050qwea1006tax id1103cha1202135003123510312364410002LA0102MW0209Vientaine0304asfg0404asfg6503bbc6603bbb89230003abs0104qw120204qw1281230003sdf0504ffff0604ffff63042E4E";
-    final emvdecode = EMVMPM.decode(emvqr);
-
-    // print decode json model
-    debugPrint("emv decode ------> ${emvdecode.toJson()}");
+import 'package:emvqrcode/emvqrcode.dart';
 ```
 
-#### Generate
+## Usage
+
+The package supports two kinds of EMV QR codes:
+
+| Kind | Meaning | Format | Entry points |
+| ---- | ------- | ------ | ------------ |
+| MPM | Merchant-presented mode | TLV text with a CRC16 checksum | `EMVMPM.decode`, `EMVMPM.encode`, `verifyEmvQr` |
+| CPM | Consumer-presented mode | BER-TLV, hex, then base64 | `EMVCPM().generatePayload` |
+
+## MPM
+
+### Quick start
+
+```dart
+final emv = EMVQR()
+  ..setPayloadFormatIndicator("00")
+  ..setPointOfInitiationMethod("12")
+  ..setMerchantName("MW");
+
+final encoded = EMVMPM.encode(emv);
+print(encoded.value); // the QR payload, CRC included
+
+final decoded = EMVMPM.decode(encoded.value!);
+print(decoded.emvqr?.merchantName?.value); // MW
+```
+
+### Decode
+
+`EMVMPM.decode` never throws on bad input. Check `error` before using `emvqr`.
+
+```dart
+const emvqr =
+    "00020001021203200002IT0103abc0203def04200002IT0103abc0203def624601050qwea1006tax id1103cha1202135003123510312364410002LA0102MW0209Vientaine0304asfg0404asfg6503bbc6603bbb89230003abs0104qw120204qw1281230003sdf0504ffff0604ffff63042E4E";
+
+final result = EMVMPM.decode(emvqr);
+
+if (result.error != null) {
+  print(result.error!.message); // for example: qrcode not emvCo type
+} else {
+  print(result.emvqr!.toJson());
+}
+```
+
+### Generate
 
 ```dart
    final emv = EMVQR();
@@ -102,16 +137,64 @@ dependencies:
     // encode data to emvCo
     final emvEncode = EMVMPM.encode(emv);
 
-    // print encode json model
+    // the payload string is in emvEncode.value, any error is in emvEncode.error
     debugPrint("emv encode -------> ${emvEncode.toJson()}");
 
     
     // {emvqr: 00020001021203200002IT0103abc0203def04200002IT0103abc0203def625201050qwea1006tax id1103cha1202001302135003123510312364410002LA0102MW0209Vientaine0304asfg0404asfg6503bbc6603bbb89230003abs0104qw120204qw126304735A, error: null}
 ```
 
+#### Field rules and errors
+
+The setters validate their input and **throw** when a rule is broken, so wrap
+user-supplied values in `try`/`catch`.
+
+| Field | Rule |
+| ----- | ---- |
+| `setPayloadFormatIndicator`, `setPointOfInitiationMethod`, `setTipOrConvenienceIndicator`, `setCountryCode` | exactly 2 characters |
+| `setTransactionCurrency` | exactly 3 characters |
+| `setMerchantCategoryCode` | exactly 4 characters |
+| `setTransactionAmount`, `setValueOfConvenienceFeeFixed` | up to 13 characters |
+| `setValueOfConvenienceFeePercentage` | up to 5 characters |
+| `setMerchantName` | up to 25 characters |
+| `setMerchantCity` | up to 15 characters |
+| `setPostalCode` | up to 10 characters |
+| `MerchantAccountInformation.setGloballyUniqueIdentifier` | up to 32 characters |
+| any other value, and every template as a whole | up to 99 characters |
+
+Ids are checked too: merchant account information `02`-`51`, RFU for EMVCo
+`65`-`79`, unreserved templates `80`-`99`. An id outside its range throws.
+
+```dart
+try {
+  emv.setCountryCode("LAO");
+} on ValueLengthErr catch (e) {
+  print(e); // length of countryCode value must be 2
+}
+```
+
+The exceptions are exported from the package:
+
+| Exception | Thrown when |
+| --------- | ----------- |
+| `ValueLengthErr` | a value must be an exact length and is not |
+| `MaxValueLengthErr` | a value is longer than its maximum |
+| `InvalidId` | an id is outside its allowed range |
+
+`decode` and `encode` report problems through `error`, an `EmvError` whose
+`type` is an `EmvErrorType` (for example `notEmvType`).
+
+See [`example/main.dart`](example/main.dart) for a complete walkthrough.
+
+Lengths count characters, not UTF-8 bytes, as the EMV MPM spec requires, so a
+name such as `最佳运输` has length `04`. The CRC is still computed over the UTF-8
+bytes.
+
 ### Verify CRC EMVCO
 
-if you need to verify whether data in emvCo had changed or not you can use this method.
+`verifyEmvQr` returns `true` when the CRC matches the payload. It returns
+`false`, and does not throw, for a wrong checksum, truncated or malformed TLV
+input, or text that is too short.
 
 ```dart
 
@@ -121,10 +204,10 @@ if you need to verify whether data in emvCo had changed or not you can use this 
     // verify emvqr
     final verified = verifyEmvQr(wrongData);
 
-    if(verified) {
-        debugPrint("emvCo corrected}");
-    }else {
-        debugPrint("emvCo incorrect}");
+    if (verified) {
+        debugPrint("emvCo correct");
+    } else {
+        debugPrint("emvCo incorrect");
     }
 
 ```
@@ -132,6 +215,9 @@ if you need to verify whether data in emvCo had changed or not you can use this 
 ## CPM
 
 ### Generate
+
+`EMVCPM().generatePayload` returns the base64 payload, or `null` when it cannot
+build one.
 
 ```dart
 

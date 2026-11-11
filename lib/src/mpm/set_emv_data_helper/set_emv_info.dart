@@ -1,20 +1,40 @@
-import '../../../emvqrcode.dart';
 import '../../constants/emv_id.dart';
 import '../../errors/set_emv_value_err.dart';
+import '../../models/additional_data_field_template.dart';
+import '../../models/emvqr_model.dart';
+import '../../models/merchant_account_information.dart';
+import '../../models/merchant_information_language_template.dart';
+import '../../models/tlv_model.dart';
+import '../../models/unreserved_template.dart';
+import '../emv_types.dart';
+import 'additional_data_field_template.dart';
+import 'merchant_account_information.dart';
+import 'merchant_information_language_template.dart';
+import 'unreserved_template.dart';
 
 /// set emv value
 class EMVQR {
   late EmvqrModel value = EmvqrModel();
 
+  static void _requireExact(String value, int length, String title) {
+    if (value.length != length) {
+      throw ValueLengthErr(title: title, length: "$length");
+    }
+  }
+
+  static void _requireMax(String value, int length, String title) {
+    if (value.length > length) {
+      throw MaxValueLengthErr(title: title, length: "$length");
+    }
+  }
+
   /// Set payload format inficator
   ///
   /// [value] is only No.
   /// length of [value] is 2.
-  setPayloadFormatIndicator(String? value) {
+  void setPayloadFormatIndicator(String? value) {
     if (value != null) {
-      if (value.length != 2) {
-        throw ValueLengthErr(title: "PayloadFormatIndicator", length: "2");
-      }
+      _requireExact(value, 2, "PayloadFormatIndicator");
       var payloadFormatIndicator = setTLV(value, ID.payloadFormatIndicator);
       this.value =
           this.value.copyWith(payloadFormatIndicator: payloadFormatIndicator);
@@ -25,11 +45,9 @@ class EMVQR {
   ///
   /// [value] is only No.
   /// length of [value] is 2.
-  setPointOfInitiationMethod(String? value) {
+  void setPointOfInitiationMethod(String? value) {
     if (value != null) {
-      if (value.length != 2) {
-        throw ValueLengthErr(title: "PointOfInitiationMethod", length: "2");
-      }
+      _requireExact(value, 2, "PointOfInitiationMethod");
       var pointOfInitiationMethod = setTLV(value, ID.pointOfInitiationMethod);
       this.value =
           this.value.copyWith(pointOfInitiationMethod: pointOfInitiationMethod);
@@ -40,11 +58,9 @@ class EMVQR {
   ///
   /// [value] is only No.
   /// length of [value] is 4.
-  setMerchantCategoryCode(String? value) {
+  void setMerchantCategoryCode(String? value) {
     if (value != null) {
-      if (value.length != 4) {
-        throw ValueLengthErr(title: "MerchantCategoryCode", length: "4");
-      }
+      _requireExact(value, 4, "MerchantCategoryCode");
       var merchantCategoryCode = setTLV(value, ID.merchantCategoryCode);
       this.value =
           this.value.copyWith(merchantCategoryCode: merchantCategoryCode);
@@ -55,11 +71,9 @@ class EMVQR {
   ///
   /// [value] is only No.
   /// length of [value] is 3.
-  setTransactionCurrency(String? value) {
+  void setTransactionCurrency(String? value) {
     if (value != null) {
-      if (value.length != 3) {
-        throw ValueLengthErr(title: "MerchantCategoryCode", length: "3");
-      }
+      _requireExact(value, 3, "TransactionCurrency");
       var transactionCurrency = setTLV(value, ID.transactionCurrency);
       this.value =
           this.value.copyWith(transactionCurrency: transactionCurrency);
@@ -69,11 +83,9 @@ class EMVQR {
   /// set transaction amount
   ///
   /// length limit of [value] is 1 up to 13.
-  setTransactionAmount(String? value) {
+  void setTransactionAmount(String? value) {
     if (value != null) {
-      if (value.length > 13) {
-        throw MaxValueLengthErr(title: "transactionAmount", length: "13");
-      }
+      _requireMax(value, 13, "transactionAmount");
       var transactionAmount = setTLV(value, ID.transactionAmount);
       this.value = this.value.copyWith(transactionAmount: transactionAmount);
     }
@@ -83,11 +95,9 @@ class EMVQR {
   ///
   /// [value] is only No.
   /// length of [value] is 2.
-  setTipOrConvenienceIndicator(String? value) {
+  void setTipOrConvenienceIndicator(String? value) {
     if (value != null) {
-      if (value.length != 2) {
-        throw ValueLengthErr(title: "tipOrConvenienceIndicator", length: "2");
-      }
+      _requireExact(value, 2, "tipOrConvenienceIndicator");
       var tipOrConvenienceIndicator =
           setTLV(value, ID.tipOrConvenienceIndicator);
       this.value = this
@@ -99,12 +109,9 @@ class EMVQR {
   /// set Value Of Convenience Fee Fixed
   ///
   /// length limit of [value] is 1 up to 13.
-  setValueOfConvenienceFeeFixed(String? value) {
+  void setValueOfConvenienceFeeFixed(String? value) {
     if (value != null) {
-      if (value.length > 13) {
-        throw MaxValueLengthErr(
-            title: "valueOfConvenienceFeeFixed", length: "13");
-      }
+      _requireMax(value, 13, "valueOfConvenienceFeeFixed");
       var valueOfConvenienceFeeFixed =
           setTLV(value, ID.valueOfConvenienceFeeFixed);
       this.value = this
@@ -116,12 +123,9 @@ class EMVQR {
   /// set value of convenience fee percentage
   ///
   /// length limit of [value] is 1 up to 5.
-  setValueOfConvenienceFeePercentage(String? value) {
+  void setValueOfConvenienceFeePercentage(String? value) {
     if (value != null) {
-      if (value.length > 5) {
-        throw MaxValueLengthErr(
-            title: "valueOfConvenienceFeePercentage", length: "5");
-      }
+      _requireMax(value, 5, "valueOfConvenienceFeePercentage");
       var valueOfConvenienceFeePercentage =
           setTLV(value, ID.valueOfConvenienceFeePercentage);
       this.value = this.value.copyWith(
@@ -132,11 +136,9 @@ class EMVQR {
   /// set country code
   ///
   /// length of [value] is 2.
-  setCountryCode(String? value) {
+  void setCountryCode(String? value) {
     if (value != null) {
-      if (value.length != 2) {
-        throw ValueLengthErr(title: "countryCode", length: "2");
-      }
+      _requireExact(value, 2, "countryCode");
       var countryCode = setTLV(value, ID.countryCode);
       this.value = this.value.copyWith(countryCode: countryCode);
     }
@@ -145,11 +147,9 @@ class EMVQR {
   /// set merchant name
   ///
   /// length limit of [value] is 1 up to 25.
-  setMerchantName(String? value) {
+  void setMerchantName(String? value) {
     if (value != null) {
-      if (value.length > 25) {
-        throw MaxValueLengthErr(title: "merchantName", length: "25");
-      }
+      _requireMax(value, 25, "merchantName");
       var merchantName = setTLV(value, ID.merchantName);
       this.value = this.value.copyWith(merchantName: merchantName);
     }
@@ -158,11 +158,9 @@ class EMVQR {
   /// set merchant city
   ///
   /// length limit of [value] is 1 up to 15.
-  setMerchantCity(String? value) {
+  void setMerchantCity(String? value) {
     if (value != null) {
-      if (value.length > 15) {
-        throw MaxValueLengthErr(title: "merchantCity", length: "15");
-      }
+      _requireMax(value, 15, "merchantCity");
       var merchantCity = setTLV(value, ID.merchantCity);
       this.value = this.value.copyWith(merchantCity: merchantCity);
     }
@@ -171,14 +169,11 @@ class EMVQR {
   /// set postal code
   ///
   /// length limit of [value] is 1 up to 10.
-  setPostalCode(String? value) {
+  void setPostalCode(String? value) {
     if (value != null) {
-      if (value.length <= 10) {
-        var postalCode = setTLV(value, ID.postalCode);
-        this.value = this.value.copyWith(postalCode: postalCode);
-      } else {
-        throw MaxValueLengthErr(title: "PostalCode", length: "10");
-      }
+      _requireMax(value, 10, "PostalCode");
+      var postalCode = setTLV(value, ID.postalCode);
+      this.value = this.value.copyWith(postalCode: postalCode);
     }
   }
 
@@ -187,7 +182,7 @@ class EMVQR {
   /// merchant account information is map type.
   /// u can add more than one item.
   /// [id] id No. is "02" up to "51".
-  addMerchantAccountInformation(
+  void addMerchantAccountInformation(
       {String? id, MerchantAccountInformation? value}) {
     if (id != null && value != null) {
       if (int.parse(id) < int.parse(ID.merchantAccountInformationRangeStart) ||
@@ -195,16 +190,16 @@ class EMVQR {
         // this.value = this.value.copyWith(unreservedTemplates: {});
         throw InvalidId(title: "MerchantAccountInformation");
       }
-      String _globally =
+      String globally =
           "${value.value.globallyUniqueIdentifier?.tag}${value.value.globallyUniqueIdentifier?.length}${value.value.globallyUniqueIdentifier?.value}";
-      String _payment = "";
+      String payment = "";
       value.value.paymentNetworkSpecific?.forEach((element) {
-        _payment += "${element.tag}${element.length}${element.value}";
+        payment += "${element.tag}${element.length}${element.value}";
       });
 
       MerchantAccountInformationModel mTLV = MerchantAccountInformationModel(
           tag: id,
-          length: getValueLength(_globally + _payment),
+          length: getValueLength(globally + payment),
           value: value.value);
 
       // add merchant account info
@@ -220,7 +215,7 @@ class EMVQR {
   /// set additional data field template
   ///
   /// /// [value] is AdditionalDataFieldTemplate()
-  setAdditionalDataFieldTemplate(AdditionalDataFieldTemplate? value) {
+  void setAdditionalDataFieldTemplate(AdditionalDataFieldTemplate? value) {
     if (value != null) {
       String billNumber = tlvToString(value.value.billNumber);
       String mobileNumber = tlvToString(value.value.mobileNumber);
@@ -269,10 +264,10 @@ class EMVQR {
     }
   }
 
-  /// set merchant information langage template
+  /// set merchant information language template
   ///
   /// [value] is MerchantInformationLanguageTemplate()
-  setMerchantInformationLanguageTemplate(
+  void setMerchantInformationLanguageTemplate(
       MerchantInformationLanguageTemplate? value) {
     if (value != null) {
       String languagePreference = tlvToString(value.value.languagePreference);
@@ -301,7 +296,7 @@ class EMVQR {
   /// u can add more than one item.
   /// [id] id No. is "65" up to "79".
   /// max length of [value] is 99.
-  addRfuForEMVCo({String? id, String? value}) {
+  void addRfuForEMVCo({String? id, String? value}) {
     if (id != null && value != null) {
       if (int.parse(id) < int.parse(ID.rfuForEMVCoRangeStart) ||
           int.parse(id) > int.parse(ID.rfuForEMVCoRangeEnd)) {
@@ -309,9 +304,7 @@ class EMVQR {
         throw InvalidId(title: "RfuForEMVCo");
       }
 
-      if (value.length > 99) {
-        throw MaxValueLengthErr(title: "RFUFforEmvCo", length: "99");
-      }
+      _requireMax(value, 99, "RFUForEmvCo");
 
       if (this.value.rfuForEmvCo != null) {
         this.value.rfuForEmvCo?.add(setTLV(value, id));
@@ -329,22 +322,22 @@ class EMVQR {
   /// unreserved template is map type.
   /// u can add more than one item.
   /// [id] id No. is "80" up to "99".
-  addUnreservedTemplate({String? id, UnreservedTemplate? value}) {
+  void addUnreservedTemplate({String? id, UnreservedTemplate? value}) {
     if (id != null && value != null) {
       if (int.parse(id) < int.parse(ID.unreservedTemplatesRangeStart) ||
           int.parse(id) > int.parse(ID.unreservedTemplatesRangeEnd)) {
         throw InvalidId(title: "UnreservedTemplate");
       }
-      String _globally =
+      String globally =
           "${value.value.globallyUniqueIdentifier?.tag}${value.value.globallyUniqueIdentifier?.length}${value.value.globallyUniqueIdentifier?.value}";
-      String _payment = "";
+      String payment = "";
       value.value.contextSpecificData?.forEach((element) {
-        _payment += "${element.tag}${element.length}${element.value}";
+        payment += "${element.tag}${element.length}${element.value}";
       });
 
       UnreservedTemplateModel unreservedTemplate = UnreservedTemplateModel(
           tag: id,
-          length: getValueLength(_globally + _payment),
+          length: getValueLength(globally + payment),
           value: value.value);
 
       // add merchant account info

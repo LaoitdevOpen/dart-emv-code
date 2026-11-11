@@ -79,7 +79,31 @@ void main(List<String> args) {
   String notEmvQrcode = "https://laoitdev.com";
   final notEmvDecode = EMVMPM.decode(notEmvQrcode);
   print("result ------> ${notEmvDecode.toJson()}");
-  //result ------> {emvqr: null, error: {type: EmvErrorType.verifyqrErr, message: The emv data was wrong}}
+  // result ------> {emvqr: null, error: {type: EmvErrorType.notEmvType, message: qrcode not emvCo type}}
+  if (notEmvDecode.error != null) {
+    print("decode failed: ${notEmvDecode.error!.message}");
+  }
+
+  /**
+   * setters throw when a value breaks the rules
+   */
+  try {
+    EMVQR().setCountryCode("LAO"); // must be exactly 2 characters
+  } on ValueLengthErr catch (e) {
+    print("invalid value ------> $e"); // length of countryCode value must be 2
+  }
+
+  try {
+    EMVQR().setMerchantName("A" * 26); // up to 25 characters
+  } on MaxValueLengthErr catch (e) {
+    print("invalid value ------> $e"); // max length of merchantName value is 25
+  }
+
+  try {
+    EMVQR().addRfuForEMVCo(id: "10", value: "x"); // id must be 65 to 79
+  } on InvalidId catch (e) {
+    print("invalid id ------> $e"); // RfuForEMVCo id is invalid.
+  }
 
 // ---------- CPM QRcode -------------------//
 

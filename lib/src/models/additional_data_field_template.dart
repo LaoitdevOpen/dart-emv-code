@@ -123,22 +123,18 @@ class AdditionalDataFieldTemplateValue {
       );
 
   Map<String, dynamic> toJson() => {
-        "billNumber": billNumber != null ? billNumber!.toJson() : null,
-        "mobileNumber": mobileNumber != null ? mobileNumber!.toJson() : null,
-        "storeLabel": storeLabel != null ? storeLabel!.toJson() : null,
-        "loyaltyNumber": loyaltyNumber != null ? loyaltyNumber!.toJson() : null,
-        "referenceLabel":
-            referenceLabel != null ? referenceLabel!.toJson() : null,
-        "customerLabel": customerLabel != null ? customerLabel!.toJson() : null,
-        "terminalLabel": terminalLabel != null ? terminalLabel!.toJson() : null,
-        "purposeTransaction":
-            purposeTransaction != null ? purposeTransaction!.toJson() : null,
-        "additionalConsumerDataRequest": additionalConsumerDataRequest != null
-            ? additionalConsumerDataRequest!.toJson()
-            : null,
-        "merchantTaxID": merchantTaxId != null ? merchantTaxId!.toJson() : null,
-        "merchantChannel":
-            merchantChannel != null ? merchantChannel!.toJson() : null,
+        "billNumber": billNumber?.toJson(),
+        "mobileNumber": mobileNumber?.toJson(),
+        "storeLabel": storeLabel?.toJson(),
+        "loyaltyNumber": loyaltyNumber?.toJson(),
+        "referenceLabel": referenceLabel?.toJson(),
+        "customerLabel": customerLabel?.toJson(),
+        "terminalLabel": terminalLabel?.toJson(),
+        "purposeTransaction": purposeTransaction?.toJson(),
+        "additionalConsumerDataRequest":
+            additionalConsumerDataRequest?.toJson(),
+        "merchantTaxID": merchantTaxId?.toJson(),
+        "merchantChannel": merchantChannel?.toJson(),
         "rfuForEMVCo": rfuForEMVCo != null
             ? List<dynamic>.from(rfuForEMVCo!.map((x) => x.toJson()))
             : [],

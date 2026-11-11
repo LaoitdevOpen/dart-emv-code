@@ -73,10 +73,9 @@ class MerchantInformationLanguageTemplateValue {
       );
 
   Map<String, dynamic> toJson() => {
-        "languagePreference":
-            languagePreference != null ? languagePreference!.toJson() : null,
-        "merchantName": merchantName != null ? merchantName!.toJson() : null,
-        "merchantCity": merchantCity != null ? merchantCity!.toJson() : null,
+        "languagePreference": languagePreference?.toJson(),
+        "merchantName": merchantName?.toJson(),
+        "merchantCity": merchantCity?.toJson(),
         "rfuForEMVCo": rfuForEMVCo != null
             ? List<dynamic>.from(rfuForEMVCo!.map((x) => x.toJson()))
             : null,

@@ -76,6 +76,8 @@ class MerchantAccountInformationValue {
   Map<String, dynamic> toJson() => {
         "globallyUniqueIdentifier": globallyUniqueIdentifier?.toJson(),
         "paymentNetworkSpecific":
-            List<dynamic>.from(paymentNetworkSpecific!.map((x) => x.toJson())),
+            paymentNetworkSpecific == null
+            ? null
+            : List<dynamic>.from(paymentNetworkSpecific!.map((x) => x.toJson())),
       };
 }
