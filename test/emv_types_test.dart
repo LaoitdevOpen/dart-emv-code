@@ -21,6 +21,11 @@ void main() {
 
   group('tlvToString', () {
     test('null gives empty string', () => expect(tlvToString(null), ''));
+    test('incomplete TLV gives empty string', () {
+      expect(tlvToString(TLVModel(tag: '00')), '');
+      expect(tlvToString(TLVModel(tag: '00', length: '02')), '');
+      expect(tlvToString(TLVModel(length: '02', value: '01')), '');
+    });
     test('concatenates tag, length and value', () {
       expect(tlvToString(TLVModel(tag: '00', length: '02', value: '01')),
           '000201');
@@ -59,6 +64,11 @@ void main() {
     test('accepts a correct checksum', () => expect(verifyEmvQr(valid), true));
     test('rejects a wrong checksum', () {
       expect(verifyEmvQr(valid.substring(0, valid.length - 4) + '0000'), false);
+    });
+    test('rejects input shorter than a CRC', () {
+      expect(verifyEmvQr(''), false);
+      expect(verifyEmvQr('ab'), false);
+      expect(verifyEmvQr('abc'), false);
     });
     test('rejects when payload is altered', () {
       expect(verifyEmvQr(valid.replaceFirst('CN', 'JP')), false);

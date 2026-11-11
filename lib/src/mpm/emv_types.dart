@@ -180,7 +180,7 @@ TLVModel setTLV(String v, String id) {
 }
 
 String tlvToString(TLVModel? tlv) {
-  if (tlv != null && tlv.tag != null && tlv.tag != null && tlv.tag != null) {
+  if (tlv != null && tlv.tag != null && tlv.length != null && tlv.value != null) {
     return "${tlv.tag}${tlv.length}${tlv.value}";
   }
   return "";
@@ -683,6 +683,9 @@ String format(String id, String value) {
 ///
 /// check if emv data is true
 bool verifyEmvQr(String value) {
+  if (value.length < 4) {
+    return false;
+  }
   final emqrForChecksum = value.substring(0, value.length - 4);
   final emqrForCheckEmv = value.substring(value.length - 4, value.length);
   final checksum = CRC16().checkSum(utf8.encode(emqrForChecksum));
