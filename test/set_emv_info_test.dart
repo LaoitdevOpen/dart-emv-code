@@ -54,7 +54,7 @@ void main() {
         expect(get(e)?.length, len.toString().padLeft(2, '0'));
       });
       test('$name rejects wrong length', () {
-        expect(() => set(EMVQR(), ok + 'x'), throwsA(isA<ValueLengthErr>()));
+        expect(() => set(EMVQR(), '${ok}x'), throwsA(isA<ValueLengthErr>()));
         expect(() => set(EMVQR(), ok.substring(1)),
             throwsA(isA<ValueLengthErr>()));
       });

@@ -27,20 +27,20 @@ void main() {
   group('CRC params', () {
     final crc = CRC();
     test('crc16CcittFalse parameters', () {
-      final p = crc.crc16CcittFalse as Params;
+      final p = crc.crc16CcittFalse;
       expect(p.poly, 0x1021);
       expect(p.init, 0xFFFF);
       expect(p.check, 0x29B1);
       expect(p.name, 'CRC-16/CCITT-FALSE');
     });
     test('crc16Arc parameters', () {
-      final p = crc.crc16Arc as Params;
+      final p = crc.crc16Arc;
       expect(p.poly, 0x8005);
       expect(p.refIn, true);
       expect(p.check, 0xBB3D);
     });
     test('Params copyWith and json round trip', () {
-      final p = (crc.crc16Arc as Params).copyWith(name: 'x');
+      final p = crc.crc16Arc.copyWith(name: 'x');
       expect(p.name, 'x');
       final back = Params.fromJson(p.toJson());
       expect(back.poly, p.poly);

@@ -87,7 +87,7 @@ class EMVCPM {
     if (id != null && id.isNotEmpty && value != null && value.isNotEmpty) {
       final length = (value.length ~/ 2);
       String hexLength = length.toRadixString(16);
-      hexLength = "00" + hexLength;
+      hexLength = "00$hexLength";
 
       return id +
           hexLength.substring((hexLength.length - 2)).toUpperCase() +
