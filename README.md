@@ -23,7 +23,7 @@ pubspec.yaml:
 
 ```yaml
 dependencies:
-  emvqrcode: ^1.0.5
+  emvqrcode: ^1.1.0
 ```
 
 Then import it:

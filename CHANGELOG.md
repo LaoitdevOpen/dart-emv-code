@@ -1,4 +1,4 @@
-## Unreleased
+## 1.1.0
 
 + require Dart SDK `^3.8.0`
 + fix `postalCode` being serialised as `Instance of 'TLVModel'` in `toJson`
